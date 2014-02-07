@@ -1,10 +1,7 @@
 <?php
 
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
-
-class User extends Eloquent implements UserInterface, RemindableInterface {
-    const TABLE_NAME = 'users';
+class CharityCategory extends Eloquent {
+    const TABLE_NAME = 'charity_categories';
 
 	/**
 	 * The database table used by the model.
