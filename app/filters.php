@@ -35,7 +35,12 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+	if (Auth::guest()) {
+        $msg = Cms\App\Messages\FlashMessageFactory::makeWarningMessage(
+            Cms\App\Strings::get('login_required'), 'msg');
+        return Redirect::guest('users/login')
+            ->with('message', $msg);
+    }
 });
 
 
