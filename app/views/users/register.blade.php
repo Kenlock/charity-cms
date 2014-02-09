@@ -6,7 +6,6 @@
          <li>{{ $error }}</li>
       @endforeach
    </ul>
- 
 <ul class="form-fields">
     <li>
         {{ Form::label('firstname', 'First Name') }}
@@ -45,6 +44,6 @@
         ]) }}
     </li>
  
-   <li>{{ Form::submit('Register', array('class'=>'btn btn-large btn-primary btn-block'))}}</li>
+   <li>{{ Form::submit('Register', array('class'=>'btn btn-large btn-primary btn-block')) }}</li>
 </ul>
 {{ Form::close() }}

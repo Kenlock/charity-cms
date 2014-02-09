@@ -1,11 +1,11 @@
 <?php
 
-use \Cms\App\FlashMessage;
+use \Cms\App\Messages\FlashMessageFactory;
 use \Cms\App\Strings;
 
 class UserController extends BaseController {
 
-    protected $layout = 'layout.message-layout';
+    protected $layout = 'layout._single_column';
 
     public function __construct() {
         $this->beforeFilter('csrf', ['on' => 'post']);
@@ -17,9 +17,11 @@ class UserController extends BaseController {
     }
 
     public function getLogin() {
+        // no need to show a login page if already logged
         if (Auth::check()) {
-            echo "Logged in";
+            return Redirect::to('users/dashboard');
         }
+
         $this->layout->content = View::make('users.login');
     }
 

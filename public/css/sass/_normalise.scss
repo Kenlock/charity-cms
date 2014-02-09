@@ -1,0 +1,18 @@
+article, figure, footer, header {
+    display: block;
+}
+
+body, html {
+    font-size: 62.5%;   // this is so we can use Rems instead of pixels
+    margin: 0;
+    padding: 0;
+}
+
+body, textarea {
+    @include font-size(1.6);
+    font-family: sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+
+}

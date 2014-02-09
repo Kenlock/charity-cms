@@ -6,4 +6,8 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
+
+# swap + cache files
 *~
+*.swp
+public/css/sass/.sass-cache/

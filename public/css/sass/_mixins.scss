@@ -1,0 +1,10 @@
+
+/**
+ * set the font size in rems, with a pixel fall-back
+ * @link http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+ * @param Integer $sizeValue the size in pixels the desired font should be
+ */
+@mixin font-size($sizeValue: 1.6) {
+    font-size: ($sizeValue * 10) + px;
+    font-size: $sizeValue + rem;
+}
