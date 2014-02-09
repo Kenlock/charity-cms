@@ -1,11 +1,11 @@
 @extends('layout.master')
 
 @section('content')
-    <aside class="sidebar">
+    <aside class="sidebar one-third">
         @yield('sidebar')
     </aside>
 
-    <section class="content">
+    <section class="content two-thirds">
         @yield('content')
     </section>
 @override

@@ -1,0 +1,5 @@
+#wrapper {
+    @include vendor(border-radius, 4px);
+    margin: auto;
+    max-width: $desk-start;
+}

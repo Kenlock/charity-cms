@@ -14,10 +14,11 @@
 <body>
 
     <div id="wrapper">
-        
         @include('layout._flash')
 
-        @yield('content')
+        <div class="grid-wrapper">        
+            @yield('content')
+        </div>
     </div>
 
     @section('scripts')

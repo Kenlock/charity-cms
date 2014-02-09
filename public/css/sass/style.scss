@@ -1,3 +1,39 @@
-@import "_mixins";
+@charset "UTF-8";
+/*------------------------------------*\
+    STYLE.CSS
+\*------------------------------------*/
+/**
+ *
+ * sass --watch style.scss:style.min.css --style compressed
+ *
+ * Here we pull in some variables, include the inuit.css framework, then add our
+ * project-specific components afterwards.
+ */
 
-@import "_normalise";
+
+/**
+ * Setup
+ */
+@import "vars";
+@import "inuit.css/inuit";
+
+.grid__item:first-child {
+    padding-left: 0;
+}
+
+
+
+
+/**
+ * She’s all yours, cap’n... Begin importing your stuff here.
+ */
+//@import "ui/example";
+@import "ui/objects/content-block";
+@import "ui/objects/buttons";
+@import "ui/objects/messages";
+
+@import "ui/base";
+@import "ui/wrapper";
+@import "ui/forms";
+
+@import "ui/_single_column";
