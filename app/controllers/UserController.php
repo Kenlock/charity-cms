@@ -43,12 +43,12 @@ class UserController extends BaseController {
             $user->image = "";
             $user->save();
 
-            $msg = FlashMessageFactory::makeSuccessMessage(Strings::get('register_success'));
+            $msg = FlashMessageFactory::makeSuccessMessage(Lang::get('strings.register_success'));
 
             return Redirect::to('users/login')
                 ->with('message', $msg);
         } else {
-            $msg = FlashMessageFactory::makeWarningMessage(Strings::get('register_error'));
+            $msg = FlashMessageFactory::makeWarningMessage(Lang::get('strings.register_error'));
             return Redirect::to('users/register')
                 ->with('message', $msg)
                 ->withErrors($validator)
@@ -61,10 +61,10 @@ class UserController extends BaseController {
                 'email' => Input::get('email'),
                 'password' => Input::get('password')
                 ])) {
-            $msg = FlashMessageFactory::makeSuccessMessage(Strings::get('login_successful'));
+            $msg = FlashMessageFactory::makeSuccessMessage(Lang::get('strings.login_successful'));
             return Redirect::to('users/dashboard')->with('message', $msg);
         } else {
-            $msg = FlashMessageFactory::makeWarningMessage(Strings::get('login_failed'));
+            $msg = FlashMessageFactory::makeWarningMessage(Lang::get('strings.login_failed'));
             return Redirect::to('users/login')
                 ->with('message', $msg)
                 ->withInput();
