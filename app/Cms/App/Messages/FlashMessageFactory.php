@@ -7,7 +7,7 @@ class FlashMessageFactory {
     }
 
     public static function makeMessage($message, $classes = []) {
-        return new FlashMessage($message, array_merge(['msg'], $classes));
+        return new FlashMessage($message, $classes);
     }
 
     public static function makeSuccessMessage($message, $classes = []) {
