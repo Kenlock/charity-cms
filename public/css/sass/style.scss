@@ -17,8 +17,14 @@
 @import "vars";
 @import "inuit.css/inuit";
 
-.grid__item:first-child {
+// handle grid gutters ourselves
+.grid__item {
     padding-left: 0;
+}
+
+.grid-wrapper * {
+    -webkit-transition:0.2s width;
+    animation: 0.2s width;
 }
 
 
@@ -37,3 +43,4 @@
 @import "ui/forms";
 
 @import "ui/_single_column";
+@import "ui/_two_columns";

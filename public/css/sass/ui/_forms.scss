@@ -2,6 +2,10 @@ input[type=text], input[type=password], textarea {
     border: 1px solid #CCC;
     @include vendor(border-radius, 2px);
     padding: 4px 6px;
+
+    @media all and (max-width: $lap-start) {
+        width: 100%;
+    }
 }
 
 form label {
@@ -16,3 +20,9 @@ label.req {
         color: red;
     }
 }
+
+//textarea {
+//
+//    width: 100%;
+//
+//}

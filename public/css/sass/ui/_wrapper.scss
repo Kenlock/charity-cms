@@ -2,4 +2,7 @@
     @include vendor(border-radius, 4px);
     margin: auto;
     max-width: $desk-start;
+    @media all and (max-width: $lap-start) {
+        padding: 0 10px;
+    }
 }

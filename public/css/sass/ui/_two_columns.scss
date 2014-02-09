@@ -1,0 +1,18 @@
+.content .container {
+
+    @include font-size(18px);
+    line-height: 150%;
+
+}
+
+.sidebar {
+    float: right;
+}
+
+.sidebar .container {
+    @extend .content-block;
+    margin-left: 20px;
+    @media all and (max-width: $lap-start) {
+        margin-left: 0;
+    }
+}
