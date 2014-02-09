@@ -1,15 +1,16 @@
-@mixin btn-theme($btn-color) {
+@mixin btn-theme($btn-color, $btn-text-color: white) {
     background: $btn-color;
     border-color: darken($btn-color, 20%);
-    color: white;
+    color: $btn-text-color;
+    &:hover {
+        $btn-hover-color: lighten($btn-color, 10%);
+        background: $btn-hover-color;
+    }
     &:active {
         $btn-active-color: darken($btn-color, 20%);
         background: $btn-active-color;
         border-color: darken($btn-active-color, 20%);
-    }
-    &:hover {
-        $btn-hover-color: lighten($btn-color, 10%);
-        background: $btn-hover-color;
+        color: darken($btn-text-color, 20%);
     }
 }
 
