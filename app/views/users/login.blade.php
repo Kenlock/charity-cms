@@ -15,3 +15,9 @@
         </li>
     </ul>
 {{ Form::close() }}
+
+<h4>or sign in with:</h4>
+<ul class="btn-list">
+    <li>{{ HTML::link('oauth/google', 'Google+', array('class' => 'google-plus-btn')) }}</li>
+    <li>{{ HTML::link('oauth/facebook', 'Facebook', array('class' => 'facebook-btn')) }}</li>
+</ul>
