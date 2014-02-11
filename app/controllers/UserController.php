@@ -12,6 +12,13 @@ class UserController extends BaseController {
         $this->beforeFilter('auth', ['only' => ['getDashboard']]);
     }
 
+    public function getAll() {
+        $users = User::where('firstname',  'Aidan')->get();
+        $this->layout->content = View::make('users.all');
+        $this->layout->content->users = $users;
+        $this->layout->content->oauth = OAuth::get();
+    }
+
     public function getDashboard() {
         $this->layout->content = View::make('users.dashboard');
     }
@@ -30,17 +37,11 @@ class UserController extends BaseController {
     }
 
     public function postCreate() {
-        $validator = Validator::make(Input::all(), User::$rules);
+        $validator = User::validate(Input::all());
 
         if ($validator->passes()) {
-            // save the user
-            $user = new User();
-            $user->firstname = Input::get('firstname');
-            $user->lastname = Input::get('lastname');
-            $user->email = Input::get('email');
-            $user->description = Input::get('description');
-            $user->password = Hash::make(Input::get('password'));
-            $user->image = "";
+            // make a new user from the input received
+            $user = User::make(Input::all());
             $user->save();
 
             $msg = FlashMessageFactory::makeSuccessMessage(Lang::get('strings.register_success'));

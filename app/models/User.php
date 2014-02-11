@@ -9,7 +9,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         'firstname'             =>'required|alpha|min:2',
         'lastname'              =>'required|alpha|min:2',
         'email'                 =>'required|email|unique:users',
-        'description'           =>'required',
         'password'              =>'required|alpha_num|between:6,12|confirmed',
         'password_confirmation' =>'required|alpha_num|between:6,12'
     );
@@ -31,6 +30,21 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     protected $guarded = array('id', 'password');
     protected $fillable = array('description', 'firstname', 'lastname', 'image', 'email');
+
+    /**
+     * Generate a random un-hashed password
+     * @param Integer $length the desired length of the password
+     * @return String the random password
+     */
+    public static function generateRandomPassword($length) {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $password = '';
+        $alphabetLength = strlen($alphabet) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $alphabet[rand(0, $alphabetLength)];
+        }
+        return $password;
+    }
 
 	/**
 	 * Get the unique identifier for the user.
@@ -71,5 +85,28 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->email;
 	}
+
+    /**
+     * Create a User from the given attributes.
+     * Note: this fills a new object with the given attributes and defines
+     *      unfilleable attributes explicitly
+     * @param array $attributes the attributes to create a User from
+     * @return User the new User
+     */
+    public static function make($attributes) {
+        $user = new User();
+        $user->fill($attributes);
+        $user->password = Hash::make($attributes['password']);
+        return $user;
+    }
+
+    /**
+     * Validate an array of attributes using this model's rules.
+     * @param array $data the attributes to validate
+     * @return Validator the Validator containing the validation result
+     */
+    public static function validate($data) {
+        return Validator::make($data, self::$rules);
+    }
 
 }

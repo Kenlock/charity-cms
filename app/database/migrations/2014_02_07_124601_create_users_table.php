@@ -24,10 +24,10 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 64);
 
             // user for the about page
-			$table->text('description');
+			$table->text('description')->nullable();
 
             // charity's logo, icon or avatar
-			$table->string('image');
+			$table->string('image')->nullable();
 
 			$table->timestamps();
 		});

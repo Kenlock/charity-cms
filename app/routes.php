@@ -14,3 +14,6 @@
 Route::get('/', 'HomeController@getIndex');
 
 Route::controller('/users', 'UserController');
+Route::get('/users', 'UserController@getAll');
+
+Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
