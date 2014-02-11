@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>@yield('title', 'Charity CMS')</title>
+    <title>{{ isset($title) ? $title : 'Charity CMS' }}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     @section('styles')

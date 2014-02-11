@@ -17,6 +17,6 @@ class Charity extends Eloquent {
 	 */
 	protected $hidden = array();
 
-    protected $guarded = array();
+    protected $guarded = array('charity_id', 'name');
     protected $fillable = array();
 }
