@@ -37,7 +37,7 @@ class OAuthController extends BaseController {
                 return "Oops! {$e}";
             }
 
-            $existingUser = OAuth::where('oauth_uid', '=', $oauthUser['uid'])
+            $existingUser = OAuth::where('uid', '=', $oauthUser['uid'])
                 ->where('provider', '=', $providerName)
                 ->first();
 
