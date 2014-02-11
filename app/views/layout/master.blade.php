@@ -14,6 +14,13 @@
 <body>
 
     <div id="wrapper">
+        
+        <nav class="nav">
+            @section('nav-bar')
+                @include('layout.main-nav')
+            @show
+        </nav>
+
         @include('layout._flash')
 
         <div class="grid-wrapper">        
