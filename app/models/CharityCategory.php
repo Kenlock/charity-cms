@@ -15,49 +15,22 @@ class CharityCategory extends Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password');
+	protected $hidden = array();
 
-    protected $guarded = array('id', 'password');
-    protected $fillable = array('description', 'firstname', 'lastname', 'image', 'email');
+    protected $guarded = array();
+    protected $fillable = array();
 
-	/**
-	 * Get the unique identifier for the user.
-	 *
-	 * @return mixed
-	 */
-	public function getAuthIdentifier()
-	{
-		return $this->getKey();
-	}
+    public static function getCategoryId($title) {
+        return self::where('title', '=', $title)->get(array('charity_category_id'))->first();
+    }
 
-	/**
-	 * Get the password for the user.
-	 *
-	 * @return string
-	 */
-	public function getAuthPassword()
-	{
-		return $this->password;
-	}
-
-	/**
-	 * Get the user's image/logo/avatar
-	 *
-	 * @return string URL to image
-	 */
-	public function getImage()
-	{
-		return $this->image;
-	}
-
-	/**
-	 * Get the e-mail address where password reminders are sent.
-	 *
-	 * @return string
-	 */
-	public function getReminderEmail()
-	{
-		return $this->email;
-	}
+    public static function getTitles() {
+        $results = self::distinct()->get();
+        $categories = array();
+        foreach ($results as $category) {
+            $categories[$category->charity_category_id] = $category->title;
+        }
+        return $categories;
+    }
 
 }

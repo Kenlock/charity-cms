@@ -16,6 +16,7 @@ Route::get('/', 'HomeController@getIndex');
 Route::controller('/users', 'UserController');
 Route::get('/users', 'UserController@getAll');
 
-Route::controller('/ch', 'CharityController');
+Route::controller('/c', 'CharityController');
+Route::get('/c', 'CharityController@getAll');
 
 Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
