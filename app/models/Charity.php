@@ -6,8 +6,9 @@ class Charity extends Eloquent {
     protected $primaryKey = 'charity_id';
 
     public static $rules = array(
-        'name'              => "required|min:2|unique:charities",
+        'address'           => 'required|min:6',
         'description'       => 'required|min:2',
+        'name'              => "required|min:2|unique:charities",
         'charity_category_id'  => 'required|exists:charity_categories,charity_category_id'
     );
 

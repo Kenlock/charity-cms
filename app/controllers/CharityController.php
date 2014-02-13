@@ -31,15 +31,18 @@ class CharityController extends BaseController {
     }
 
     public function postCreate() {
+        $address = implode(',', array(Input::get('address'), Input::get('address1'), Input::get('address2')));
         $validator = Charity::validate(Input::all());
         if ($validator->passes()) {
-            $charity = Charity::make(Input::all());
+            $data = Input::only('name', 'description');
+            $data['address'] = $address;
+            $charity = Charity::make($data);
             $charity->save();
             return Redirect::to('users/dashboard')
                 ->with('message_success', "Charity {$charity->name} created successfully");
         } else {
             return Redirect::to('c/create')
-                ->with('message', 'The Following errors occurred')
+                ->with('message_error', 'The Following errors occurred')
                 ->withErrors($validator)
                 ->withInput();
         }

@@ -13,6 +13,12 @@ return array(
 
     // Charity
     'charity_category' => 'Category',
+    'charity_address' => 'Charity\'s Address',
+    'charity_address_hint' => 'The address of your charity',
+    'charity_address1' => 'Address Line 1',
+    'charity_address2' => 'Address Line 2',
+    'charity_address3' => 'Address Line 3',
+    'charity_category' => 'Category',
     'charity_category_hint' => 'Please choose the most appropriate category your charity fits into',
     'charity_create_button' => 'Create Charity',
     'charity_create_description' => 'Please fill out the following form to create a new Charity.',

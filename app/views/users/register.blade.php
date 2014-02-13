@@ -14,14 +14,12 @@
     <li>
         {{ Form::label('firstname', Lang::get('forms.firstname'), array('class' => 'req')) }}
         {{ Form::text('firstname', null, [
-            'class'=>'input-block-level',
             'placeholder'=>'First Name'
         ]) }}
     </li>
     <li>
         {{ Form::label('lastname', Lang::get('forms.lastname'), array('class' => 'req')) }}
         {{ Form::text('lastname', null, [
-            'class'=>'input-block-level',
             'placeholder'=>'Last Name'
         ]) }}
     </li>
@@ -36,15 +34,13 @@
     <li>
         {{ Form::label('password_confirmation', Lang::get('forms.password_confirmation'), array('class' => 'req')) }}
         {{ Form::password('password_confirmation', [
-            'class'=>'input-block-level',
             'placeholder'=>'Confirm Password'
         ]) }}
     </li>
     <li>
         {{ Form::label('description', Lang::get('forms.about')) }}
         {{ Form::textarea('description', null, [
-            'class'=>'input-block-level',
-            'placeholder'=>'About your Charity'
+            'placeholder'=>Lang::get('forms.about')
         ]) }}
     </li>
  
