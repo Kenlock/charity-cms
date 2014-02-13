@@ -15,7 +15,7 @@ class CreateCharitiesTable extends Migration {
 		Schema::create(Charity::TABLE_NAME, function(Blueprint $table)
 		{
 			$table->increments('charity_id');
-			$table->string('name', 255);
+			$table->string('name', 255)->unique();
 			$table->unsignedInteger('charity_category_id');
 			$table->text('description');
 			$table->string('image', 255)->nullable();

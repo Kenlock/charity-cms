@@ -11,16 +11,22 @@ class ModelTest extends TestCase {
 
         #$validator = Charity::validate($data);
         #echo $validator->errors();
-        #$this->assertTrue($validator->passes());
+        //$this->assertTrue($validator->passes());
+        
     }
 
     public function testCharityCategoryList() {
-        #$category = new CharityCategory();
-        #$category->title = "Animals";
-        #$category->save();
+        $category = new CharityCategory();
+        $category->title = "Animals";
+        $category->save();
 
         //var_dump(CharityCategory::getTitles());
-        var_dump(CharityCategory::getCategoryId('Animals')->charity_category_id);
+        //var_dump(CharityCategory::getCategoryId('Animals')->charity_category_id);
+    }
+
+    public function testAidan() {
+        $value  = true;
+        $this->assertTrue($value);
     }
 
 }

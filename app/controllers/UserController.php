@@ -8,8 +8,12 @@ class UserController extends BaseController {
     protected $layout = 'layout._single_column';
 
     public function __construct() {
-        $this->beforeFilter('csrf', ['on' => 'post']);
-        $this->beforeFilter('auth', ['only' => ['getDashboard']]);
+        $this->beforeFilter('csrf', array('on' => 'post'));
+        $this->beforeFilter('auth', array(
+            'only' => array(
+                'getDashboard'
+            )
+        ));
     }
 
     public function getAll() {
@@ -30,6 +34,12 @@ class UserController extends BaseController {
         }
 
         $this->layout->content = View::make('users.login');
+    }
+
+    public function getLogout() {
+        Auth::logout();
+        return Redirect::to('users/login')
+            ->with('message_success', 'You were successfully logged out');
     }
 
     public function getRegister() {

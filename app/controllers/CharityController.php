@@ -2,6 +2,16 @@
 
 class CharityController extends BaseController {
 
+    public function __construct() {
+        $this->beforeFilter('csrf', ['on' => 'post']);
+        $this->beforeFilter('auth', array(
+            'only' => array(
+                'getCreate',
+                'postCreate'
+            )
+        ));
+    }
+
     public function getAll() {
         $layout = View::make('layout._single_column');
         $layout->content = View::make('charity.all');
@@ -13,6 +23,11 @@ class CharityController extends BaseController {
         $layout = View::make('layout._single_column');
         $layout->content = View::make('charity.create');
         return $layout;
+    }
+
+    public function getCharity($name) {
+        $charity = Charity::where('name', '=', $name)->get()->first();
+        dd($charity);
     }
 
     public function postCreate() {
