@@ -8,7 +8,7 @@ class OAuthController extends BaseController {
 
     private function redirectDashboard($message = true) {
         return Redirect::to('users/dashboard')
-            ->with('message', $message ? Lang::get('strings.login_successful') : '');
+            ->with('message_success', $message ? Lang::get('strings.login_successful') : '');
     }
 
     public function getOAuth($providerName) {

@@ -72,12 +72,13 @@ class UserController extends BaseController {
                 'email' => Input::get('email'),
                 'password' => Input::get('password')
                 ])) {
-            $msg = FlashMessageFactory::makeSuccessMessage(Lang::get('strings.login_successful'));
-            return Redirect::to('users/dashboard')->with('message', $msg);
+            //$msg = FlashMessageFactory::makeSuccessMessage(Lang::get('strings.login_successful'));
+            return Redirect::to('users/dashboard')
+                ->with('message_success', Lang::get('strings.login_successful'));
         } else {
-            $msg = FlashMessageFactory::makeWarningMessage(Lang::get('strings.login_failed'));
+            #$msg = FlashMessageFactory::makeWarningMessage(Lang::get('strings.login_failed'));
             return Redirect::to('users/login')
-                ->with('message', $msg)
+                ->with('message_error', Lang::get('strings.login_failed'))
                 ->withInput();
         }
     }
