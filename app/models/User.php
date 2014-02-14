@@ -66,6 +66,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->password;
 	}
 
+    public function getCharities() {
+        $t1 = Permission::TABLE_NAME;
+        $t2 = Charity::TABLE_NAME;
+        return Charity::with('permissions')
+            ->leftJoin($t1, "{$t1}.charity_id", '=', "{$t2}.charity_id")
+            ->where('user_id', '=', $this->user_id)
+            ->groupBy("{$t2}.charity_id")
+            ->get();
+    }
+
 	/**
 	 * Get the user's image/logo/avatar
 	 *
@@ -98,6 +108,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         $user->fill($attributes);
         $user->password = Hash::make($attributes['password']);
         return $user;
+    }
+
+    public function permissions() {
+        return $this->hasMany('Permission');
     }
 
     /**

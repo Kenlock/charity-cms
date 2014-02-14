@@ -39,6 +39,10 @@ class Charity extends Eloquent {
         return $charity;
     }
 
+    public function permissions() {
+        return $this->hasMany('Permission');
+    }
+
     public static function validate($data) {
         return Validator::make($data, self::$rules);
     }

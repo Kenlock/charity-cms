@@ -25,6 +25,8 @@ class UserController extends BaseController {
 
     public function getDashboard() {
         $this->layout->content = View::make('users.dashboard');
+        $charities = Auth::user()->getCharities();
+        $this->layout->content->myCharities = $charities;
     }
 
     public function getLogin() {

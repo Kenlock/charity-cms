@@ -8,6 +8,8 @@ class CharityCategorySeeder extends Seeder {
 
     public function run() {
 
+        DB::table(CharityCategory::TABLE_NAME)->delete();
+
         foreach ($this->categories as $cat) {
             $category = new CharityCategory();
             $category->title = $cat;

@@ -11,7 +11,11 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
+        // create the Charity Categories
 		$this->call('CharityCategorySeeder');
+
+        // create the FormViews
+		$this->call('PostViewSeeder');
 	}
 
 }
