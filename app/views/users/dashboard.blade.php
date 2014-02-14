@@ -1,3 +1,10 @@
 <h1>Dashboard</h1>
  
-<p>Welcome to your Dashboard. You rock!</p>
+<section>
+
+    <ul>
+        <li>{{ HTML::link('c/create', 'Create a charity') }}</li>
+        <li>{{ HTML::link('c/', 'View all charities') }}</li>
+    </ul>
+
+</section>

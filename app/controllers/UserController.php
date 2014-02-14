@@ -17,7 +17,7 @@ class UserController extends BaseController {
     }
 
     public function getAll() {
-        $users = User::where('firstname',  'Aidan')->get();
+        $users = User::limit(25)->get();
         $this->layout->content = View::make('users.all');
         $this->layout->content->users = $users;
         $this->layout->content->oauth = OAuth::get();

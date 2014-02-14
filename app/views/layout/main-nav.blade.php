@@ -1,6 +1,6 @@
 <ul>
-    <li>Home</li>
-    <li>Contact</li>
+    <li>{{ HTML::link('/', 'Home') }}</li>
+    <li>{{ HTML::link('/contact', 'Contact') }}</li>
 </ul>
 
 @include('layout.login-nav')

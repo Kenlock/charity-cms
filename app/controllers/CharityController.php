@@ -27,7 +27,12 @@ class CharityController extends BaseController {
 
     public function getCharity($name) {
         $charity = Charity::where('name', '=', $name)->get()->first();
-        dd($charity);
+
+        $layout = View::make('layout._two_column');
+        $layout->sidebar = "Sidebar";
+        $layout->content = View::make('charity.view');
+        $layout->content->charity = $charity;
+        return $layout;
     }
 
     public function postCreate() {
