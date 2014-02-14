@@ -43,6 +43,11 @@ class UserController extends BaseController {
     }
 
     public function getRegister() {
+        if (Auth::check()) {
+            return Redirect::to('users/dashboard')
+                ->with('message_error', 'You already have an account!');
+        }
+
         $this->layout->content = View::make('users.register');
     }
 
