@@ -35,6 +35,14 @@ class CharityController extends BaseController {
         return $layout;
     }
 
+    public function getDashboard($name) {
+        $charity = Charity::where('name', '=', $name)->first();
+        $layout = View::make('layout._single_column');
+        $layout->content = View::make('charity.dashboard');
+        $layout->content->charity = $charity;
+        return $layout;
+    }
+
     public function postCreate() {
         $address = implode(',', array(Input::get('address'), Input::get('address1'), Input::get('address2')));
         $validator = Charity::validate(Input::all());
@@ -42,7 +50,11 @@ class CharityController extends BaseController {
             $data = Input::only('name', 'description');
             $data['address'] = $address;
             $charity = Charity::make($data);
+            DB::beginTransaction();
             $charity->save();
+            $permission = Permission::make(Auth::user(), $charity, null, 1);
+            $permission->save();
+            DB::commit();
             return Redirect::to('users/dashboard')
                 ->with('message_success', "Charity {$charity->name} created successfully");
         } else {

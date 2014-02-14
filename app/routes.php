@@ -20,4 +20,6 @@ Route::get('/c/view/{name}', 'CharityController@getCharity');
 Route::controller('/c', 'CharityController');
 Route::get('/c', 'CharityController@getAll');
 
+Route::controller('pages', 'PageController');
+
 Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
