@@ -13,6 +13,7 @@ return array(
     'register_description' => 'Please fill out the following form to register '
         .'an account with us. It won\'t take long, I promise!<br /><small>* = '
         .'required field</small>',
+    'register_success'  => 'Your account was successfully created. Thank you for registering with us.',
 
     // Charity
     'charity_category' => 'Category',

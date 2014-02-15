@@ -1,7 +1,6 @@
 <?php
 
-use \Cms\App\Messages\FlashMessageFactory;
-use \Cms\App\Strings;
+use \Cms\App\Sanitiser;
 
 class UserController extends BaseController {
 
@@ -54,6 +53,11 @@ class UserController extends BaseController {
     }
 
     public function postCreate() {
+        $sanitiser = Sanitiser::make(Input::all())
+            ->guard(array('password', 'password_confirmation'))
+            ->sanitise();
+        Input::merge($sanitiser->getAll());
+
         $validator = User::validate(Input::all());
 
         if ($validator->passes()) {
@@ -61,29 +65,24 @@ class UserController extends BaseController {
             $user = User::make(Input::all());
             $user->save();
 
-            $msg = FlashMessageFactory::makeSuccessMessage(Lang::get('strings.register_success'));
-
             return Redirect::to('users/login')
-                ->with('message', $msg);
+                ->with('message_success', Lang::get('forms.register_success'));
         } else {
-            $msg = FlashMessageFactory::makeWarningMessage(Lang::get('strings.register_error'));
             return Redirect::to('users/register')
-                ->with('message', $msg)
+                ->with('message_error', Lang::get('forms.errors_occurred'))
                 ->withErrors($validator)
                 ->withInput();
         }
     }
 
     public function postSignin() {
-        if (Auth::attempt([
+        if (Auth::attempt(array(
                 'email' => Input::get('email'),
                 'password' => Input::get('password')
-                ])) {
-            //$msg = FlashMessageFactory::makeSuccessMessage(Lang::get('strings.login_successful'));
+                ))) {
             return Redirect::to('users/dashboard')
                 ->with('message_success', Lang::get('strings.login_successful'));
         } else {
-            #$msg = FlashMessageFactory::makeWarningMessage(Lang::get('strings.login_failed'));
             return Redirect::to('users/login')
                 ->with('message_error', Lang::get('strings.login_failed'))
                 ->withInput();
