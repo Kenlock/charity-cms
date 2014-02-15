@@ -12,11 +12,24 @@ class PageController extends BaseController {
         ));
     }
 
+    private function charityExistsOrRedirect($charity) {
+        if ($charity == null)
+            return Redirect::to('users/dashboard')
+                ->with('message_error', Lang::get('charity.charity_not_found'));
+    }
+
+    private function userCanCreateOrRedirect(Charity $charity) {
+        if (!Auth::user()->canCreatePage($charity))
+            return Redirect::to('users/dashboard')
+                ->with('message_error', Lang::get('charity.deny_create_page'));
+    }
+
     public function getCreate($charity_id) {
         // check if the charity exists
         $charity = Charity::find($charity_id);
-        if ($charity == null) return Redirect::to('users/dashboard')
-                ->with('message_error', Lang::get('charity.charity_not_found'));
+
+        $this->charityExistsOrRedirect($charity);
+        $this->userCanCreateOrRedirect($charity);
         
         // show the form
         $layout = View::make('layout._single_column');
@@ -29,8 +42,9 @@ class PageController extends BaseController {
     public function postCreate($charity_id) {
         // check if the charity exists
         $charity = Charity::find($charity_id);
-        if ($charity == null) return Redirect::to('users/dashboard')
-                ->with('message_error', Lang::get('charity.charity_not_found'));
+
+        $this->charityExistsOrRedirect($charity);
+        $this->userCanCreateOrRedirect($charity);
 
         Input::merge(array(
             'charity_id' => $charity_id
@@ -38,13 +52,7 @@ class PageController extends BaseController {
         $validator = Page::validate(Input::all());
 
         if ($validator->passes()) {
-            $page = new Page();
-            $page->fill(Input::all());
-            DB::beginTransaction();
-            $page->page_id = $page->save();
-            $perm = Permission::make(Auth::user(), Charity::find($charity_id), $page, 1);
-            $perm->save();
-            DB::commit();
+            $page = Page::makeAndSave(Auth::user(), $charity, Input::all());
 
             return Redirect::to("c/dashboard/{$charity->name}")
                 ->with('message_success', Lang::get('forms.page_created', array(

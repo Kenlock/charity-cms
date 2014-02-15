@@ -15,6 +15,7 @@ class Page extends Eloquent {
 	 * @var string
 	 */
 	protected $table = self::TABLE_NAME;
+	protected $primaryKey = 'page_id';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -25,6 +26,17 @@ class Page extends Eloquent {
 
     protected $guarded = array();
     protected $fillable = array('title', 'charity_id', 'default_view_id');
+
+    public static function makeAndSave(User $user, Charity $charity, $data) {
+        $page = new Page();
+        $page->fill($data);
+        DB::beginTransaction();
+        $page->page_id = $page->save();
+        $perm = Permission::make($user, $charity, $page, Permission::CAN_EDIT_PAGE);
+        $perm->save();
+        DB::commit();
+        return $page;
+    }
 
     public static function validate($data) {
         return Validator::make($data, self::$rules);

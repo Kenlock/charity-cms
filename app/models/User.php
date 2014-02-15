@@ -5,6 +5,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
     const TABLE_NAME = 'users';
+
     public static $rules = array(
         'firstname'             =>'required|between:2,50',
         'lastname'              =>'required|between:2,50',
@@ -30,6 +31,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     protected $guarded = array('id', 'password');
     protected $fillable = array('description', 'firstname', 'lastname', 'image', 'email');
+
+    public function canCreatePage(Charity $charity) {
+        $permissions = Permission::where('user_id', '=', $this->user_id)
+            ->where('charity_id', '=', $charity->charity_id)
+            ->where('level', '=', Permission::CAN_EDIT_PAGE)
+            ->get();
+        return $permissions != null;
+    }
 
     /**
      * Generate a random un-hashed password
