@@ -38,10 +38,12 @@ class CharityController extends BaseController {
         $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
 
         $layout = View::make('layout._two_column');
-        $layout->sidebar = "Sidebar";
+        $layout->sidebar = "<h2>{$charity->name}</h2>";
         $layout->content = View::make('charity.view');
         $layout->content->charity = $charity;
         $layout->content->pages = $pages;
+        $layout->content->title = "Home";
+        $layout->content->content = e($charity->description);
         return $layout;
     }
 
