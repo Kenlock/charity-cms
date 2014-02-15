@@ -3,6 +3,7 @@
 class PostView extends Eloquent {
     const TABLE_NAME = 'post_views';
 
+
 	/**
 	 * The database table used by the model.
 	 *
@@ -19,4 +20,14 @@ class PostView extends Eloquent {
 
     protected $guarded = array();
     protected $fillable = array();
+
+    public static function getViewTitles() {
+        $postViews = self::get();
+        $titles = array();
+        foreach ($postViews as $postView) {
+            $titles[$postView->post_view_id] = $postView->title;
+        }
+        return $titles;
+    }
+
 }

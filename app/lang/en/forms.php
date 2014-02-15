@@ -1,6 +1,9 @@
 <?php
 
 return array(
+
+    'errors_occurred'       => 'The following errors occurred',
+
     'about' => 'About yourself',
     'email' => 'Email Address',
     'firstname' => 'First Name',
@@ -26,4 +29,11 @@ return array(
     'charity_description_hint' => 'Briefly describe your charity. e.g What you do, your aims etc.',
     'charity_name' => 'Name',
     'charity_name_hint' => 'Enter your charities name. Must contain only letters and numbers',
+
+    // pages
+    'page_create'   => 'Create Page',
+    'page_created'   => ':page_title page created successfully',
+    'page_form_description'   => 'Fill out the following form to create a new page',
+    'page_title'   => 'Page Title',
+    'page_type'   => 'Page Type',
 );
