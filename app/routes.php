@@ -16,8 +16,8 @@ Route::get('/', 'HomeController@getIndex');
 Route::controller('/users', 'UserController');
 Route::get('/users', 'UserController@getAll');
 
-Route::get('/c/view/{charity_name}/{page_id}', 'CharityController@getPage');
-Route::get('/c/view/{name}', 'CharityController@getCharity');
+#Route::get('/c/view/{charity_name}/{page_id}', 'CharityController@getPage');
+#Route::get('/c/view/{name}', 'CharityController@getCharity');
 Route::controller('/c', 'CharityController');
 Route::get('/c', 'CharityController@getAll');
 

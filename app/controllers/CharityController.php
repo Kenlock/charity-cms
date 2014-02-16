@@ -31,19 +31,29 @@ class CharityController extends BaseController {
         return $layout;
     }
 
-    public function getCharity($name) {
+    public function getCharity($name, $page_id = 0) {
         $charity = Charity::where('name', '=', $name)->get()->first();
         if ($charity == null) return $this->charityNotFound($name, 'c/');
 
         $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
+
+        $page = Page::find($page_id);
+        $posts = Post::with('propertiesSmall')
+            ->with('propertiesLarge')
+            ->with('postView')
+            ->where('page_id', '=', $page_id)->get();
+
+        $postView = View::make('charity.posts', array(
+            'posts' => $posts
+        ));
 
         $layout = View::make('layout._two_column');
         $layout->sidebar = "<h2>{$charity->name}</h2>";
         $layout->content = View::make('charity.view');
         $layout->content->charity = $charity;
         $layout->content->pages = $pages;
-        $layout->content->title = "Home";
-        $layout->content->content = e($charity->description);
+        $layout->content->title = isset($page->title) ? $page->title : "Home";
+        $layout->content->content = $postView;
         return $layout;
     }
 

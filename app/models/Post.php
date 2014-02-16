@@ -19,4 +19,38 @@ class Post extends Eloquent {
 
     protected $guarded = array();
     protected $fillable = array();
+    
+    protected $primaryKey = 'post_id';
+
+    public function getLargeProperty($key) {
+        foreach ($this->propertiesLarge as $prop) {
+            if ($prop->title == $key) return $prop->content;
+        }
+        return '';
+    }
+
+    public function getProperty($key) {
+        $property = $this->getSmallProperty($key);
+        return $property == '' ? $this->getLargeProperty($key) : $property;
+    }
+
+    public function getSmallProperty($key) {
+        foreach ($this->propertiesSmall as $prop) {
+            if ($prop->title == $key) return $prop->content;
+        }
+        return '';
+    }
+
+    public function propertiesSmall() {
+        return $this->hasMany('PostPropertySmall');
+    }
+
+    public function propertiesLarge() {
+        return $this->hasMany('PostPropertyLarge');
+    }
+
+    public function postView() {
+        return $this->hasOne('PostView', 'post_view_id');
+    }
+
 }

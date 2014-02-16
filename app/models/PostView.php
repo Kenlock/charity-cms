@@ -21,6 +21,8 @@ class PostView extends Eloquent {
     protected $guarded = array();
     protected $fillable = array();
 
+    protected $primaryKey = 'post_view_id';
+
     public static function getViewTitles() {
         $postViews = self::get();
         $titles = array();
