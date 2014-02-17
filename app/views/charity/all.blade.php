@@ -3,7 +3,7 @@
 
         <li>{{ $charity->name }} ({{ $charity->category->title }})
             <ul>
-                <li>{{ HTML::link("c/view/{$charity->name}", $charity->name) }}</li>
+                <li>{{ HTML::link("c/charity/{$charity->name}", $charity->name) }}</li>
             </ul>
         </li>
 

@@ -4,6 +4,7 @@ class Permission extends Eloquent {
     const TABLE_NAME = 'permissions';
 
     const CAN_EDIT_PAGE = 1;
+    const CAN_POST = 1;
 
 	/**
 	 * The database table used by the model.

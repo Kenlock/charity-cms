@@ -11,3 +11,4 @@ Thumbs.db
 *~
 *.swp
 public/css/sass/.sass-cache/
+public/uploads

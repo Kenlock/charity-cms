@@ -5,9 +5,15 @@
         
         <section>
             <h2>{{ $post->title }}</h2>
-            {{ View::make("postViews.{$post->postView->view}.display", array('post' => $post)) }}
+            <?php echo View::make("postViews.{$post->postView->view}.display", array('post' => $post)); ?>
         </section>
 
     @endforeach
+
+@else
+
+    <section>
+        No Posts
+    </section>
 
 @endif

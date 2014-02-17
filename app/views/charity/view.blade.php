@@ -1,4 +1,4 @@
-<?php $url = "c/view/$charity->name"; ?>
+<?php $url = "c/charity/$charity->name"; ?>
 
 @section('nav-bar')
     <ul>

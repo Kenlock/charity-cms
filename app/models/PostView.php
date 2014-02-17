@@ -3,7 +3,6 @@
 class PostView extends Eloquent {
     const TABLE_NAME = 'post_views';
 
-
 	/**
 	 * The database table used by the model.
 	 *
@@ -23,6 +22,18 @@ class PostView extends Eloquent {
 
     protected $primaryKey = 'post_view_id';
 
+    private function getViewPath($viewName, $view) {
+        return "postViews.{$viewName}.{$view}";
+    }
+
+    public function getDisplayView() {
+        return View::make($this->getViewPath($this->view, 'display'));
+    }
+
+    public function getFormView() {
+        return View::make($this->getViewPath($this->view, 'form'));
+    }
+
     public static function getViewTitles() {
         $postViews = self::get();
         $titles = array();
@@ -30,6 +41,12 @@ class PostView extends Eloquent {
             $titles[$postView->post_view_id] = $postView->title;
         }
         return $titles;
+    }
+
+    public function makePostValidator() {
+        $p = "/views/postViews/{$this->view}/PostValidator.php";
+        require app_path() . str_replace('/', DIRECTORY_SEPARATOR, $p);
+        return new PostValidator();
     }
 
 }

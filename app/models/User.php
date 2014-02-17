@@ -40,6 +40,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $permissions != null;
     }
 
+    public function canPostTo(Page $page) {
+        $perms = Permission::where('user_id', '=', $this->user_id)
+            ->where('page_id', '=', $page->page_id)->get(array('level'));
+        foreach ($perms as $perm) {
+            if ($perm->level == Permission::CAN_POST) return true;
+        }
+        return false;
+    }
+
     /**
      * Generate a random un-hashed password
      * @param Integer $length the desired length of the password

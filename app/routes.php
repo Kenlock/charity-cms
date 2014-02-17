@@ -22,5 +22,6 @@ Route::controller('/c', 'CharityController');
 Route::get('/c', 'CharityController@getAll');
 
 Route::controller('pages', 'PageController');
+Route::controller('posts', 'PostController');
 
 Route::get('/oauth/{provider}', 'OAuthController@getOAuth');

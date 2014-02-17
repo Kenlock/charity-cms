@@ -27,11 +27,15 @@ class Page extends Eloquent {
     protected $guarded = array();
     protected $fillable = array('title', 'charity_id', 'default_view_id');
 
+    public function charity() {
+        $this->hasOne('Charity', 'charity_id');
+    }
+
     public static function makeAndSave(User $user, Charity $charity, $data) {
         $page = new Page();
         $page->fill($data);
         DB::beginTransaction();
-        $page->page_id = $page->save();
+        $page->save();
         $perm = Permission::make($user, $charity, $page, Permission::CAN_EDIT_PAGE);
         $perm->save();
         DB::commit();
