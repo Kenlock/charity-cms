@@ -9,6 +9,10 @@ class Sanitiser {
         $this->guarded = array();
     }
 
+    public function all() {
+        return $this->data;
+    }
+
     public function get($key) {
         return $this->data[$key];
     }

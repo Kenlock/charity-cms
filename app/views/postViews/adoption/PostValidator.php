@@ -12,16 +12,14 @@ class PostValidator extends BasePostValidator {
             'image'
         ),
         'large' => array(
-            'last_seen',
-            'extra_info'
+            'animal_description',
         )
     );
 
     protected $rules = array(
         'animal_name'   => 'required|between:2,100',
         'contact'       => 'required|between:2,255',
-        'last_seen'     => 'required',
-        'extra_info'    => '',
+        'animal_description'     => 'required',
         'image'         => 'image|max:4096'
     );
 
@@ -31,12 +29,11 @@ class PostValidator extends BasePostValidator {
         return parent::onSuccess();
     }
 
-    public function validate() {
+    public function validate($data = null) {
         $sanitiser = Sanitiser::make(\Input::all())
             ->guard('image')
             ->sanitise();
-        \Input::merge($sanitiser->getAll());
-        return parent::validate();
+        return parent::validate($sanitiser->all());
     }
 
 }

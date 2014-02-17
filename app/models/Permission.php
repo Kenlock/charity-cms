@@ -3,6 +3,7 @@
 class Permission extends Eloquent {
     const TABLE_NAME = 'permissions';
 
+    const ALL_PAGES = 0;
     const CAN_EDIT_PAGE = 1;
     const CAN_POST = 1;
 

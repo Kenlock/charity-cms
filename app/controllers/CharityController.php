@@ -1,5 +1,7 @@
 <?php
 
+use Cms\App\Sanitiser;
+
 class CharityController extends BaseController {
 
     public function __construct() {
@@ -32,10 +34,16 @@ class CharityController extends BaseController {
     }
 
     public function getCharity($name, $page_id = 0) {
+
         $charity = Charity::where('name', '=', $name)->get()->first();
         if ($charity == null) return $this->charityNotFound($name, 'c/');
+        
+        // get the default page_id
+        $page_id = $page_id == 0 ? $charity->default_page_id : $page_id;
 
-        $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
+        $pages = Page::where('charity_id', '=', $charity->charity_id)
+            ->limit(10)
+            ->get();
 
         $page = Page::find($page_id);
         $posts = Post::with('propertiesSmall')
@@ -49,6 +57,10 @@ class CharityController extends BaseController {
 
         $layout = View::make('layout._two_column');
         $layout->sidebar = "<h2>{$charity->name}</h2>";
+        $layout->sidebar = View::make('charity.sidebar', array(
+            'charity' => $charity,
+            'page' => $page
+        ));
         $layout->content = View::make('charity.view');
         $layout->content->charity = $charity;
         $layout->content->pages = $pages;
@@ -96,17 +108,25 @@ class CharityController extends BaseController {
     }
 
     public function postCreate() {
-        $address = implode(',', array(Input::get('address'), Input::get('address1'), Input::get('address2')));
+        Input::merge(array(
+            'address' => Charity::makeAddress(
+                Input::get('address'),
+                Input::get('address1'),
+                Input::get('address2')
+            )
+        ));
+        $sanitiser = Sanitiser::make(Input::all())
+            ->guard('image')
+            ->sanitise();
+        Input::merge($sanitiser->getAll());
         $validator = Charity::validate(Input::all());
         if ($validator->passes()) {
-            $data = Input::only('name', 'description');
-            $data['address'] = $address;
-            $charity = Charity::make($data);
-            DB::beginTransaction();
-            $charity->save();
-            $permission = Permission::make(Auth::user(), $charity, null, 1);
-            $permission->save();
-            DB::commit();
+            $charity = Charity::makeAndSave(
+                Input::get('name'),
+                Input::get('charity_category_id'),
+                Input::get('description'),
+                Input::get('address')
+            );
             return Redirect::to('users/dashboard')
                 ->with('message_success', "Charity {$charity->name} created successfully");
         } else {

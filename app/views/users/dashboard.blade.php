@@ -6,7 +6,10 @@
         <h2>My Charities</h2>
         <ul>
             @foreach($myCharities as $charity)
-                <li>{{ HTML::link("c/dashboard/{$charity->name}", $charity->name) }}</li>
+                <li>
+                    {{ HTML::link("c/charity/{$charity->name}", $charity->name) }}
+                    ({{ HTML::link("c/dashboard/{$charity->name}", 'Dashboard') }})
+                </li>
             @endforeach
         </ul>
     @endif

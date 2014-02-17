@@ -6,10 +6,24 @@ class PostViewSeeder extends Seeder {
 
         DB::table(PostView::TABLE_NAME)->delete();
 
-        $postView = new PostView();
-        $postView->view = 'lost_and_found';
-        $postView->title = "Lost &amp; Found";
-        $postView->save();
+        $postViews = array(
+            array(
+                'post_view_id' => 0,
+                'view' => 'announcement',
+                'title' => 'Announcement'
+            ),
+            array(
+                'view' => 'lost_and_found',
+                'title' => 'Lost &amp; Found'
+            ),
+            array(
+                'view' => 'adoption',
+                'title' => 'Adopt and Animal'
+            ),
+        );
+
+        PostView::insert($postViews);
+
     }
 
 }
