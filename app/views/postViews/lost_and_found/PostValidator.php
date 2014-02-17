@@ -35,7 +35,7 @@ class PostValidator extends BasePostValidator {
         $sanitiser = Sanitiser::make(\Input::all())
             ->guard('image')
             ->sanitise();
-        return parent::validate($sanitiser::all());
+        return parent::validate($sanitiser->all());
     }
 
 }

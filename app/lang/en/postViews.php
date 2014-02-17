@@ -5,6 +5,10 @@ return array(
     'error'   => 'The following errors occurred',
     'success'   => 'Post created successfully!',
     'title'   => 'Post Title',
+
+    // announcement
+    'announcement.content' => 'Announcement',
+    'announcement.send' => 'Post Announcement',
     
     // lost & found
     'lost_and_found.animal_name' => 'Animal Name',
