@@ -58,7 +58,7 @@ class Charity extends Eloquent {
         $page = Page::makeAndSave(Auth::user(), $charity, array(
             'charity_id' => $charity->charity_id,
             'title' => "Home",
-            'default_view_id' => 0,
+            'default_view_id' => Page::DEFAULT_POSTVIEW,
         ));
 
         $charity->default_page_id = $page->page_id;

@@ -8,7 +8,6 @@ class PostViewSeeder extends Seeder {
 
         $postViews = array(
             array(
-                'post_view_id' => 0,
                 'view' => 'announcement',
                 'title' => 'Announcement'
             ),

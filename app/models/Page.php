@@ -3,6 +3,8 @@
 class Page extends Eloquent {
     const TABLE_NAME = 'pages';
 
+    const DEFAULT_POSTVIEW = 1;
+
     public static $rules = array(
         'title' => 'required|between:2,40',
         'charity_id' => 'required|integer|exists:charities,charity_id',
