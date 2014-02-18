@@ -1,6 +1,5 @@
 input[type=text], input[type=password], textarea {
-    border: 1px solid #CCC;
-    @include vendor(border-radius, 2px);
+    border: 2px solid $c-main-background;
     padding: 4px 6px;
 
     @media all and (max-width: $lap-start) {
@@ -9,6 +8,7 @@ input[type=text], input[type=password], textarea {
 }
 
 form label {
+    margin-bottom: 10px;
     &:after {
         content: ':';
     }
@@ -21,8 +21,8 @@ label.req {
     }
 }
 
-//textarea {
-//
-//    width: 100%;
-//
-//}
+textarea {
+
+    width: 100%;
+
+}

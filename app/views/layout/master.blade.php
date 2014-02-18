@@ -15,18 +15,30 @@
 
     <div id="wrapper">
         
-        <nav class="nav">
-            @section('nav-bar')
-                @include('layout.main-nav')
-            @show
-        </nav>
+        <header class="header">
+            <nav class="nav wrapper">
+                <a href="{{ URL::to('/') }}">
+                    <img src="{{ asset('css/images/logo.png') }}" alt="Altruisco Logo" class="logo" />
+                </a>
+                @section('nav-bar')
+                    @include('layout.main-nav')
+                @show
+            </nav>
+        </header> <!-- .header -->
 
-        @include('layout._flash')
+        <div id="main-content" class="wrapper">
 
-        <div class="grid-wrapper">        
-            @yield('content')
-        </div>
+            @include('layout._flash')
+
+            <div class="grid-wrapper">        
+                @yield('content')
+            </div>
+
+        </div> <!-- .wrapper -->
+
     </div>
+
+    @include('layout.footer')
 
     @section('scripts')
 

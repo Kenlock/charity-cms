@@ -27,20 +27,39 @@
     animation: 0.2s width;
 }
 
-
+// keyframes mixin
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
+}
 
 
 /**
  * She’s all yours, cap’n... Begin importing your stuff here.
  */
 //@import "ui/example";
+@import "ui/fonts";
+
+@import "ui/wrapper";
 @import "ui/objects/content-block";
+
 @import "ui/objects/buttons";
 @import "ui/objects/messages";
 @import "ui/objects/nav";
+@import "ui/objects/header";
+@import "ui/objects/footer";
 
 @import "ui/base";
-@import "ui/wrapper";
 @import "ui/forms";
 
 @import "ui/_single_column";

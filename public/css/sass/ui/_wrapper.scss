@@ -1,8 +1,22 @@
+#main-content {
+
+    padding: 20px 0;
+
+}
+
 #wrapper {
-    @include vendor(border-radius, 4px);
+    
+    background: $c-background;
+
     margin: auto;
-    max-width: $desk-start;
     @media all and (max-width: $lap-start) {
         padding: 0 10px;
     }
+}
+
+.wrapper {
+    
+    margin: 0 auto;
+    max-width: $desk-start;
+
 }

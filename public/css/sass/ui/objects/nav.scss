@@ -1,7 +1,5 @@
 .nav {
 
-    background: rgba(0, 0, 0, .6);
-    margin: 20px 0;
     overflow: hidden;
 
     @include vendor(border-radius, 4px);
@@ -13,21 +11,26 @@
     }
 
     ul {
+        $font-size: 48px;
         
-        float: left;
+        float: right;
+        font-family: mathlete-bulky;
+        @include font-size($font-size);
         margin: 0;
         padding: 0;
 
         a {
 
-            color: white;
+            border-right: 4px solid red;
+            color: black;
             display: block;
             padding: 4px 10px 4px 10px;
             text-decoration: none;
 
             &:hover {
 
-                background: rgba(255, 255, 255, .1);
+                @include vendor(animation, fadelink .2s);
+                color: $c-main-background;
 
             }
 
@@ -35,14 +38,30 @@
 
         li {
 
-            border-right: 1px solid white;
+            $padding: (108 - $font-size) / 2 + 6;
+
             float: left;
+            padding: $padding 0;
+            line-height: (108px - $padding * 2);
             list-style: none;
 
-            &:last-child {
-                
-                border-right: none;
-
+            &:first-child a {
+                border-color: #F8D653;
+            }
+            &:nth-child(2) a {
+                border-color: #F59742;
+            }
+            &:nth-child(3) a {
+                border-color: #939611;
+            }
+            &:nth-child(4) a {
+                border-color: #939611;
+            }
+            &:nth-child(5) a {
+                border-color: #0B92B9;
+            }
+            &:nth-child(6) a {
+                border-color: #A8D7EB;
             }
 
         }
@@ -55,4 +74,13 @@
 
     }
 
+}
+
+@include keyframes(fadelink) {
+    0% {
+        color: black;
+    }
+    100% {
+        color: $c-main-background;
+    }
 }

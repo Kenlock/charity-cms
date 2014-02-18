@@ -1,17 +1,22 @@
 .content .container {
 
-    @include font-size(18px);
+    background: white;
     line-height: 150%;
+    padding: 30px 20px;
 
 }
 
 .sidebar {
-    float: right;
+    float: left;
 }
 
 .sidebar .container {
+
+    background: white;
+    padding: 30px 20px;
+
     @extend .content-block;
-    margin-left: 20px;
+    margin-right: 20px;
     @media all and (max-width: $lap-start) {
         margin-left: 0;
     }

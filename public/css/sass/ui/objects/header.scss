@@ -1,0 +1,13 @@
+header.header {
+
+    @extend .cf;
+
+    background: white;
+    border-bottom: 4px solid $c-main-background;
+    padding: 20px 0;
+
+    .logo {
+        float: left;
+    }
+
+}
