@@ -13,11 +13,12 @@
 .sidebar .container {
 
     background: white;
+    margin-bottom: 20px;
     padding: 30px 20px;
 
     @extend .content-block;
-    margin-right: 20px;
-    @media all and (max-width: $lap-start) {
-        margin-left: 0;
+    @media all and (min-width: $lap-start) {
+        margin-right: 20px;
+        margin-bottom: 0;
     }
 }
