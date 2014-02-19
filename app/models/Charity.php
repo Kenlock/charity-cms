@@ -30,7 +30,7 @@ class Charity extends Eloquent {
     protected $fillable = array();
 
     public function category() {
-        return $this->hasOne('CharityCategory', 'charity_category_id');
+        return $this->hasOne('CharityCategory', 'charity_category_id', 'charity_category_id');
     }
 
     #public static function make($data) {
