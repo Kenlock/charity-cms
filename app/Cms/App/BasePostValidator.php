@@ -43,9 +43,7 @@ abstract class BasePostValidator {
             $movePath = Path::make(public_path(), $path);
             $image->move($movePath, $image->getClientOriginalName());
 
-            $data = \Input::all();
-            $data[$name] = Path::make($path, $image->getClientOriginalName());
-            \Input::replace($data);
+            $this->data[$name] = Path::make($path, $image->getClientOriginalName());
         } else {
             \Input::merge(array(
                 $name => ''
