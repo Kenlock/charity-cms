@@ -4,11 +4,17 @@
 
 abstract class BasePostValidator {
 
+    private $data;
+
     protected $properties = array(
         array('small' => array(), 'large' => array())
     );
 
     protected $rules = array();
+
+    public function __construct() {
+        $this->data = array();
+    }
 
     public function onSuccess() {
         $fields = array_merge($this->properties['small'], $this->properties['large']);
@@ -21,7 +27,7 @@ abstract class BasePostValidator {
             foreach ($properties as $property) {
                 $insertData[$size][] = array(
                     'title' => $property,
-                    'content' => \Input::get($property)
+                    'content' => $this->data[$property]
                 );
             }
         }
@@ -48,9 +54,9 @@ abstract class BasePostValidator {
     }
 
     public function validate($data = null) {
-        $data = isset($data) ? $data : Input::all();
+        $this->data = isset($data) ? $data : Input::all();
         $this->rules['title'] = 'required|between:2,255';
-        return \Validator::make(\Input::all(), $this->rules);
+        return \Validator::make($this->data, $this->rules);
     }
 
 }
