@@ -17,9 +17,12 @@
         
         <header class="header">
             <nav class="nav wrapper">
+                @section('logo')
                 <a href="{{ URL::to('/') }}">
                     <img src="{{ asset('css/images/logo.png') }}" alt="Altruisco Logo" class="logo" />
                 </a>
+                @show
+
                 @section('nav-bar')
                     @include('layout.main-nav')
                 @show

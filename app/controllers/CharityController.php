@@ -55,7 +55,10 @@ class CharityController extends BaseController {
             'posts' => $posts
         ));
 
-        $layout = View::make('layout._two_column');
+        $layout = View::make('layout.charity._two_column', array(
+            'charity' => $charity,
+            'pages' => $pages
+        ));
         $layout->sidebar = "<h2>{$charity->name}</h2>";
         $layout->sidebar = View::make('charity.sidebar', array(
             'charity' => $charity,

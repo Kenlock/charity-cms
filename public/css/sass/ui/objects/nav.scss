@@ -1,6 +1,8 @@
-.nav {
+$logo-height: 108px;
+$font-size: 48px;
+$link-padding: ($logo-height - $font-size) / 2 + 6;
 
-    overflow: hidden;
+.nav {
 
     @include vendor(border-radius, 4px);
     
@@ -11,9 +13,8 @@
     }
 
     ul {
-        $font-size: 48px;
-        
-        float: right;
+
+        clear: both;
         font-family: mathlete-bulky;
         @include font-size($font-size);
         margin: 0;
@@ -21,10 +22,9 @@
 
         a {
 
-            border-right: 4px solid red;
             color: black;
             display: block;
-            padding: 4px 10px 4px 10px;
+            padding: 4px 15px 4px 15px;
             text-decoration: none;
 
             &:hover {
@@ -38,31 +38,8 @@
 
         li {
 
-            $padding: (108 - $font-size) / 2 + 6;
-
-            float: left;
-            padding: $padding 0;
-            line-height: (108px - $padding * 2);
             list-style: none;
-
-            &:first-child a {
-                border-color: #F8D653;
-            }
-            &:nth-child(2) a {
-                border-color: #F59742;
-            }
-            &:nth-child(3) a {
-                border-color: #939611;
-            }
-            &:nth-child(4) a {
-                border-color: #939611;
-            }
-            &:nth-child(5) a {
-                border-color: #0B92B9;
-            }
-            &:nth-child(6) a {
-                border-color: #A8D7EB;
-            }
+            text-align: center;
 
         }
 
@@ -71,6 +48,53 @@
     .login-nav {
         
         float: right;
+
+    }
+
+    @media all and (min-width: $lap-start) {
+
+        height: $logo-height;
+
+        ul {
+
+            clear: none;
+            float: right;
+
+            a {
+
+                border-right: 4px solid red;
+
+            }
+
+            li {
+
+                float: left;
+                line-height: ($logo-height - $link-padding * 2);
+                padding: $link-padding 0;
+                text-align: left;
+
+                &:first-child a {
+                    border-color: #F8D653;
+                }
+                &:nth-child(2) a {
+                    border-color: #F59742;
+                }
+                &:nth-child(3) a {
+                    border-color: #939611;
+                }
+                &:nth-child(4) a {
+                    border-color: #939611;
+                }
+                &:nth-child(5) a {
+                    border-color: #0B92B9;
+                }
+                &:nth-child(6) a {
+                    border-color: #A8D7EB;
+                }
+            
+            }
+
+        }
 
     }
 
