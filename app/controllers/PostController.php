@@ -54,6 +54,12 @@ class PostController extends BaseController {
 
         if ($view == null) return $this->viewNotFound();
 
+        // set the page to redirect to
+        $charity = Charity::where('charity_id', '=', $page->charity_id)->first();
+        $redirect = $charity == null
+            ? "posts/create/{$page_id}"
+            : "c/charity/{$charity->name}/{$page->page_id}";
+
         $postValidator = $view->makePostValidator();
         $validator = $postValidator->validate();
         if ($validator->passes()) {
@@ -61,10 +67,10 @@ class PostController extends BaseController {
 
             Post::makeAndSave(Auth::user(), $page, $view, Input::get('title'), $data);
 
-            return Redirect::to("posts/create/{$page_id}")
+            return Redirect::to($redirect)
                 ->with('message_success', Lang::get('postViews.success'));
         } else {
-            return Redirect::to("posts/create/{$page_id}")
+            return Redirect::to($redirect)
                 ->with('message_error', Lang::get('postViews.error'))
                 ->withErrors($validator)
                 ->withInput();
