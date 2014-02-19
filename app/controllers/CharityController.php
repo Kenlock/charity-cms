@@ -20,6 +20,23 @@ class CharityController extends BaseController {
             ->with('message_error', Lang::get('charity.charity_not_found'));
     }
 
+    public function getAbout($charity_name) {
+        $charity = Charity::where('name', '=', $charity_name)->first();
+        if ($charity == null) return $this->charityNotFound($charity_name);
+        $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
+
+        return View::make('layout.charity._two_column', array(
+            'charity' => $charity,
+            'content' => View::make('charity.about', array(
+                'charity' => $charity,
+            )),
+            'pages' => $pages,
+            'sidebar' => View::make('charity.sidebar', array(
+                'charity' => $charity
+            ))
+        ));
+    }
+
     public function getAll() {
         $layout = View::make('layout._single_column');
         $layout->content = View::make('charity.all');
@@ -42,13 +59,13 @@ class CharityController extends BaseController {
         $page_id = $page_id == 0 ? $charity->default_page_id : $page_id;
 
         $pages = Page::where('charity_id', '=', $charity->charity_id)
-            ->limit(10)
             ->get();
 
         $page = Page::find($page_id);
         $posts = Post::with('propertiesSmall')
             ->with('propertiesLarge')
             ->with('postView')
+            ->limit(10)
             ->where('page_id', '=', $page_id)->get();
 
         $postView = View::make('charity.posts', array(
