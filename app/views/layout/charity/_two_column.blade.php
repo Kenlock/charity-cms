@@ -11,3 +11,7 @@
         <li>{{ HTML::link("c/about/{$charity->name}", "About") }}</li>
     </ul>
 @overwrite
+
+@section('sidebar')
+    @include('charity.sidebar')
+@overwrite

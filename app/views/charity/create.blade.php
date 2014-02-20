@@ -1,4 +1,4 @@
-{{ Form::open(array('url'=>'c/create', 'class'=>'form-create-charity')) }}
+{{ Form::open(array('url'=>'c/create', 'class'=>'form-create-charity', 'files' => true)) }}
     <h2 class="form-signup-heading">Create a Charity</h2>
     <p>
         {{ Lang::get('forms.charity_create_description') }}
@@ -52,6 +52,11 @@
             {{ Lang::get('forms.charity_category_hint') }}
         </p>
         {{ Form::select('charity_category_id', CharityCategory::getTitles()) }}
+    </li>
+    <li>
+        {{ Form::label('image', Lang::get('forms.charity_image')) }}
+        <p>{{ Lang::get('forms.charity_image_hint') }}</p>
+        {{ Form::file('image') }}
     </li>
  
    <li>{{ Form::submit(Lang::get('forms.charity_create_button'), array('class'=>'btn')) }}</li>

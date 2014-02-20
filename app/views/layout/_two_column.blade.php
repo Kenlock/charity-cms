@@ -3,7 +3,9 @@
 @section('content')
     <aside class="grid__item sidebar one-third palm-one-whole">
         <div class="container">
-            {{ $sidebar }}
+            @section('sidebar')
+                {{ isset($sidebar) ? $sidebar : '' }}
+            @show
         </div>
     </aside><!--
 

@@ -76,11 +76,6 @@ class CharityController extends BaseController {
             'charity' => $charity,
             'pages' => $pages
         ));
-        $layout->sidebar = "<h2>{$charity->name}</h2>";
-        $layout->sidebar = View::make('charity.sidebar', array(
-            'charity' => $charity,
-            'page' => $page
-        ));
         $layout->content = View::make('charity.view');
         $layout->content->charity = $charity;
         $layout->content->pages = $pages;
@@ -138,14 +133,16 @@ class CharityController extends BaseController {
         $sanitiser = Sanitiser::make(Input::all())
             ->guard('image')
             ->sanitise();
-        Input::merge($sanitiser->getAll());
-        $validator = Charity::validate(Input::all());
+
+
+        $validator = Charity::validate($sanitiser->all());
         if ($validator->passes()) {
             $charity = Charity::makeAndSave(
                 Input::get('name'),
                 Input::get('charity_category_id'),
                 Input::get('description'),
-                Input::get('address')
+                Input::get('address'),
+                Input::file('image')
             );
             return Redirect::to('users/dashboard')
                 ->with('message_success', "Charity {$charity->name} created successfully");

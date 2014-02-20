@@ -1,5 +1,7 @@
 <?php
 
+use Cms\App\Path;
+
 class Charity extends Eloquent {
     const TABLE_NAME = 'charities';
 
@@ -9,7 +11,8 @@ class Charity extends Eloquent {
         'address'           => 'required|min:6',
         'description'       => 'required|min:2',
         'name'              => "required|min:2|unique:charities",
-        'charity_category_id'  => 'required|exists:charity_categories,charity_category_id'
+        'charity_category_id'  => 'required|exists:charity_categories,charity_category_id',
+        'image'             => 'sometimes|image|max:4096'
     );
 
 	/**
@@ -42,6 +45,16 @@ class Charity extends Eloquent {
     public static function makeAndSave($name, $category_id, $description, $address, $image = '') {
         DB::beginTransaction();
         $charity = new Charity();
+
+        if ($image != '') {
+            $date = date('d-m-Y');
+            $path = Path::make("uploads", $date);
+            $movePath = Path::make(public_path(), $path);
+            $image->move($movePath, $image->getClientOriginalName());
+
+            $image = Path::make($path, $image->getClientOriginalName());
+        }
+
         $charity->fill(array(
             'name' => $name,
             'charity_category_id' => $category_id,
