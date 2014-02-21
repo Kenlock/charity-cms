@@ -10,12 +10,12 @@
  * project-specific components afterwards.
  */
 
-
 /**
  * Setup
  */
-@import "vars";
-@import "inuit.css/inuit";
+@import "../vars";
+@import "../inuit.css/inuit";
+@import "../mixins";
 
 // handle grid gutters ourselves
 .grid__item {
@@ -25,22 +25,6 @@
 .grid-wrapper * {
     -webkit-transition:0.2s width;
     animation: 0.2s width;
-}
-
-// keyframes mixin
-@mixin keyframes($name) {
-  @-webkit-keyframes #{$name} {
-    @content; 
-  }
-  @-moz-keyframes #{$name} {
-    @content;
-  }
-  @-ms-keyframes #{$name} {
-    @content;
-  }
-  @keyframes #{$name} {
-    @content;
-  } 
 }
 
 
@@ -62,5 +46,5 @@
 @import "ui/base";
 @import "ui/forms";
 
-@import "ui/_single_column";
-@import "ui/_two_columns";
+@import "ui/single_column";
+@import "ui/two_columns";

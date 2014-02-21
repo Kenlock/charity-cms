@@ -1,3 +1,10 @@
+.address input {
+
+    display: block;
+    margin: 10px 0;
+
+}
+
 input[type=text], input[type=password], textarea {
     border: 2px solid $c-main-background;
     padding: 4px 6px;
@@ -12,6 +19,14 @@ form label {
     &:after {
         content: ':';
     }
+}
+
+// field hints
+.form-fields p {
+    
+    @include font-size(14px);
+    margin-left: 20px;
+
 }
 
 label.req {

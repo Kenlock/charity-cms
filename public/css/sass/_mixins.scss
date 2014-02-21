@@ -1,24 +1,40 @@
 
-/**
- * set the font size in rems, with a pixel fall-back
- * @link http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
- * @param Integer $sizeValue the size in pixels the desired font should be
- */
-@mixin font-size($sizeValue: 1.6) {
-    font-size: ($sizeValue * 10) + px;
-    font-size: $sizeValue + rem;
+///**
+// * set the font size in rems, with a pixel fall-back
+// * @link http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+// * @param Integer $sizeValue the size in pixels the desired font should be
+// */
+//@mixin font-size($sizeValue: 1.6) {
+//    font-size: ($sizeValue * 10) + px;
+//    font-size: $sizeValue + rem;
+//}
+
+// keyframes mixin
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
 }
 
-/**
- * Create vendor-prefixed CSS in one go, e.g.
- *
-   `@include vendor(border-radius, 4px);`
- *
- */
-@mixin vendor($property, $value...){
-    -webkit-#{$property}:$value;
-       -moz-#{$property}:$value;
-        -ms-#{$property}:$value;
-         -o-#{$property}:$value;
-            #{$property}:$value;
-}
+///**
+// * Create vendor-prefixed CSS in one go, e.g.
+// *
+//   `@include vendor(border-radius, 4px);`
+// *
+// */
+//@mixin vendor($property, $value...){
+//    -webkit-#{$property}:$value;
+//       -moz-#{$property}:$value;
+//        -ms-#{$property}:$value;
+//         -o-#{$property}:$value;
+//            #{$property}:$value;
+//}
