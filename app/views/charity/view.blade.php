@@ -1,7 +1,7 @@
 <?php $url = "c/charity/$charity->name"; ?>
 
 @section('nav-bar')
-    @include('charity.navbar', $pages)
+    @include('charity.navbar')
 @overwrite
 
 <section class="posts">
