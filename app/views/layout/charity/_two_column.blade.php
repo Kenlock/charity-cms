@@ -1,5 +1,9 @@
 @extends('layout._two_column')
 
+@section('styles')
+    {{ HTML::style('css/default.min.css') }}
+@overwrite
+
 @section('logo')
 @overwrite
 

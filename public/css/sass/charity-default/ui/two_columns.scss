@@ -9,7 +9,7 @@ $top-gutter: 50px;      // gap between top nav-bar and columns
     @include vendor(border-radius, 3px);
 }
 
-.content .container .posts {
+.content .container {
 
     @extend %two_column_corners;
 

@@ -1,9 +1,5 @@
 <?php $url = "c/charity/$charity->name"; ?>
 
-@section('styles')
-    {{ HTML::style('css/default.min.css') }}
-@overwrite
-
 @section('nav-bar')
     @include('charity.navbar', $pages)
 @overwrite
