@@ -1,0 +1,72 @@
+.nav {
+    
+    &:after {
+
+        @extend .cf;
+
+    }
+
+    ul {
+
+        @extend .cf;
+
+        @include font-size(18px);
+        margin: 0;
+        padding: 0;
+
+        a {
+
+            color: black;
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+
+            &:hover {
+
+                @include vendor(animation, fadelink .2s);
+                color: black;
+
+            }
+
+        }
+
+        li {
+
+            list-style: none;
+            text-align: center;
+
+        }
+
+    }
+
+    @media all and (min-width: $lap-start) {
+
+        .login-menu {
+            
+            float:right;
+
+        }
+
+        ul {
+
+            li {
+
+                float: left;
+                text-align: left;
+            
+            }
+
+        }
+
+    }
+
+}
+
+@include keyframes(fadelink) {
+    0% {
+        color: black;
+    }
+    100% {
+        color: black;
+    }
+}

@@ -1,0 +1,86 @@
+
+$h1-size: 32px;
+$sidebar-float: right;
+$sidebar-gutter: 20px;
+$top-gutter: 50px;      // gap between top nav-bar and columns
+
+
+%two_column_corners {
+    @include vendor(border-radius, 3px);
+}
+
+.content .container .posts {
+
+    @extend %two_column_corners;
+
+    background: white;
+    line-height: 150%;
+    margin-top: $top-gutter;
+    padding: 30px 20px;
+
+}
+
+.sidebar {
+    float: $sidebar-float;
+}
+
+.sidebar .container {
+
+    figure {
+        
+        img {
+
+            background: #EEE;
+            width: 100%;
+            max-height: 200px;
+
+        }
+
+    }
+
+    .hearts {
+
+        @include font-size(15px);
+        @include vendor(border-radius, 400px);
+
+        background: white;
+        color: #EB296E;
+        display: table;
+        height: 100px;
+        font-weight: bold;
+        margin: ($top-gutter - 48px) auto -52px auto;
+        padding-top: 22px;
+        text-align: center;
+        width: 100px;
+
+        img {
+            
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+            width: 16px;
+
+        }
+
+    }
+
+    .sidebar-content {
+        @extend %two_column_corners;
+        background: white;
+        margin-bottom: 20px;
+        padding: 30px 20px;
+        
+    }
+
+    @media all and (min-width: $lap-start) {
+
+        @if ($sidebar-float == 'right') {
+            margin-left: $sidebar-gutter;
+        } @else {
+            margin-right: $sidebar-gutter;
+        }
+
+        margin-bottom: 0;
+
+    }
+}

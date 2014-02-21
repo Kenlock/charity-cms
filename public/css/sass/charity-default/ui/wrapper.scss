@@ -1,0 +1,24 @@
+#main-content {
+
+    padding: 20px 0;
+
+}
+
+#wrapper {
+
+    @extend .cf;
+    
+    background: $c-background;
+
+    margin: auto;
+    @media all and (max-width: $lap-start) {
+        padding: 0 10px;
+    }
+}
+
+.wrapper {
+    
+    margin: 0 auto;
+    max-width: $desk-start;
+
+}

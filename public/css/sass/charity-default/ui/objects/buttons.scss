@@ -1,0 +1,60 @@
+@mixin btn-theme($btn-color, $btn-text-color: white) {
+    background: $btn-color;
+    border-color: darken($btn-color, 20%);
+    color: $btn-text-color;
+    &:hover {
+        $btn-hover-color: lighten($btn-color, 10%);
+        background: $btn-hover-color;
+    }
+    &:active {
+        $btn-active-color: darken($btn-color, 20%);
+        background: $btn-active-color;
+        border-color: darken($btn-active-color, 20%);
+        color: darken($btn-text-color, 20%);
+    }
+}
+
+
+.btn {
+
+    border: 0px solid #000;
+    border-bottom: 2px solid #000;
+    display: inline-block;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 6px 12px;
+    text-decoration: none;
+
+    @include btn-theme(#65B045);
+    @include vendor(border-radius, 3px);
+
+}
+
+.btn-list {
+    margin: 0;
+    padding: 0;
+    li {
+        display: inline-block;
+        list-style: none;
+        margin-right: 10px;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.facebook-btn {
+
+    @extend .btn;
+    
+    @include btn-theme(#3B5998);
+
+}
+
+.google-plus-btn {
+
+    @extend .btn;
+    
+    @include btn-theme(#DC4A38);
+
+}

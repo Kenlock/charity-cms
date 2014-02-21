@@ -1,0 +1,22 @@
+@mixin msg-theme($msg-color) {
+    background: $msg-color;
+    color: lighten($msg-color, 40%);
+    border: 1px solid darken($msg-color, 20%);
+}
+
+.msg {
+    @include vendor(border-radius, 4px);
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.wrn {
+    @extend .msg;
+    @include msg-theme(#C6353A);
+}
+
+.suc {
+    @extend .msg;
+    @include msg-theme(#35C66C);
+}
