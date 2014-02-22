@@ -83,13 +83,13 @@ $link-padding: ($logo-height - $font-size) / 2 + 6;
                     border-color: #939611;
                 }
                 &:nth-child(4) a {
-                    border-color: #939611;
-                }
-                &:nth-child(5) a {
                     border-color: #0B92B9;
                 }
-                &:nth-child(6) a {
+                &:nth-child(5) a {
                     border-color: #A8D7EB;
+                }
+                &:nth-child(6) a {
+                    border-color: #AADAE8;
                 }
             
             }
