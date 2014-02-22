@@ -104,6 +104,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->image;
 	}
 
+    public function getName() {
+        return "{$this->firstname} {$this->lastname}";
+    }
+
 	/**
 	 * Get the e-mail address where password reminders are sent.
 	 *

@@ -30,7 +30,7 @@ class Page extends Eloquent {
     protected $fillable = array('title', 'charity_id', 'default_view_id');
 
     public function charity() {
-        $this->hasOne('Charity', 'charity_id');
+        return $this->hasOne('Charity', 'charity_id');
     }
 
     public static function makeAndSave(User $user, Charity $charity, $data) {

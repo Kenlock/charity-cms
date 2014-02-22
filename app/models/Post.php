@@ -22,6 +22,19 @@ class Post extends Eloquent {
     
     protected $primaryKey = 'post_id';
 
+    public function author() {
+        return $this->hasOne('User', 'user_id', 'user_id');
+    }
+
+    public function charity() {
+        return $this->hasOne('Charity', 'charity_id', 'charity_id');
+    }
+
+    public function getCreatedAtAttribute() {
+        $date = date('d M Y', strtotime($this->attributes['created_at']));
+        return $date;
+    }
+
     public function getLargeProperty($key) {
         foreach ($this->propertiesLarge as $prop) {
             if ($prop->title == $key) return $prop->content;

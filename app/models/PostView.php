@@ -26,8 +26,8 @@ class PostView extends Eloquent {
         return "postViews.{$viewName}.{$view}";
     }
 
-    public function getDisplayView() {
-        return View::make($this->getViewPath($this->view, 'display'));
+    public function getDisplayView($post) {
+        return View::make($this->getViewPath($this->view, 'display'), array('post' => $post));
     }
 
     public function getFormView() {

@@ -68,20 +68,20 @@ class CharityController extends BaseController {
             ->limit(10)
             ->where('page_id', '=', $page_id)->get();
 
-        $postView = View::make('charity.posts', array(
-            'posts' => $posts
-        ));
-
         $layout = View::make('layout.charity._two_column', array(
             'charity' => $charity,
+            'content' => View::make('charity.view', array(
+                'charity' => $charity,
+                'pages' => $pages,
+                'title' => isset($page->title) ? $page->title : "Home",
+                'content' => View::make('charity.posts', array(
+                    'charity' => $charity,
+                    'posts' => $posts
+                ))
+            )),
             'page' => $page,
             'pages' => $pages
         ));
-        $layout->content = View::make('charity.view');
-        $layout->content->charity = $charity;
-        $layout->content->pages = $pages;
-        $layout->content->title = isset($page->title) ? $page->title : "Home";
-        $layout->content->content = $postView;
         return $layout;
     }
 

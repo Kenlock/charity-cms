@@ -4,7 +4,16 @@ class PostController extends BaseController {
 
     public function __construct() {
         $this->beforeFilter('csrf', array('on' => 'post'));
-        $this->beforeFilter('auth');
+        $this->beforeFilter('auth', array(
+            'only' => array(
+                'getCreate',
+                'postCreate'
+        )));
+    }
+
+    private function charityNotFound() {
+        return Redirect::to('/')
+            ->with('message_error', Lang::get('charity.charity_not_found'));
     }
 
     private function pageNotFound() {
@@ -15,6 +24,11 @@ class PostController extends BaseController {
     private function permissionDenied() {
         return Redirect::to('/')
             ->with('message_error', Lang::get('strings.permission_denied'));
+    }
+
+    private function postNotFound() {
+        return Redirect::to('/')
+            ->with('message_error', Lang::get('post.post_not_found'));
     }
 
     private function viewNotFound() {
@@ -41,6 +55,28 @@ class PostController extends BaseController {
         $layout = View::make('layout._single_column');    
         $layout->content = $formView;
         return $layout;
+    }
+
+    public function getSingle($charity_name, $post_id) {
+        $charity = Charity::where('name', '=', $charity_name)->first();
+
+        // check if charity exists
+        if ($charity == null) return $this->charityNotFound();
+
+        // check if post exists
+        $post = Post::find($post_id);
+        if ($post == null) return $this->postNotFound();
+
+        $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
+
+        return View::make('layout.charity._two_column', array(
+            'charity' => $charity,
+            'pages' => $pages,
+            'post' => $post,
+            'content' => View::make('charity.single_post', array(
+                'post' => $post,
+            ))
+        ));
     }
 
     public function postCreate($page_id) {
