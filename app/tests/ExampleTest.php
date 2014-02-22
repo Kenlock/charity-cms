@@ -33,4 +33,9 @@ class ExampleTest extends TestCase {
         $this->assertTrue(true);
     }
 
+    public function testMarkdown() {
+        $string = Markdown::string('#title');
+        echo $string;
+    }
+
 }
