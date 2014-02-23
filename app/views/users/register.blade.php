@@ -1,4 +1,4 @@
-{{ Form::open(array('url'=>'users/create', 'class'=>'form-signup')) }}
+{{ Form::open(array('url'=>'users/create', 'class'=>'form-signup', 'files' => true)) }}
     <h2 class="form-signup-heading">Please Register</h2>
     <p>
         {{ Lang::get('forms.register_description') }}
@@ -42,6 +42,10 @@
         {{ Form::textarea('description', null, [
             'placeholder'=>Lang::get('forms.about')
         ]) }}
+    </li>
+    <li>
+        {{ Form::label('image', Lang::get('forms.user_image')) }}
+        {{ Form::file('image') }}
     </li>
  
    <li>{{ Form::submit(Lang::get('buttons.register'), array('class'=>'btn')) }}</li>

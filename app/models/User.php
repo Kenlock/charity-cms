@@ -2,14 +2,16 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Cms\App\Sanitiser;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends BaseModel implements UserInterface, RemindableInterface {
     const TABLE_NAME = 'users';
 
-    public static $rules = array(
+    protected $rules = array(
         'firstname'             =>'required|between:2,50',
         'lastname'              =>'required|between:2,50',
         'email'                 =>'required|email|unique:users',
+        'image'                 =>'sometimes|image|max:4096',
         'password'              =>'required|alpha_num|between:6,20|confirmed',
         'password_confirmation' =>'required|alpha_num|between:6,20'
     );
@@ -29,8 +31,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 
-    protected $guarded = array('id', 'password');
-    protected $fillable = array('description', 'firstname', 'lastname', 'image', 'email');
+    protected $guarded = array('password');
+    protected $fillable = array('firstname', 'lastname', 'email', 'description');
 
     public function canCreatePage(Charity $charity) {
         $permissions = Permission::where('user_id', '=', $this->user_id)
@@ -94,15 +96,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             ->get();
     }
 
-	/**
-	 * Get the user's image/logo/avatar
-	 *
-	 * @return string URL to image
-	 */
-	public function getImage()
-	{
-		return $this->image;
-	}
+    public function getDescriptionAttribute() {
+        return Markdown::string($this->attributes['description']);
+    }
 
     public function getName() {
         return "{$this->firstname} {$this->lastname}";
@@ -120,16 +116,42 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     /**
      * Create a User from the given attributes.
-     * Note: this fills a new object with the given attributes and defines
-     *      unfilleable attributes explicitly
      * @param array $attributes the attributes to create a User from
      * @return User the new User
      */
-    public static function make($attributes) {
+    public static function makeFromArray(array $attributes) {
+        $sanitiser = Sanitiser::make($attributes)
+            ->guard(array('image', 'password', 'password_confirmation'))
+            ->sanitise();
+        $data = $sanitiser->all();
+
         $user = new User();
-        $user->fill($attributes);
-        $user->password = Hash::make($attributes['password']);
+        $user->validate($data);
+
+        $user->password = $attributes['password'];
+        $user->image = $attributes['image'];
+
         return $user;
+    }
+
+    /**
+     * Make a User from the given information
+     * @param string $firstname the first name of the user
+     * @param string $lastname the second name of the user
+     * @param string $email user's email address
+     * @param string $password user's desired password
+     * @param string $description the user's multi-line description
+     * @param UploadedFile $image the user's image
+     * @return User the User model instance
+     */
+    public static function make($firstName, $lastName, $email, $password, $description = '', $image = '') {
+        return static::makeFromArray(array(
+            'firstname' => $firstName,
+            'lastname' => $lastName,
+            'email' => $email,
+            'description' => $description,
+            'image' => $image,
+        ));
     }
 
     public function permissions() {
@@ -137,12 +159,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
     /**
-     * Validate an array of attributes using this model's rules.
-     * @param array $data the attributes to validate
-     * @return Validator the Validator containing the validation result
+     * Save the current user into the database.
+     * This method define's values that cannot be filled using the fill() method
+     * @param array $options optional @see Eloquent->save
      */
-    public static function validate($data) {
-        return Validator::make($data, self::$rules);
+    public function save(array $options = array()) {
+        $this->image = $this->saveImage($this->image);
+        $this->password = Hash::make($this->password);
+
+        parent::save($options);
     }
 
 }

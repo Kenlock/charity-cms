@@ -53,16 +53,9 @@ class UserController extends BaseController {
     }
 
     public function postCreate() {
-        $sanitiser = Sanitiser::make(Input::all())
-            ->guard(array('password', 'password_confirmation'))
-            ->sanitise();
-        Input::merge($sanitiser->getAll());
+        $user = User::makeFromArray(Input::all());
 
-        $validator = User::validate(Input::all());
-
-        if ($validator->passes()) {
-            // make a new user from the input received
-            $user = User::make(Input::all());
+        if ($user->isValid()) {
             $user->save();
 
             return Redirect::to('users/login')
@@ -70,7 +63,7 @@ class UserController extends BaseController {
         } else {
             return Redirect::to('users/register')
                 ->with('message_error', Lang::get('forms.errors_occurred'))
-                ->withErrors($validator)
+                ->withErrors($user->getValidator())
                 ->withInput();
         }
     }
