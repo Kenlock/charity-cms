@@ -106,7 +106,7 @@ class PostController extends BaseController {
             return Redirect::to($redirect)
                 ->with('message_success', Lang::get('postViews.success'));
         } else {
-            return Redirect::to($redirect)
+            return Redirect::to("posts/create/{$page_id}")
                 ->with('message_error', Lang::get('postViews.error'))
                 ->withErrors($validator)
                 ->withInput();
