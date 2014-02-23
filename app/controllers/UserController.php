@@ -23,9 +23,19 @@ class UserController extends BaseController {
     }
 
     public function getDashboard() {
-        $this->layout->content = View::make('users.dashboard');
-        $charities = Auth::user()->getCharities();
-        $this->layout->content->myCharities = $charities;
+        $favorites = Favorite::with('charity')
+            ->where('user_id', '=', Auth::user()->user_id)
+            ->limit(10)
+            ->get();
+        $favoriteCharities = array();
+        foreach ($favorites as $fav) {
+            $favoriteCharities[] = $fav->charity;
+        }
+        return View::make('layout._two_column', array(
+            'content' => View::make('users.dashboard', array(
+                'myFavoriteCharities' => $favoriteCharities
+            ))
+        ));
     }
 
     public function getLogin() {
