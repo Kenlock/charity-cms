@@ -36,6 +36,10 @@ class Charity extends Eloquent {
         return $this->hasOne('CharityCategory', 'charity_category_id', 'charity_category_id');
     }
 
+    public function getFavoriteCount() {
+        return Favorite::where('charity_id', '=', $this->charity_id)->count();
+    }
+
     #public static function make($data) {
     #    $charity = new Charity();
     #    $charity->fill($data);

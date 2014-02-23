@@ -11,7 +11,7 @@
     padding: 10px;
 }
 
-.wrn {
+.err {
     @extend .msg;
     @include msg-theme(#C6353A);
 }

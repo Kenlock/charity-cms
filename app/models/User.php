@@ -114,6 +114,12 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+    public function hasFavorited($charity) {
+        return Favorite::where('charity_id', '=', $charity->charity_id)
+            ->where('user_id', '=', $this->user_id)
+            ->count() > 0;
+    }
+
     /**
      * Create a User from the given attributes.
      * @param array $attributes the attributes to create a User from

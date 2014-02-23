@@ -1,0 +1,16 @@
+.heart-large {
+
+    background: url(images/heart_large.jpg);
+    display: block;
+    height: 64px;
+    width: 64px;
+
+}
+
+.heart-grey-large {
+
+    @extend .heart-large;
+
+    background: url(images/heart_grey_large.jpg);
+
+}

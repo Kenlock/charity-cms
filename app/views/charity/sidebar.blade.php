@@ -1,6 +1,10 @@
+<?php
+$heart_class = Auth::check() && Auth::user()->hasFavorited($charity) ? 'heart-large' : 'heart-grey-large';
+?>
+
 <div class="hearts">
     {{ HTML::image('css/images/heart.jpg', 'Heart Image') }}
-    103
+    {{ $charity->getFavoriteCount() }}
 </div>
 
 <section class="sidebar-content">
@@ -13,6 +17,11 @@
         @endif
     </figure>
     <h2>{{ $charity->name }}</h2>
+
+    
+    <a href="{{ URL::to("favorite/{$charity->name}") }}" class="{{ $heart_class }}" title="Favorite this Charity"></a>
+        
+        
 
     @if (isset($page) and !Auth::guest() and Auth::user()->canPostTo($page))
         {{ HTML::link("posts/create/{$page->page_id}", 'New Post', array('class' => 'btn')) }}
