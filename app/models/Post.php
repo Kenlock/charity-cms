@@ -30,6 +30,10 @@ class Post extends Eloquent {
         return $this->hasOne('Charity', 'charity_id', 'charity_id');
     }
 
+    public function comments() {
+        return $this->hasMany('Comment', 'post_id', 'post_id');
+    }
+
     public function getCreatedAtAttribute() {
         $date = date('d M Y', strtotime($this->attributes['created_at']));
         return $date;

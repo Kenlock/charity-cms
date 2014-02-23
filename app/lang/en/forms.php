@@ -33,6 +33,10 @@ return array(
     'charity_name' => 'Name',
     'charity_name_hint' => 'Enter your charities name. Must contain only letters and numbers',
 
+    // comments
+    'comment'   => 'Add a Comment',
+    'comment_submit'   => 'Post Comment',
+
     // pages
     'page_create'   => 'Create Page',
     'page_created'   => ':page_title page created successfully',

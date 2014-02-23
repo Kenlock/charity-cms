@@ -23,5 +23,6 @@ Route::get('/c', 'CharityController@getAll');
 
 Route::controller('pages', 'PageController');
 Route::controller('posts', 'PostController');
+Route::controller('comments', 'CommentController');
 
 Route::get('/oauth/{provider}', 'OAuthController@getOAuth');

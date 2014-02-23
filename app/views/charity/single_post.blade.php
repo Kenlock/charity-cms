@@ -11,9 +11,12 @@
 
     <h2>Comments</h2>
     @if (count($post->comments) > 0)
-        Comments...
+        @foreach ($post->comments as $comment)
+            {{ $comment }}
+        @endforeach
     @else
         No Comments
     @endif
+    @include('comments.comment_form')
 
 </article>
