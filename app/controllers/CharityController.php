@@ -52,21 +52,27 @@ class CharityController extends BaseController {
 
     public function getCharity($name, $page_id = 0) {
 
-        $charity = Charity::where('name', '=', $name)->get()->first();
+        $charity = Charity::with('pages')
+            ->where('name', '=', $name)
+            ->get()
+            ->first();
         if ($charity == null) return $this->charityNotFound($name, 'c/');
         
         // get the default page_id
         $page_id = $page_id == 0 ? $charity->default_page_id : $page_id;
 
-        $pages = Page::where('charity_id', '=', $charity->charity_id)
-            ->get();
+        $pages = $charity->pages;
 
-        $page = Page::find($page_id);
+        $page = $pages->filter(function($page) use($page_id) {
+            return $page->page_id == $page_id;
+        })->first();
+        $page = $page == null ? $pages->first() : $page;
+
         $posts = Post::with('propertiesSmall')
             ->with('propertiesLarge')
             ->with('postView')
             ->limit(10)
-            ->where('page_id', '=', $page_id)->get();
+            ->where('page_id', '=', $page->page_id)->get();
 
         $layout = View::make('layout.charity._two_column', array(
             'charity' => $charity,

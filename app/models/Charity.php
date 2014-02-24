@@ -89,6 +89,10 @@ class Charity extends Eloquent {
         return implode(',', func_get_args());
     }
 
+    public function pages() {
+        return $this->hasMany('Page', 'charity_id', 'charity_id');
+    }
+
     public function permissions() {
         return $this->hasMany('Permission');
     }

@@ -25,6 +25,16 @@ class UserTest extends TestCase {
                 'description' => 'This is my description',
                 'image' => '',
             ),
+            array(
+                'valid' => true,
+                'firstname' => 'Aidan',
+                'lastname' => 'Grabe',
+                'password' => 'po',
+                'password_confirmation' => 'po',
+                'email' => 'aidsgrabe5@gmail.com',
+                'description' => 'This is my description',
+                'image' => '',
+            ),
         );
 
         foreach ($users as $user) {
