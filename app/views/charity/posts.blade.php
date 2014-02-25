@@ -1,3 +1,4 @@
+
 @if (isset($posts) and count($posts) > 0)
 
     @foreach ($posts as $post)

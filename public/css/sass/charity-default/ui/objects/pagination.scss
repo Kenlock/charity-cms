@@ -1,0 +1,21 @@
+ul.pagination {
+
+    display: table;
+    list-style: none;
+    margin: auto;
+    padding: 0;
+
+    a, .active, .disabled {
+        
+        display: block;
+        padding: 4px 6px;
+
+    }
+
+    li {
+
+        float: left;
+
+    }
+
+}

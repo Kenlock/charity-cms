@@ -20,11 +20,5 @@ $heart_class = Auth::check() && Auth::user()->hasFavorited($charity) ? 'heart-la
 
     
     <a href="{{ URL::to("favorite/{$charity->name}") }}" class="{{ $heart_class }}" title="Favorite this Charity"></a>
-        
-        
-
-    @if (isset($page) and !Auth::guest() and Auth::user()->canPostTo($page))
-        {{ HTML::link("posts/create/{$page->page_id}", 'New Post', array('class' => 'btn')) }}
-    @endif
 
 </section> <!-- .sidebar-content -->

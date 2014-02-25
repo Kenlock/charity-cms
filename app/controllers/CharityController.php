@@ -80,6 +80,7 @@ class CharityController extends BaseController {
             'charity' => $charity,
             'content' => View::make('charity.view', array(
                 'charity' => $charity,
+                'page' => $page,
                 'pages' => $pages,
                 'title' => isset($page->title) ? $page->title : "Home",
                 'content' => View::make('charity.posts', array(
