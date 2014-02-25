@@ -15,8 +15,13 @@
             {{ $comment }}
         @endforeach
     @else
-        No Comments
+        <p>No Comments</p>
     @endif
-    @include('comments.comment_form')
+
+    @if (Auth::check())
+        @include('comments.comment_form')
+    @else
+        <p>{{ Lang::get('comments.login_required') }}</p>
+    @endif
 
 </article>
