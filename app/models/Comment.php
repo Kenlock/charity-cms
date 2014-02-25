@@ -28,6 +28,10 @@ class Comment extends Eloquent {
         ))->__toString();
     }
 
+    public function getCommentAttribute() {
+        return Markdown::string($this->attributes['comment']);
+    }
+
     /**
      * Get the time this comment was created at
      * @param bool $timeFormat optional. If true, get the creation time as a
