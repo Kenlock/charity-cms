@@ -71,8 +71,10 @@ class CharityController extends BaseController {
         $posts = Post::with('propertiesSmall')
             ->with('propertiesLarge')
             ->with('postView')
-            ->limit(10)
-            ->where('page_id', '=', $page->page_id)->get();
+            ->orderBy('created_at', 'desc')
+            #->limit(10)
+            ->where('page_id', '=', $page->page_id)
+            ->paginate(5);
 
         $layout = View::make('layout.charity._two_column', array(
             'charity' => $charity,

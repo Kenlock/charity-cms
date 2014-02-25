@@ -9,6 +9,8 @@
 
     @endforeach
 
+    {{ $posts->links() }}
+
 @else
 
     <section>

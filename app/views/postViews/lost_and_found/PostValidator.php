@@ -22,7 +22,7 @@ class PostValidator extends BasePostValidator {
         'contact'       => 'required|between:2,255',
         'last_seen'     => 'required',
         'extra_info'    => '',
-        'image'         => 'image|max:4096'
+        'image'         => 'required|image|max:4096'
     );
 
     public function onSuccess() {
