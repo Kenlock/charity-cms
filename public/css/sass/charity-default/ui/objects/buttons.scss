@@ -3,6 +3,7 @@
     border-color: darken($btn-color, 20%);
     color: $btn-text-color;
     &:hover {
+        color: $btn-text-color;
         $btn-hover-color: lighten($btn-color, 10%);
         background: $btn-hover-color;
     }

@@ -3,6 +3,7 @@
 use Cms\App\Path;
 
 class Charity extends Eloquent {
+    const DEFAULT_IMAGE = 'css/images/user_default.png';
     const TABLE_NAME = 'charities';
 
     protected $primaryKey = 'charity_id';
@@ -38,6 +39,12 @@ class Charity extends Eloquent {
 
     public function getFavoriteCount() {
         return Favorite::where('charity_id', '=', $this->charity_id)->count();
+    }
+
+    public function getImageAttribute() {
+        return $this->attributes['image'] == ''
+            ? self::DEFAULT_IMAGE
+            : $this->attributes['image'];
     }
 
     #public static function make($data) {

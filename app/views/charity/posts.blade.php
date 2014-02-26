@@ -4,7 +4,7 @@
     @foreach ($posts as $post)
         
         <section>
-            <h2>{{ HTML::link("posts/single/{$charity->name}/{$post->post_id}", $post->title) }}</h2>
+            <h2>{{ HTML::link("posts/single/{$charity->name}/{$post->post_id}", $post->title) }} <time>{{ date('d M \'y', $post->created_at) }}</time></h2>
             {{ $post->postView->getDisplayView($post); }}
         </section>
 

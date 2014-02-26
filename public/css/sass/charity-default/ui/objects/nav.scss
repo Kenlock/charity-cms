@@ -24,7 +24,8 @@
             &:hover {
 
                 @include vendor(animation, fadelink .2s);
-                color: black;
+
+                color: #35C679;
 
             }
 
@@ -67,6 +68,6 @@
         color: black;
     }
     100% {
-        color: black;
+        color: #35C679;
     }
 }

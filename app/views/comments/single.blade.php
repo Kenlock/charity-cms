@@ -1,5 +1,9 @@
-<h3>{{ $comment->user->getName() }} said on {{ date('d M Y h:i:s', $comment->getCreatedAt()) }}:</h3>
-
-<p>
-    {{ $comment->comment }}
-</p>
+<div>
+    <figure>
+        {{ HTML::image($comment->user->image, 'User Profile Image') }}
+    </figure>
+    <article>
+        <h3>{{ $comment->user->getName() }}: <time>{{ $comment->getAgeString() }}</time></h3>
+        {{ $comment->comment }}
+    </article>
+</div>

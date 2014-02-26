@@ -5,6 +5,8 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Cms\App\Sanitiser;
 
 class User extends BaseModel implements UserInterface, RemindableInterface {
+
+    const DEFAULT_IMAGE = 'css/images/user_default.png';
     const TABLE_NAME = 'users';
 
     protected $rules = array(
@@ -98,6 +100,12 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
 
     public function getDescriptionAttribute() {
         return Markdown::string($this->attributes['description']);
+    }
+
+    public function getImageAttribute() {
+        return $this->attributes['image'] == ''
+            ? self::DEFAULT_IMAGE
+            : $this->attributes['image'];
     }
 
     public function getName() {

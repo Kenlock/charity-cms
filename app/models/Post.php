@@ -31,12 +31,11 @@ class Post extends Eloquent {
     }
 
     public function comments() {
-        return $this->hasMany('Comment', 'post_id', 'post_id');
+        return $this->hasMany('Comment', 'post_id', 'post_id')->orderBy('created_at', 'desc');
     }
 
     public function getCreatedAtAttribute() {
-        $date = date('d M Y', strtotime($this->attributes['created_at']));
-        return $date;
+        return strtotime($this->attributes['created_at']);
     }
 
     public function getLargeProperty($key) {

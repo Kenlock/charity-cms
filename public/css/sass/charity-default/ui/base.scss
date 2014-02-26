@@ -6,32 +6,36 @@ body {
 
 }
 
+a {
+
+    color: #35C679;
+    text-decoration: none;
+
+    &:hover {
+
+        color: #EB296E;
+
+    }
+
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
     letter-spacing: 2px;
 }
 
 h2 {
+
     @include font-size(30px);
     margin: 0 0 20px 0;
-    border-bottom: 4px solid white;
+    border-bottom: 1px solid #EEE;
 
-    &:first-child {
-        border-color: #F8D653;
+    time {
+
+        float: right;
+        font-size: .6em;
+        line-height: 50px;
+
     }
-    &:nth-child(2) {
-        border-color: #F59742;
-    }
-    &:nth-child(3) {
-        border-color: #939611;
-    }
-    &:nth-child(4) {
-        border-color: #939611;
-    }
-    &:nth-child(5) {
-        border-color: #0B92B9;
-    }
-    &:nth-child(6) {
-        border-color: #A8D7EB;
-    }
+
 }

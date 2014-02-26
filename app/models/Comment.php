@@ -28,6 +28,23 @@ class Comment extends Eloquent {
         ))->__toString();
     }
 
+    public function getAge() {
+        $now = new DateTime('now');
+        $cDate = new DateTime($this->attributes['created_at']);
+        return $now->diff($cDate);
+    }
+
+    public function getAgeString() {
+        $diff = $this->getAge();
+        if ($diff->y > 0) return "{$diff->y} year(s) ago";
+        if ($diff->m > 0) return "{$diff->m} month(s) ago";
+        if ($diff->d > 0) return "{$diff->d} day(s) ago";
+        if ($diff->h > 0) return "{$diff->h} hour(s) ago";
+        if ($diff->i > 0) return "{$diff->i} minute(s) ago";
+        if ($diff->s > 20) return "{$diff->s} second(s) ago";
+        return "just now";
+    }
+
     public function getCommentAttribute() {
         return Markdown::string($this->attributes['comment']);
     }
