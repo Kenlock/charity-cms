@@ -3,6 +3,17 @@ body {
     @include font-size(20px);
 }
 
+a {
+    
+    color: #34A5C4;
+    text-decoration: none;
+
+    &:hover {
+        color: #EB296E;
+    }
+
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: mathlete-bulky, sans-serif;
     font-weight: normal;
@@ -17,19 +28,19 @@ h2 {
     &:first-child {
         border-color: #F8D653;
     }
-    &:nth-child(2) {
+    &:nth-childi(2n) {
         border-color: #F59742;
     }
-    &:nth-child(3) {
+    &:nth-child(3n) {
         border-color: #939611;
     }
-    &:nth-child(4) {
+    &:nth-child(4n) {
         border-color: #939611;
     }
-    &:nth-child(5) {
+    &:nth-child(5n) {
         border-color: #0B92B9;
     }
-    &:nth-child(6) {
+    &:nth-child(6n) {
         border-color: #A8D7EB;
     }
 }

@@ -5,6 +5,7 @@
     &:hover {
         $btn-hover-color: lighten($btn-color, 10%);
         background: $btn-hover-color;
+        color: $btn-text-color;
     }
     &:active {
         $btn-active-color: darken($btn-color, 20%);
@@ -14,21 +15,34 @@
     }
 }
 
-
-.btn {
+%btn-base {
 
     border: 0px solid #000;
     border-bottom: 2px solid #000;
     display: inline-block;
     font-weight: bold;
     margin: 10px 0;
-    padding: 6px 12px;
+    padding: 6px 16px;
     text-decoration: none;
 
-    @include btn-theme(#65B045);
-    @include vendor(border-radius, 3px);
+}
+
+.btn {
+
+    @extend %btn-base;
+
+    @include btn-theme($c-main-background);
 
 }
+
+.secondary-btn {
+
+    @extend .btn;
+
+    @include btn-theme(#F8D653, black);
+
+}
+
 
 .btn-list {
     margin: 0;

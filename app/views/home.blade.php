@@ -2,10 +2,14 @@
 
 <p>
     Welcome to Altruisco.org! We are a non-profit charity website hosting service.
+    <figure>
+        {{ HTML::image('css/images/dashboard.png', 'Dashboard Preview') }}
+    </figure>
 </p>
+
+
+<h2>By using our service you can:</h2>
 <p>
-    We provide an easy to use dashboard for managing your charities website.
-    By using our service you can:
     <ul>
         <li>Create multiple charity websites</li>
         <li>Create posts for your users to read</li>
@@ -25,5 +29,5 @@
 </p>
 <p>
     {{ HTML::link('users/register', 'Register', array('class' => 'btn')) }}
-    {{ HTML::link('c', 'Discover', array('class' => 'btn')) }}
+    {{ HTML::link('c', 'Discover', array('class' => 'secondary-btn')) }}
 </p>
