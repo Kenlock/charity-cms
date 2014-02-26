@@ -12,5 +12,13 @@
         Last Seen: <br />
         {{ $post->getLargeProperty('last_seen') }}
     </p>
+    <p>
+        Extra Information: <br />
+        @if (trim($post->getLargeProperty('extra_info')) != '')
+            {{ $post->getLargeProperty('extra_info') }}
+        @else
+            {{ Lang::get('postViews.lost_and_found.no_extra_info') }}
+        @endif
+    </p>
 
 </article>

@@ -15,6 +15,7 @@ return array(
     'lost_and_found.contact' => 'Please Contact',
     'lost_and_found.last_seen' => 'Last Seen',
     'lost_and_found.extra_info' => 'Extra Information',
+    'lost_and_found.no_extra_info' => 'None Provided',
     'lost_and_found.image' => 'Image',
     'lost_and_found.send'   => 'Post',
     
