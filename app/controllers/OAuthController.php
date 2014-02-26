@@ -53,7 +53,7 @@ class OAuthController extends BaseController {
                         'description' => $oauthUser['description'],
                         'password' => User::generateRandomPassword(10)
                     );
-                    $user = User::make($userAttributes);
+                    $user = User::makeFromArray($userAttributes);
                     $user->save();
                 }
 

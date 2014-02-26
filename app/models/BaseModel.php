@@ -18,9 +18,9 @@ abstract class BaseModel extends Eloquent {
         return $this->validator->passes();
     }
 
-    public function saveImage(UploadedFile $image = null) {
+    public function saveImage($image = null) {
         $path = '';
-        if ($image != null) {
+        if ($image != null && $image instanceof UploadedFile) {
             $date = date('d-m-Y');
             $path = Path::make("uploads", $date);
             $newPath = Path::make(public_path(), $path);
@@ -30,6 +30,8 @@ abstract class BaseModel extends Eloquent {
 
             // get the path relative to public folder
             $path = Path::make($path, $image->getClientOriginalName());
+        } elseif ($image != null) {
+            $path = $image;
         }
         return $path;
     }
