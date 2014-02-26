@@ -18,7 +18,10 @@ class CommentController extends BaseController {
         $post = Post::find($post_id);
         if ($post == null) Redirect::back()->with('message_error', "Post not found");
 
-        $comment = Comment::make(Auth::user(), $post, Input::get('comment'));
+        $sanitiser = Sanitiser::make(Input::all())
+            ->sanitise();
+
+        $comment = Comment::make(Auth::user(), $post, $sanitiser->get('comment'));
         $validator = $comment->validate();
 
         if ($validator->passes()) {
