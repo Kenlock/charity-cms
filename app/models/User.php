@@ -178,7 +178,7 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
      * @param array $options optional @see Eloquent->save
      */
     public function save(array $options = array()) {
-        $this->image = $this->saveImage($this->image);
+        $this->image = $this->saveImage($this->attributes['image']);
         $this->password = Hash::make($this->password);
 
         parent::save($options);

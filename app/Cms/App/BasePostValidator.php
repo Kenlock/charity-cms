@@ -51,6 +51,9 @@ abstract class BasePostValidator {
         }
     }
 
+    /**
+     * Validate the given data according to the posts rules
+     */
     public function validate($data = null) {
         $this->data = isset($data) ? $data : Input::all();
         $this->rules['title'] = 'required|between:2,255';
