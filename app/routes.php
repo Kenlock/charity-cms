@@ -25,6 +25,8 @@ Route::controller('pages', 'PageController');
 Route::controller('posts', 'PostController');
 Route::controller('comments', 'CommentController');
 
+Route::get('help', 'HelpController@getFaq');
+
 Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
 
 Route::get('/favorite/{charity_name}', 'FavoriteController@favoriteCharity');
