@@ -17,7 +17,7 @@ class PostViewSeeder extends Seeder {
             ),
             array(
                 'view' => 'adoption',
-                'title' => 'Adopt and Animal'
+                'title' => 'Adopt an Animal'
             ),
         );
 
