@@ -115,8 +115,10 @@ class Post extends Eloquent {
         // if the user can delete posts for this post's page
         $permissions = Permission::where('user_id', '=', $user->user_id)
             ->where('charity_id', '=', $this->page->charity->charity_id)
-            ->where('page_id', '=', $this->page->page_id)
-            ->or('page_id', '=', 0)
+            ->where(function($query) {
+                $query->where('page_id', '=', $this->page->page_id)
+                    ->orWhere('page_id', '=', 0);
+            })
             ->count();
     
         return $permissions > 0;
