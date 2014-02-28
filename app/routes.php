@@ -30,3 +30,4 @@ Route::get('help', 'HelpController@getFaq');
 Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
 
 Route::get('/favorite/{charity_name}', 'FavoriteController@favoriteCharity');
+Route::get('/unfavorite/{charity_name}', 'FavoriteController@unfavoriteCharity');
