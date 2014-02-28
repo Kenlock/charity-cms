@@ -1,5 +1,9 @@
 <article>
 
+    @if ($post->userCanDelete(Auth::user()))
+        {{ HTML::link("posts/delete/{$post->post_id}", Lang::get('post.delete'), array('class' => 'delete-post btn')) }}
+    @endif
+
     <small>{{ HTML::link("c/charity/{$post->page->charity->name}/{$post->page->page_id}", '&larr; Back') }}</small>
 
     <h2>{{ $post->title }}</h2>

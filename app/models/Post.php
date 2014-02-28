@@ -93,4 +93,28 @@ class Post extends Eloquent {
         return $this->hasMany('PostPropertyLarge');
     }
 
+    /**
+     * Check if a given user has permission to delete the current post
+     * @param User $user the user to check against
+     * @return boolean true if the user has permission to delete this post,
+     *      false if she does not
+     */
+    public function userCanDelete($user) {
+        // if the user is a guest
+        if (!isset($user)) return false;
+
+        // if the user is the author of the post
+        if ($this->author->user_id == $user->user_id) return true;
+
+        // if the user can delete posts for this post's page
+        $permissions = Permission::where('user_id', '=', $user->user_id)
+            ->where('charity_id', '=', $this->page->charity->charity_id)
+            ->where('page_id', '=', $this->page->page_id)
+            ->or('page_id', '=', 0)
+            ->count();
+    
+        return $permissions > 0;
+
+    }
+
 }

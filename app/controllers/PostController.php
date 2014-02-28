@@ -26,8 +26,8 @@ class PostController extends BaseController {
             ->with('message_error', Lang::get('strings.permission_denied'));
     }
 
-    private function postNotFound() {
-        return Redirect::to('/')
+    private function postNotFound(Charity $charity) {
+        return Redirect::to("c/charity/{$charity}")
             ->with('message_error', Lang::get('post.post_not_found'));
     }
 
@@ -57,6 +57,35 @@ class PostController extends BaseController {
         return $layout;
     }
 
+    /**
+     * Try to delete a post
+     * @param int $post_id the id of the post to delete.
+     * @return Redirect
+     */
+    public function getDelete($post_id) {
+        $post = Post::find($post_id);
+        $success = true;
+        $message = 'Post deleted successfully'; // TODO Lang::get()
+
+        // check if the post exists
+        if ($post == null)
+            return App::abort(404, Lang::get('post.post_not_found'));
+
+        $page = $post->page;
+        $charity = $page->charity;
+
+        if ($post->userCanDelete(Auth::user())) {
+            $post->delete();
+        } else {
+            $message = Lang::get('strings.permission_denied');
+            $success = false;
+        }
+
+        $class = $success ? "success" : "error";
+        return Redirect::intended("c/charity/{$charity->name}/{$page->page_id}")
+            ->with("message_{$class}", $message);
+    }
+
     public function getSingle($charity_name, $post_id) {
         $charity = Charity::where('name', '=', $charity_name)->first();
 
@@ -65,7 +94,7 @@ class PostController extends BaseController {
 
         // check if post exists
         $post = Post::find($post_id);
-        if ($post == null) return $this->postNotFound();
+        if ($post == null) return $this->postNotFound($charity);
 
         $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
 
