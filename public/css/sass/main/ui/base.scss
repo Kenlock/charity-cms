@@ -25,22 +25,22 @@ h2 {
     margin: 0 0 20px 0;
     border-bottom: 4px solid white;
 
-    &:first-child {
+    &:nth-of-type(n) {
         border-color: #F8D653;
     }
-    &:nth-childi(2n) {
+    &:nth-of-type(2n) {
         border-color: #F59742;
     }
-    &:nth-child(3n) {
+    &:nth-of-type(3n) {
         border-color: #939611;
     }
-    &:nth-child(4n) {
-        border-color: #939611;
-    }
-    &:nth-child(5n) {
+    &:nth-of-type(4n) {
         border-color: #0B92B9;
     }
-    &:nth-child(6n) {
+    &:nth-of-type(5n) {
         border-color: #A8D7EB;
+    }
+    &:nth-of-type(6n) a {
+        border-color: #AADAE8;
     }
 }

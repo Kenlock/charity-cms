@@ -29,6 +29,22 @@
         </ul>
     @endif
 
+    <h2>Recent Comments</h2>
+    <ul class="comments">
+        @if (count($my_recent_comments) > 0)
+            @foreach($my_recent_comments as $comment)
+                <li>
+                    <h3>Posted on:
+                        {{ HTML::link("posts/single/{$comment->post->page->charity->name}/{$comment->post->post_id}", $comment->post->title) }}
+                    </h3>
+                    @include('comments.single')
+                </li>
+            @endforeach
+        @else
+            <li>You have not made any comments</li>
+        @endif
+    </ul>
+
     <h2>Other Actions</h2>
     <ul>
         <li>{{ HTML::link('c/create', 'Create a charity') }}</li>

@@ -31,9 +31,17 @@ class UserController extends BaseController {
         foreach ($favorites as $fav) {
             $favoriteCharities[] = $fav->charity;
         }
+
+        $comments = Comment::with('post')
+            ->where('user_id', '=', Auth::user()->user_id)
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
         return View::make('layout._two_column', array(
             'content' => View::make('users.dashboard', array(
-                'myFavoriteCharities' => $favoriteCharities
+                'myFavoriteCharities' => $favoriteCharities,
+                'my_recent_comments' => $comments,
             ))
         ));
     }

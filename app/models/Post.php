@@ -26,12 +26,18 @@ class Post extends Eloquent {
         return $this->hasOne('User', 'user_id', 'user_id');
     }
 
-    public function charity() {
-        return $this->hasOne('Charity', 'charity_id', 'charity_id');
-    }
+   # public function charity() {
+   #     return $this->hasOne('Charity', 'charity_id', 'charity_id');
+   # }
 
     public function comments() {
         return $this->hasMany('Comment', 'post_id', 'post_id')->orderBy('created_at', 'desc');
+    }
+
+    public function delete() {
+        $this->comments()->delete();
+
+        return parent::delete();
     }
 
     public function getCreatedAtAttribute() {

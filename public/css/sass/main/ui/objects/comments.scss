@@ -1,0 +1,64 @@
+$comment-image-size: 63px;
+
+.comments {
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    div {
+
+        margin-bottom: 20px;
+
+        & > figure {
+
+            margin: 0;
+            
+            img {
+
+                @include vendor(border-radius, $comment-image-size);
+                @include vendor(box-shadow, 0 0 5px #222);
+                
+                background: #333;
+                height: $comment-image-size;
+                margin: 0px 0px (-$comment-image-size / 2) 10px;
+                width: $comment-image-size;
+
+            }
+
+        }
+
+        article {
+
+            @include vendor(border-radius, 4px);
+
+            background: #EEE;
+            border: 1px solid #CCC;
+            padding: 10px 20px;
+
+            & > h3 {
+
+                time {
+
+                    float: right;
+
+                }
+
+                @include font-size(14px);
+
+                font-family: sans-serif;
+                margin: 0 0 0 ($comment-image-size + 10px);
+
+            }
+
+            p {
+
+                margin: 10px 0;
+                
+            }
+
+        }
+
+    }
+
+}
