@@ -19,6 +19,9 @@ $heart_class = Auth::check() && Auth::user()->hasFavorited($charity) ? 'heart-la
     <h2>{{ $charity->name }}</h2>
 
     
-    <a href="{{ URL::to("favorite/{$charity->name}") }}" class="{{ $heart_class }}" title="Favorite this Charity"></a>
+    <div>
+        <a href="{{ URL::to("favorite/{$charity->name}") }}" class="{{ $heart_class }}" title="Favorite this Charity"></a>
+        @include('paypal.donate_button', array('charity' => $charity))
+    </div>
 
 </section> <!-- .sidebar-content -->

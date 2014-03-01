@@ -33,6 +33,10 @@ class Charity extends Eloquent {
     protected $guarded = array('charity_id');
     protected $fillable = array();
 
+    public function getEmailAttribute() {
+        return "aidsgrabe@gmail.com";
+    }
+
     public function category() {
         return $this->hasOne('CharityCategory', 'charity_category_id', 'charity_category_id');
     }
