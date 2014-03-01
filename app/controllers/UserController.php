@@ -10,7 +10,8 @@ class UserController extends BaseController {
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array(
             'only' => array(
-                'getDashboard'
+                'getDashboard',
+                'getUpdate'
             )
         ));
     }
@@ -70,6 +71,16 @@ class UserController extends BaseController {
         $this->layout->content = View::make('users.register');
     }
 
+    public function getUpdate() {
+        $user = Auth::user();
+        $user->setMarkdown(false);
+        return View::make('layout._two_column', array(
+            'content' => View::make('users.update', array(
+                'user' => $user,
+            )),
+        ));
+    }
+
     public function postCreate() {
         $user = User::makeFromArray(Input::all());
 
@@ -98,6 +109,31 @@ class UserController extends BaseController {
                 ->with('message_error', Lang::get('strings.login_failed'))
                 ->withInput();
         }
+    }
+
+    /**
+     * Validate an update to the user
+     */
+    public function postUpdate() {
+        $user = Auth::user();
+        $user->validateUpdate(Input::all());
+        
+        if ($user->isValid()) {
+            $user->fill(Input::all());
+
+            // set the password to plaintext, as the save method will re-hash
+            $user->password = Input::has('password')
+                ? Input::get('password')
+                : Input::get('password_old');
+            $user->save();
+
+            return Redirect::back()
+                ->with('message_success', "Success!");
+        }
+        return Redirect::back()
+            ->with('message_error', Lang::get('forms.errors_occurred'))
+            ->withInput()
+            ->withErrors($user->getValidator());
     }
 
 }

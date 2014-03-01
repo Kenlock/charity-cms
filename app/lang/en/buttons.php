@@ -2,5 +2,6 @@
 
 return array(
     'login' => 'Login',
-    'register' => 'Register'
+    'register' => 'Register',
+    'update' => 'Update',
 );

@@ -10,6 +10,8 @@ return array(
     'lastname' => 'Last Name',
     'password' => 'Password',
     'password_confirmation' => 'Confirm Password',
+    'password_old' => 'Current Password',
+    'password_new' => 'New Password',
     'register_description' => 'Please fill out the following form to register '
         .'an account with us. It won\'t take long, I promise!<br /><small>* = '
         .'required field</small>',

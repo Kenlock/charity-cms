@@ -4,6 +4,8 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Cms\App\Sanitiser;
 
+use observers\UserObserver;
+
 class User extends BaseModel implements UserInterface, RemindableInterface {
 
     const DEFAULT_IMAGE = 'css/images/user_default.png';
@@ -16,6 +18,13 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
         'image'                 =>'sometimes|image|max:4096',
         'password'              =>'required|between:6,20|confirmed',
         'password_confirmation' =>'required|between:6,20'
+    );
+
+    protected $updateRules = array(
+        'email'                 =>':same:,email,:id:',
+        'password_old'          =>'required|password_match',
+        'password'              =>'sometimes|between:6,20|confirmed',
+        'password_confirmation' =>'sometimes|between:6,20',
     );
 
 	/**
@@ -34,7 +43,18 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
 	protected $hidden = array('password');
 
     protected $guarded = array('password');
-    protected $fillable = array('firstname', 'lastname', 'email', 'description');
+    protected $fillable = array('firstname', 'lastname', 'email', 'description', 'image');
+
+    private $markdown = true;
+
+    /**
+     * Register the user observer on boot
+     */
+    public static function boot() {
+        parent::boot();
+        
+        static::observe(new UserObserver());
+    }
 
     public function canCreatePage(Charity $charity) {
         $permissions = Permission::where('user_id', '=', $this->user_id)
@@ -51,6 +71,19 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
             if ($perm->level == Permission::CAN_POST) return true;
         }
         return false;
+    }
+
+    public function checkPassword($password) {
+        return Hash::check($password, $this->password);
+    }
+
+    /**
+     * Enable/Disable markdown for this model
+     * @param boolean $enabled true will display markdown, false will disable
+     *      it
+     */
+    public function setMarkdown($enabled) {
+        $this->markdown = $enabled;
     }
 
     /**
@@ -99,7 +132,9 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
     }
 
     public function getDescriptionAttribute() {
-        return Markdown::string($this->attributes['description']);
+        return $this->markdown
+            ? Markdown::string($this->attributes['description'])
+            : $this->attributes['description'];
     }
 
     public function getImageAttribute() {
@@ -168,20 +203,27 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
         ));
     }
 
+    public function makePassword($password) {
+        return Hash::make($password);
+    }
+
     public function permissions() {
         return $this->hasMany('Permission');
     }
 
-    /**
-     * Save the current user into the database.
-     * This method define's values that cannot be filled using the fill() method
-     * @param array $options optional @see Eloquent->save
-     */
-    public function save(array $options = array()) {
-        $this->image = $this->saveImage($this->attributes['image']);
-        $this->password = Hash::make($this->password);
+    public function validateUpdate($data) {
+        Validator::extend('password_match',
+            function($attribute, $value, $parameters) {
+                return $this->checkPassword($value);
+            }
+        );
+        parent::validateUpdate($data);
 
-        parent::save($options);
+        $messages = array(
+            'password_match' => 'Your current password was incorrect',
+            'password_old.required' => 'The current password field is required',
+        );
+        $this->getValidator()->setCustomMessages($messages);
     }
 
 }
