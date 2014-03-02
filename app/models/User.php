@@ -75,6 +75,10 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
                 ->where('charity_id', '=', $item->charity_id)
                 ->where('page_id', '=', Permission::ALL_PAGES)
                 ->count() > 0;
+        } elseif ($item instanceof Comment) {
+            return Comment::where('user_id', '=', $this->user_id)
+                ->where('comment_id', '=', $item->comment_id)
+                ->count() > 0;
         }
         return false;
     }

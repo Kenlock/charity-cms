@@ -22,6 +22,8 @@ class Comment extends Eloquent {
     protected $guarded = array();
     protected $fillable = array();
 
+    protected $primaryKey = 'comment_id';
+
     public function __toString() {
         return View::make(self::VIEW, array(
             'comment' => $this

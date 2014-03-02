@@ -2,6 +2,16 @@ $comment-image-size: 63px;
 
 .comments {
 
+    .comment {
+
+        .meta {
+
+            float: right;
+
+        }
+
+    }
+
     div {
 
         margin-bottom: 20px;
@@ -25,10 +35,11 @@ $comment-image-size: 63px;
         }
 
         article {
+            $background: #EEE;
 
             @include vendor(border-radius, 4px);
 
-            background: #EEE;
+            background: $background;
             border: 1px solid #CCC;
             padding: 10px 20px;
 
@@ -43,6 +54,12 @@ $comment-image-size: 63px;
                 @include font-size(14px);
 
                 margin: 0 0 0 ($comment-image-size + 10px);
+
+            }
+
+            &.my-comment {
+
+                background: darken($background, 10%);
 
             }
 

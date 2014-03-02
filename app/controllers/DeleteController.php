@@ -2,33 +2,33 @@
 
 class DeleteController extends BaseController {
 
-    public function __construct() {
-        $this->beforeFilter('auth', array(
-            'only' => array(
-                'deleteCharity',
-            )
-        ));
-    }
-
     /**
      * Delete a charity
      */
     public function deleteCharity($charity_id) {
-        try {
-            $charity = Charity::findOrFail($charity_id);
-        } catch (Exception $e) {
-            dd($e);
-        }
+        return $this->deleteItem(Charity::findOrFail($charity_id), 'charity');
+    }
 
-        if (Auth::user()->canDelete($charity)) {
-            $charity->delete();
+    /**
+     * Delete a comment
+     */
+    public function deleteComment($comment_id) {
+        return $this->deleteItem(Comment::findOrFail($comment_id), 'comments');
+    }
+
+
+
+
+    private function deleteItem($item, $lang_file) {
+        if (Auth::user()->canDelete($item)) {
+            $item->delete();
         } else {
-            Redirect::to('users/dashboard')
+            return Redirect::to('users/dashboard')
                 ->with('message_error', Lang::get('strings.permission_denied'));
         }
 
         return Redirect::to('users/dashboard')
-            ->with('message_success', Lang::get('charity.delete_success'));
+            ->with('message_success', Lang::get("{$lang_file}.delete_success"));
     }
 
 }
