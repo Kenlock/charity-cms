@@ -95,15 +95,15 @@ class CharityController extends BaseController {
     }
 
     public function getDashboard($name) {
-        $charity = Charity::where('name', '=', $name)->first();
+        $charity = Charity::with('pages')
+            ->where('name', '=', $name)->first();
         if ($charity == null) return $this->charityNotFound($name);
 
-        $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
-
-        $layout = View::make('layout._single_column');
-        $layout->content = View::make('charity.dashboard');
-        $layout->content->charity = $charity;
-        $layout->content->pages = $pages;
+        $layout = View::make('layout._two_column', array(
+            'content' => View::make('charity.dashboard', array(
+                'charity' => $charity
+            ))
+        ));
         return $layout;
     }
 

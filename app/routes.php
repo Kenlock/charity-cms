@@ -31,3 +31,7 @@ Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
 
 Route::get('/favorite/{charity_name}', 'FavoriteController@favoriteCharity');
 Route::get('/unfavorite/{charity_name}', 'FavoriteController@unfavoriteCharity');
+
+
+// deleting
+Route::get('delete/charity/{charity_id}', 'DeleteController@deleteCharity');

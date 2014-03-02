@@ -1,5 +1,7 @@
 <?php
 
+use observers\CharityObserver;
+
 use Cms\App\Path;
 
 class Charity extends Eloquent {
@@ -32,6 +34,15 @@ class Charity extends Eloquent {
 
     protected $guarded = array('charity_id');
     protected $fillable = array();
+
+    /**
+     * Register the charity observer on boot
+     */
+    public static function boot() {
+        parent::boot();
+        
+        static::observe(new CharityObserver());
+    }
 
     public function getEmailAttribute() {
         return "aidsgrabe@gmail.com";
@@ -109,7 +120,7 @@ class Charity extends Eloquent {
     }
 
     public function permissions() {
-        return $this->hasMany('Permission');
+        return $this->hasMany('Permission', 'charity_id', 'charity_id');
     }
 
     public static function validate($data) {
