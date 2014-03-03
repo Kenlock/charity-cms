@@ -2,7 +2,8 @@
 
 return array(
 
-    'page_not_found'    => 'Page Not Found',
-    'delete_success'    => 'Page Not Found'
+    'page_not_found'    => 'Page not found',
+    'delete_success'    => 'Page deleted uccessfully',
+    'cannot_delete_default_page' => 'Cannot delete the default page', 
 
 );

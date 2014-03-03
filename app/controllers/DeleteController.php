@@ -20,7 +20,14 @@ class DeleteController extends BaseController {
      * Delete a page
      */
     public function deletePage($page_id) {
-        return $this->deleteItem(Page::findOrFail($page_id), 'page');
+        $page = Page::with('charity')
+            ->findOrFail($page_id);
+
+        if ($page->charity->default_page_id == $page_id)
+            return Redirect::to("c/dashboard/{$page->charity->name}")
+                ->with('message_error', Lang::get('page.cannot_delete_default_page'));
+
+        return $this->deleteItem($page, 'page');
     }
 
 
