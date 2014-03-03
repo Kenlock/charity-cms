@@ -68,11 +68,11 @@ class User extends BaseModel implements Presentable, UserInterface,
 
     /**
      * Check if the current user has permission to delete a given item
-     * @param Charity $item the item to check
+     * @param Charity|Comment|Page $item the item to check
      * @return boolean true if the user can delete the item, false otherwise
      */
     public function canDelete($item) {
-        if ($item instanceof Charity) {
+        if ($item instanceof Charity || $item instanceof Page) {
             return Permission::where('user_id', '=', $this->user_id)
                 ->where('charity_id', '=', $item->charity_id)
                 ->where('page_id', '=', Permission::ALL_PAGES)

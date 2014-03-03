@@ -7,7 +7,12 @@ class CharityObserver {
      * @param Charity $charity the charity that's being deleted
      */
     public function deleting($charity) {
-        $charity->pages()->delete();
+        $charity->pages()->get()->each(function($charity) {
+            $charity->delete();
+        });
+    }
+
+    public function deleted($charity) {
         $charity->permissions()->delete();
     }
 

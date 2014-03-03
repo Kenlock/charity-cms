@@ -1,5 +1,7 @@
 <?php
 
+use observers\PageObserver;
+
 class Page extends Eloquent {
     const TABLE_NAME = 'pages';
 
@@ -29,6 +31,15 @@ class Page extends Eloquent {
     protected $guarded = array();
     protected $fillable = array('title', 'charity_id', 'default_view_id');
 
+    /**
+     * Register the Page observer on boot
+     */
+    public static function boot() {
+        parent::boot();
+        
+        static::observe(new PageObserver());
+    }
+
     public function charity() {
         return $this->hasOne('Charity', 'charity_id', 'charity_id');
     }
@@ -42,6 +53,10 @@ class Page extends Eloquent {
         $perm->save();
         DB::commit();
         return $page;
+    }
+
+    public function posts() {
+        return $this->hasMany('Post', 'page_id', 'page_id');
     }
 
     public static function validate($data) {

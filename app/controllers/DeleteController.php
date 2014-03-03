@@ -16,6 +16,14 @@ class DeleteController extends BaseController {
         return $this->deleteItem(Comment::findOrFail($comment_id), 'comments');
     }
 
+    /**
+     * Delete a page
+     */
+    public function deletePage($page_id) {
+        return $this->deleteItem(Page::findOrFail($page_id), 'page');
+    }
+
+
 
 
 

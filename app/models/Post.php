@@ -1,5 +1,7 @@
 <?php
 
+use observers\PostObserver;
+
 class Post extends Eloquent {
     const TABLE_NAME = 'posts';
 
@@ -26,9 +28,14 @@ class Post extends Eloquent {
         return $this->hasOne('User', 'user_id', 'user_id');
     }
 
-   # public function charity() {
-   #     return $this->hasOne('Charity', 'charity_id', 'charity_id');
-   # }
+    /**
+     * Register the Post observer on boot
+     */
+    public static function boot() {
+        parent::boot();
+        
+        static::observe(new PostObserver());
+    }
 
     public function comments() {
         return $this->hasMany('Comment', 'post_id', 'post_id')->orderBy('created_at', 'desc');

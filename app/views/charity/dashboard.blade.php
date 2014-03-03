@@ -9,7 +9,12 @@
     @if (count($charity->pages) > 0)
         <ul>
             @foreach ($charity->pages as $page)
-                <li>{{ HTML::link("c/charity/{$charity->name}/$page->page_id", $page->title) }}</li>
+                <li>
+                    {{ HTML::link("c/charity/{$charity->name}/$page->page_id", $page->title) }}
+                    @if (Auth::user()->canDelete($page))
+                        ({{ HTML::link("delete/page/$page->page_id", 'delete') }})
+                    @endif
+                </li>
             @endforeach
         </ul>
     @else
