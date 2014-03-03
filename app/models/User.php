@@ -99,15 +99,6 @@ class User extends BaseModel implements Presentable, UserInterface,
     }
 
     /**
-     * Enable/Disable markdown for this model
-     * @param boolean $enabled true will display markdown, false will disable
-     *      it
-     */
-    public function setMarkdown($enabled) {
-        $this->markdown = $enabled;
-    }
-
-    /**
      * Generate a random un-hashed password
      * @param Integer $length the desired length of the password
      * @return String the random password
@@ -149,6 +140,16 @@ class User extends BaseModel implements Presentable, UserInterface,
             ->leftJoin($t1, "{$t1}.charity_id", '=', "{$t2}.charity_id")
             ->where('user_id', '=', $this->user_id)
             ->groupBy("{$t2}.charity_id")
+            ->get();
+    }
+
+    public function getFavoriteCharities() {
+        $t1 = Charity::TABLE_NAME;
+        $t2 = Favorite::TABLE_NAME;
+
+        return Charity::with('favorites')
+            ->leftJoin($t2, "{$t1}.charity_id", '=', "{$t2}.charity_id")
+            ->where('user_id', '=', $this->user_id)
             ->get();
     }
 

@@ -52,6 +52,10 @@ class Charity extends Eloquent {
         return $this->hasOne('CharityCategory', 'charity_category_id', 'charity_category_id');
     }
 
+    public function favorites() {
+        return $this->hasMany('Favorite', 'charity_id', 'charity_id');
+    }
+
     public function getDescriptionAttribute() {
         return Markdown::string($this->attributes['description']);
     }

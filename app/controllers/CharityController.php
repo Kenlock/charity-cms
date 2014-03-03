@@ -101,7 +101,8 @@ class CharityController extends BaseController {
 
         $layout = View::make('layout._two_column', array(
             'content' => View::make('charity.dashboard', array(
-                'charity' => $charity
+                'charity' => $charity,
+                'favorites' => Auth::user()->getFavoriteCharities(),
             ))
         ));
         return $layout;
