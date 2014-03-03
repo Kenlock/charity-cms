@@ -1,3 +1,5 @@
+<?php $author = new presenters\UserPresenter($post->author); ?>
+
 <article>
 
     @if ($post->userCanDelete(Auth::user()))
@@ -7,7 +9,7 @@
     <small>{{ HTML::link("c/charity/{$post->page->charity->name}/{$post->page->page_id}", '&larr; Back') }}</small>
 
     <h2>{{ $post->title }}</h2>
-    <small>Posted by: {{ $post->author->getName() }} on {{ date('d/m/Y', $post->created_at) }}</small>
+    <small>Posted by: {{ $author->getName() }} on {{ date('d/m/Y', $post->created_at) }}</small>
 
     <section>
         {{ $post->postView->getDisplayView($post) }}

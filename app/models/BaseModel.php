@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 abstract class BaseModel extends Eloquent {
 
+    protected $presenter = null;
+    private $presenterInstance = null;
+
     protected $rules = array();
 
     /**
@@ -19,6 +22,12 @@ abstract class BaseModel extends Eloquent {
 
     protected $validator;
 
+    public function getPresenter() {
+        return $this->presenterInstance == null
+            ? $this->presenterInstance = new $this->presenter($this)
+            : $this->presenterInstance;
+    }
+
     public function getValidator() {
         return $this->validator;
     }
@@ -28,7 +37,7 @@ abstract class BaseModel extends Eloquent {
     }
 
     public function saveImage($image = null) {
-        $path = '';
+        $path = $image;
         if ($image != null && $image instanceof UploadedFile) {
             $date = date('d-m-Y');
             $path = Path::make("uploads", $date);
@@ -39,8 +48,6 @@ abstract class BaseModel extends Eloquent {
 
             // get the path relative to public folder
             $path = Path::make($path, $image->getClientOriginalName());
-        } elseif ($image != null) {
-            $path = $image;
         }
         return $path;
     }
@@ -63,6 +70,7 @@ abstract class BaseModel extends Eloquent {
         $this->validator = Validator::make($data,
                 array_merge($this->rules, $this->updateRules));
 
+        $this->fill($data);
     }
 
 }

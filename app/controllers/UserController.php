@@ -18,9 +18,9 @@ class UserController extends BaseController {
 
     public function getAll() {
         $users = User::limit(25)->get();
-        $this->layout->content = View::make('users.all');
-        $this->layout->content->users = $users;
-        $this->layout->content->oauth = OAuth::get();
+        $this->layout->content = View::make('users.all', array(
+            'users' => $users,
+        ));
     }
 
     public function getDashboard() {
@@ -73,7 +73,7 @@ class UserController extends BaseController {
 
     public function getUpdate() {
         $user = Auth::user();
-        $user->setMarkdown(false);
+
         return View::make('layout._two_column', array(
             'content' => View::make('users.update', array(
                 'user' => $user,
@@ -119,7 +119,7 @@ class UserController extends BaseController {
         $user->validateUpdate(Input::all());
         
         if ($user->isValid()) {
-            $user->fill(Input::all());
+            if (Input::hasFile('image')) $user->image = Input::file('image');
 
             // set the password to plaintext, as the save method will re-hash
             $user->password = Input::has('password')

@@ -5,11 +5,13 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Cms\App\Sanitiser;
 
 use observers\UserObserver;
+use presenters\Presentable;
 
-class User extends BaseModel implements UserInterface, RemindableInterface {
-
-    const DEFAULT_IMAGE = 'css/images/user_default.png';
+class User extends BaseModel implements Presentable, UserInterface,
+        RemindableInterface {
     const TABLE_NAME = 'users';
+
+    protected $presenter = 'presenters\UserPresenter';
 
     protected $rules = array(
         'firstname'             =>'required|between:2,50',
@@ -43,7 +45,7 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
 	protected $hidden = array('password');
 
     protected $guarded = array('password');
-    protected $fillable = array('firstname', 'lastname', 'email', 'description', 'image');
+    protected $fillable = array('firstname', 'lastname', 'email', 'description');
 
     private $markdown = true;
 
@@ -148,22 +150,6 @@ class User extends BaseModel implements UserInterface, RemindableInterface {
             ->where('user_id', '=', $this->user_id)
             ->groupBy("{$t2}.charity_id")
             ->get();
-    }
-
-    public function getDescriptionAttribute() {
-        return $this->markdown
-            ? Markdown::string($this->attributes['description'])
-            : $this->attributes['description'];
-    }
-
-    public function getImageAttribute() {
-        return $this->attributes['image'] == ''
-            ? self::DEFAULT_IMAGE
-            : $this->attributes['image'];
-    }
-
-    public function getName() {
-        return "{$this->firstname} {$this->lastname}";
     }
 
 	/**

@@ -1,4 +1,5 @@
 <?php $my_comment = Auth::user() == $comment->user; ?>
+<?php $user = $comment->user->getPresenter(); ?>
 
 <div class="comment">
     @if ($my_comment)
@@ -7,10 +8,10 @@
         </small>
     @endif
     <figure>
-        {{ HTML::image($comment->user->image, 'User Profile Image') }}
+        {{ HTML::image($user->image, 'User Profile Image') }}
     </figure>
     <article {{ $my_comment ? 'class="my-comment"' : '' }}>
-        <h3>{{ $comment->user->getName() }}: <time>{{ $comment->getAgeString() }}</time></h3>
+        <h3>{{ $user->getName() }}: <time>{{ $comment->getAgeString() }}</time></h3>
         {{ $comment->comment }}
     </article>
 </div>

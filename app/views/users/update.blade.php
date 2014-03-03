@@ -51,11 +51,8 @@
     </li>
     <li>
         Current Image:
-        @if (isset($user->image))
-            {{ HTML::image($user->image, 'User Profile') }}
-        @else
-            None
-        @endif
+        {{ HTML::image($user->getPresenter()->image, 'User Profile') }}
+
         {{ Form::label('image', Lang::get('forms.user_image')) }}
         {{ Form::file('image') }}
     </li>
