@@ -108,30 +108,31 @@ class CharityController extends BaseController {
         return $layout;
     }
 
-    public function getPage($charity_name, $page_id) {
-        $charity = Charity::where('name', '=', $charity_name)->get()->first();
-        if ($charity == null) return $this->charityNotFound($charity_name);
+    #public function getPage($charity_name, $page_id) {
+    #    $charity = Charity::where('name', '=', $charity_name)->get()->first();
+    #    if ($charity == null) return $this->charityNotFound($charity_name);
 
-        $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
+    #    $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
 
-        // TODO check if page belongs to charity
-        $page = Page::find($page_id);
-        $title = Lang::get('page.page_not_found');
-        if ($page != null) {
-            $title = $page->title;
-        }
+    #    // TODO check if page belongs to charity
+    #    $page = Page::find($page_id);
+    #    $title = Lang::get('page.page_not_found');
+    #    if ($page != null) {
+    #        $title = $page->title;
+    #    }
 
-        $layout = View::make('layout._two_column', array(
-            'sidebar'   => 'Sidebar'
-        ));
-        $layout->content = View::make('charity.view', array(
-            'charity' => $charity,
-            'pages' => $pages,
-            'title' => $title
-        ));
+    #    $layout = View::make('layout._two_column', array(
+    #        'sidebar'   => 'Sidebar'
+    #    ));
+    #    $layout->content = View::make('charity.view', array(
+    #        'charity' => $charity,
+    #        'page' => $page,
+    #        'pages' => $pages,
+    #        'title' => $title
+    #    ));
 
-        return $layout;
-    }
+    #    return $layout;
+    #}
 
     public function postCreate() {
         Input::merge(array(

@@ -40,8 +40,14 @@ class PageObserver {
      * @param Page $page the page that's being deleted
      */
     public function deleting($page) {
+        // delete this page's posts
         $page->posts()->get()->each(function($post) {
             $post->delete();
+        });
+
+        // delete permissions relating to this page
+        $page->permissions()->get()->each(function($perm) {
+            $perm->delete();
         });
     }
 

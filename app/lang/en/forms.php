@@ -43,6 +43,8 @@ return array(
     // pages
     'page_create'   => 'Create Page',
     'page_created'   => ':page_title page created successfully',
+    'page_edit'   => 'Edit Page',
+    'page_edited'   => 'Page edited successfully',
     'page_form_description'   => 'Fill out the following form to create a new page',
     'page_title'   => 'Page Title',
     'page_type'   => 'Page Type',

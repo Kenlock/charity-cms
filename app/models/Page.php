@@ -13,6 +13,9 @@ class Page extends BaseModel {
         'default_view_id'   => 'required|integer|exists:post_views,post_view_id',
         'open_to_all'       => 'sometimes|integer|accepted',
     );
+    protected $updateRules = array(
+        'charity_id'        => ''
+    );
 
 	/**
 	 * The database table used by the model.
