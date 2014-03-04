@@ -37,9 +37,7 @@
     </ul>
 
     <h2>Other Actions</h2>
-    <ul>
-        <li>{{ HTML::link('c/create', 'Create a charity') }}</li>
-        <li>{{ HTML::link('c/', 'View all charities') }}</li>
-    </ul>
+    {{ HTML::link('c/create', 'Create a charity', array('class' => 'btn')) }}
+    {{ HTML::link('c/', 'View all charities', array('class' => 'secondary-btn')) }}
 
 </section>
