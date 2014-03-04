@@ -2,15 +2,16 @@
 
 use observers\PageObserver;
 
-class Page extends Eloquent {
+class Page extends BaseModel {
     const TABLE_NAME = 'pages';
 
     const DEFAULT_POSTVIEW = 1;
 
-    public static $rules = array(
-        'title' => 'required|between:2,40',
-        'charity_id' => 'required|integer|exists:charities,charity_id',
-        'default_view_id' => 'required|integer|exists:post_views,post_view_id',
+    protected $rules = array(
+        'title'             => 'required|between:2,40',
+        'charity_id'        => 'required|integer|exists:charities,charity_id',
+        'default_view_id'   => 'required|integer|exists:post_views,post_view_id',
+        'open_to_all'       => 'sometimes|integer|accepted',
     );
 
 	/**
@@ -29,7 +30,9 @@ class Page extends Eloquent {
 	protected $hidden = array();
 
     protected $guarded = array();
-    protected $fillable = array('title', 'charity_id', 'default_view_id');
+    protected $fillable = array(
+        'title', 'charity_id', 'default_view_id', 'open_to_all'
+    );
 
     /**
      * Register the Page observer on boot
@@ -44,22 +47,7 @@ class Page extends Eloquent {
         return $this->hasOne('Charity', 'charity_id', 'charity_id');
     }
 
-    public static function makeAndSave(User $user, Charity $charity, $data) {
-        $page = new Page();
-        $page->fill($data);
-        DB::beginTransaction();
-        $page->save();
-        $perm = Permission::make($user, $charity, $page, Permission::CAN_EDIT_PAGE);
-        $perm->save();
-        DB::commit();
-        return $page;
-    }
-
     public function posts() {
         return $this->hasMany('Post', 'page_id', 'page_id');
-    }
-
-    public static function validate($data) {
-        return Validator::make($data, self::$rules);
     }
 }

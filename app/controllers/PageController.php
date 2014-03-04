@@ -40,28 +40,23 @@ class PageController extends BaseController {
     }
 
     public function postCreate($charity_id) {
-        // check if the charity exists
-        $charity = Charity::find($charity_id);
-
-        $this->charityExistsOrRedirect($charity);
-        $this->userCanCreateOrRedirect($charity);
-
         Input::merge(array(
             'charity_id' => $charity_id
         ));
-        $validator = Page::validate(Input::all());
+        $page = new Page();
+        $page->validate(Input::all());
 
-        if ($validator->passes()) {
-            $page = Page::makeAndSave(Auth::user(), $charity, Input::all());
+        if ($page->isValid()) {
+            $page->save();
 
-            return Redirect::to("c/dashboard/{$charity->name}")
+            return Redirect::to("c/dashboard/{$page->charity->name}")
                 ->with('message_success', Lang::get('forms.page_created', array(
                     'page_title' => $page->title
                 )));
         } else {
             return Redirect::to("pages/create/{$charity_id}")
                 ->with('message_error', Lang::get('form.errors_occurred'))
-                ->withErrors($validator)
+                ->withErrors($page->getValidator())
                 ->withInput();
         }
     }

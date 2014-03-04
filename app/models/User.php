@@ -85,13 +85,24 @@ class User extends BaseModel implements Presentable, UserInterface,
         return false;
     }
 
+    /**
+     * Check if the current user can post to a given page
+     * @param Page $page the page to check against
+     * @return boolean true if the user can post to the given page, otherwise false
+     */
     public function canPostTo(Page $page) {
-        $perms = Permission::where('user_id', '=', $this->user_id)
-            ->where('page_id', '=', $page->page_id)->get(array('level'));
-        foreach ($perms as $perm) {
-            if ($perm->level == Permission::CAN_POST) return true;
-        }
-        return false;
+        // if the page is public, return true
+        if ($page->open_to_all) return true;
+
+        // check permissions
+        return Permission::where('user_id', '=', $this->user_id)
+            ->where('page_id', '=', $page->page_id)
+            ->where('level', '=', Permission::CAN_POST)
+            ->count() > 0;
+        #foreach ($perms as $perm) {
+        #    if ($perm->level == Permission::CAN_POST) return true;
+        #}
+        #return false;
     }
 
     public function checkPassword($password) {

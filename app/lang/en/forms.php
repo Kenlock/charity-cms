@@ -46,4 +46,6 @@ return array(
     'page_form_description'   => 'Fill out the following form to create a new page',
     'page_title'   => 'Page Title',
     'page_type'   => 'Page Type',
+    'page_open_to_all' => 'Open to all users',
+    'page_open_to_all_hint' => 'Allow any user to post to this page?',
 );
