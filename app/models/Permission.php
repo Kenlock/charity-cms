@@ -25,7 +25,6 @@ class Permission extends Eloquent {
     protected $fillable = array();
 
     public function charity() {
-        #return $this->hasOne('Charity', 'charity_id', 'charity_id');
         return $this->belongsTo('Charity', 'charity_id');
     }
 

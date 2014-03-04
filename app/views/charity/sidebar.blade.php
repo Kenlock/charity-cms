@@ -18,6 +18,18 @@ $heart_class = Auth::check() && Auth::user()->hasFavorited($charity) ? 'heart-la
     </figure>
     <h2>{{ $charity->name }}</h2>
 
+    <section class="contributors">
+        <h2>Constributors</h2>
+        <ul>
+            @if ($page->open_to_all)
+                All Users
+            @else
+                    @foreach ($page->getContributors() as $contributor)
+                        <li>{{ $contributor->getPresenter()->getName() }}</li>
+                    @endforeach
+            @endif
+        </ul>
+    </section>
     
     <div>
         <a href="{{ URL::to("favorite/{$charity->name}") }}" class="{{ $heart_class }}" title="Favorite this Charity"></a>
