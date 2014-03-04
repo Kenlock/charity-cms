@@ -44,7 +44,7 @@
     @include('layout.footer')
 
     @section('scripts')
-
+        @include('scripts')
     @show
 </body>
 

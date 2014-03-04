@@ -7,16 +7,33 @@
 
     <h2>Pages</h2>
     @if (count($charity->pages) > 0)
-        <ul>
+        <table>
+            <tr>
+                <th>Page Title</th>
+                <th>Posts</th>
+                <th colspan="2">Actions</th>
+            </tr>
             @foreach ($charity->pages as $page)
-                <li>
+                <tr>
+                    <td>
                     {{ HTML::link("c/charity/{$charity->name}/$page->page_id", $page->title) }}
+                    </td>
+                    <td>
+                        {{ $page->posts()->count() }}
+                    </td>
                     @if (Auth::user()->canDelete($page))
-                        ({{ HTML::link("delete/page/$page->page_id", 'delete') }})
+                        <td>
+                            {{ HTML::link("edit/page/$page->page_id", 'edit') }}
+                        </td>
+                        <td>
+                            {{ HTML::link("delete/page/$page->page_id", 'delete', array('class' => 'delete')) }}
+                        </td>
+                    @else
+                        <td colspan="2">N/A</td>
                     @endif
-                </li>
+                </tr>
             @endforeach
-        </ul>
+        </table>
     @else
         No Pages
     @endif

@@ -22,27 +22,28 @@ class DeleteController extends BaseController {
     public function deletePage($page_id) {
         $page = Page::with('charity')
             ->findOrFail($page_id);
+        $redirect = "c/dashboard/{$page->charity->name}";
 
         if ($page->charity->default_page_id == $page_id)
-            return Redirect::to("c/dashboard/{$page->charity->name}")
+            return Redirect::to($redirect)
                 ->with('message_error', Lang::get('page.cannot_delete_default_page'));
 
-        return $this->deleteItem($page, 'page');
+        return $this->deleteItem($page, 'page', $redirect);
     }
 
 
 
 
 
-    private function deleteItem($item, $lang_file) {
+    private function deleteItem($item, $lang_file, $redirect = 'users/dashboard') {
         if (Auth::user()->canDelete($item)) {
             $item->delete();
         } else {
-            return Redirect::to('users/dashboard')
+            return Redirect::to($redirect)
                 ->with('message_error', Lang::get('strings.permission_denied'));
         }
 
-        return Redirect::to('users/dashboard')
+        return Redirect::to($redirect)
             ->with('message_success', Lang::get("{$lang_file}.delete_success"));
     }
 
