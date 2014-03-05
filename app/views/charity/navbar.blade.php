@@ -4,8 +4,9 @@
 
 <ul>
     @if (count($pages) > 0)
-        @foreach ($pages as $page)
-            <li>{{ HTML::link("c/charity/{$charity->name}/{$page->page_id}", $page->title) }}</li>
+        @foreach ($pages as $p)
+            <?php $class = $page->page_id == $p->page_id ? array('class' => 'current') : array(); ?>
+            <li>{{ HTML::link("c/charity/{$charity->name}/{$p->page_id}", $p->title, $class) }}</li>
         @endforeach
         <li>{{ HTML::link("c/about/{$charity->name}", "About") }}</li>
     @endif

@@ -21,11 +21,13 @@
             padding: 8px 12px;
             text-decoration: none;
 
-            &:hover {
+            &:hover, &.current {
 
                 @include vendor(animation, fadelink .2s);
 
                 color: #35C679;
+                border-bottom: 2px solid darken($c-background, 10%);
+                padding-bottom: 6px;
 
             }
 
