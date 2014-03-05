@@ -102,11 +102,13 @@ class Charity extends Eloquent {
         $permission = Permission::make(Auth::user(), $charity, Permission::ALL_PAGES, 1);
         $permission->save();
 
-        $page = Page::makeAndSave(Auth::user(), $charity, array(
+        $page = new Page();
+        $page->fill(array(
             'charity_id' => $charity->charity_id,
             'title' => "Home",
             'default_view_id' => Page::DEFAULT_POSTVIEW,
         ));
+        $page->save();
 
         $charity->default_page_id = $page->page_id;
         $charity->update();
