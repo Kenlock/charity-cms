@@ -15,14 +15,14 @@
             </tr>
             @foreach ($charity->pages as $page)
                 <tr>
-                    <td>
+                    <td data-label="Page Title">
                     {{ HTML::link("c/charity/{$charity->name}/$page->page_id", $page->title) }}
                     </td>
-                    <td>
+                    <td data-label="Posts">
                         {{ $page->posts()->count() }}
                     </td>
                     @if (Auth::user()->canDelete($page))
-                        <td>
+                        <td data-label="Actions">
                             {{ HTML::link("edit/page/$page->page_id", 'edit') }}
                         </td>
                         <td>
