@@ -55,7 +55,7 @@ class PageController extends BaseController {
                 )));
         } else {
             return Redirect::to("pages/create/{$charity_id}")
-                ->with('message_error', Lang::get('form.errors_occurred'))
+                ->with('message_error', Lang::get('forms.errors_occurred'))
                 ->withErrors($page->getValidator())
                 ->withInput();
         }
