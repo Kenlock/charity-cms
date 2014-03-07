@@ -46,10 +46,31 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 |
 */
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Cms\App\Exceptions\PermissionDeniedException;
+
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
 });
+
+App::error(function(ModelNotFoundException $exception, $code, $fromConsole)
+{
+	return Response::make("{$exception->getModel()} Not Found", 404);
+});
+
+App::error(function(PermissionDeniedException $exception, $code, $fromConsole) {
+    return Redirect::to('/')
+        ->with('message_error', Lang::get('strings.permission_denied'));
+});
+
+#App::error(function(Cms\App\Exceptions\PermissionDeniedException $exception, $code, $fromConsole) {
+#    dd("permission");
+#    return Response::make('Not Found', 404);
+#});
+
+
+
 
 /*
 |--------------------------------------------------------------------------

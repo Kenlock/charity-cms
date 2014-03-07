@@ -32,9 +32,8 @@ Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
 Route::get('/favorite/{charity_name}', 'FavoriteController@favoriteCharity');
 Route::get('/unfavorite/{charity_name}', 'FavoriteController@unfavoriteCharity');
 
-
-
 Route::group(array('before' => 'auth'), function() {
+
     // deleting
     Route::get('delete/charity/{charity_id}', 'DeleteController@deleteCharity');
     Route::get('delete/comment/{comment_id}', 'DeleteController@deleteComment');
@@ -43,4 +42,16 @@ Route::group(array('before' => 'auth'), function() {
     // editing
     Route::get('edit/page/{page_id}', 'EditController@getPage');
     Route::post('edit/page/{page_id}', 'EditController@postPage');
+
+    // 
+    #Route::get('create/contributor/page/{page_id}/user/{user_id}',
+    #    'CreateController@createContributor');
+    Route::get('create/contributor/{charity_id}/{user_id}',
+        'CreateController@createAdmin');
+
+    Route::get('contributors/{charity_name}/{page_id?}',
+        'ContributorController@getContributors');
+    Route::post('contributors/{charity_name}/{page_id?}',
+        'ContributorController@getContributors');
+
 });

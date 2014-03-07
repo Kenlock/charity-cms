@@ -2,7 +2,7 @@
 
 class LoginTest extends TestCase {
 
-    public function testLogin() [
+    public function testLogin() {
         
     }
 

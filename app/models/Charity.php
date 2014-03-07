@@ -56,6 +56,20 @@ class Charity extends Eloquent {
         return $this->hasMany('Favorite', 'charity_id', 'charity_id');
     }
 
+    /**
+     * Get the administrators belonging to this charity
+     * @return Collection of Users
+     */
+    public function getAdmins() {
+        $t1 = User::TABLE_NAME;
+        $t2 = Permission::TABLE_NAME;
+        return User::leftJoin($t2, "{$t1}.user_id", '=', "{$t2}.user_id")
+            ->where('charity_id', '=', $this->charity_id)
+            ->where('page_id', '=', Permission::ALL_PAGES)
+            ->groupBy("{$t1}.user_id")
+            ->get();
+    }
+
     public function getDescriptionAttribute() {
         return Markdown::string($this->attributes['description']);
     }
@@ -70,12 +84,10 @@ class Charity extends Eloquent {
             : $this->attributes['image'];
     }
 
-    #public static function make($data) {
-    #    $charity = new Charity();
-    #    $charity->fill($data);
-    #    return $charity;
-    #}
-
+    /**
+     * Make a charity and save it in the Database
+     * TODO[long] convert to ModelObserver method
+     */
     public static function makeAndSave($name, $category_id, $description, $address, $image = '') {
         DB::beginTransaction();
         $charity = new Charity();

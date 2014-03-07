@@ -95,9 +95,10 @@ class User extends BaseModel implements Presentable, UserInterface,
         if ($page->open_to_all) return true;
 
         // check permissions
-        return Permission::where('user_id', '=', $this->user_id)
+        return $this->permissions()
             ->where('page_id', '=', $page->page_id)
             ->where('level', '=', Permission::CAN_POST)
+            ->orWhere('page_id', '=', Permission::ALL_PAGES)
             ->count() > 0;
         #foreach ($perms as $perm) {
         #    if ($perm->level == Permission::CAN_POST) return true;
@@ -181,6 +182,22 @@ class User extends BaseModel implements Presentable, UserInterface,
     }
 
     /**
+     * Check if the current user is an administrator of a given charity
+     * @param Charity|int $charity the id of the charity, or the charity model
+     *      of the charity to check this user against
+     * @return boolean true if the user is an administrator else false
+     */
+    public function isAdmin($charity) {
+        $charity_id = $charity instanceof Charity
+            ? $charity->charity_id
+            : $charity;
+        return $this->permissions()
+            ->where('charity_id', '=', $charity_id)
+            ->where('page_id', '=', Permission::ALL_PAGES)
+            ->count() > 0;
+    }
+
+    /**
      * Create a User from the given attributes.
      * @param array $attributes the attributes to create a User from
      * @return User the new User
@@ -226,6 +243,20 @@ class User extends BaseModel implements Presentable, UserInterface,
 
     public function permissions() {
         return $this->hasMany('Permission');
+    }
+
+    /**
+     * Search for a user by their firstname and lastname combined
+     * @param string $search_string the name to be searched for
+     * @param int $per_page the number of results per page
+     * @return Pagination of User Collection
+     */
+    public static function searchByName($search_string, $per_page = 10) {
+        return User::whereRaw(
+            "lower(concat_ws(' ', firstname, lastname)) like lower(?)", array(
+                "%{$search_string}%"
+            ))
+            ->paginate($per_page);
     }
 
     public function validateUpdate($data) {
