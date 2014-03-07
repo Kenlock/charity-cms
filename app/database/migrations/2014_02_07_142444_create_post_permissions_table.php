@@ -19,6 +19,8 @@ class CreatePostPermissionsTable extends Migration {
 			$table->unsignedInteger('page_id');
 			$table->integer('level');
 			$table->timestamps();
+            
+            $table->primary(array('user_id', 'charity_id', 'page_id'));
 		});
 	}
 

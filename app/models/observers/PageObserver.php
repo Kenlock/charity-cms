@@ -45,10 +45,11 @@ class PageObserver {
             $post->delete();
         });
 
+        $page->permissions()->delete();
         // delete permissions relating to this page
-        $page->permissions()->get()->each(function($perm) {
-            $perm->delete();
-        });
+        #$page->permissions()->get()->each(function($perm) {
+        #    $perm->delete();
+        #});
     }
 
 }

@@ -63,6 +63,10 @@ class Page extends BaseModel {
             ->get();
     }
 
+    public function permissions() {
+        return $this->hasMany('Permission', 'page_id', 'page_id');
+    }
+
     public function posts() {
         return $this->hasMany('Post', 'page_id', 'page_id');
     }
