@@ -96,14 +96,17 @@ class User extends BaseModel implements Presentable, UserInterface,
 
         // check permissions
         return $this->permissions()
-            ->where('page_id', '=', $page->page_id)
-            ->where('level', '=', Permission::CAN_POST)
-            ->orWhere('page_id', '=', Permission::ALL_PAGES)
+            ->where(function($q) use($page) {
+                $q->where(function($q) use($page) {
+                    $q->where('page_id', '=', $page->page_id)
+                    ->where('level', '=', Permission::CAN_POST);
+                }) 
+                ->orWhere(function($query) use($page) {
+                    $query->where('page_id', '=', Permission::ALL_PAGES)
+                        ->where('charity_id', '=', $page->charity->charity_id);
+                });
+            })
             ->count() > 0;
-        #foreach ($perms as $perm) {
-        #    if ($perm->level == Permission::CAN_POST) return true;
-        #}
-        #return false;
     }
 
     public function checkPassword($password) {
@@ -242,7 +245,7 @@ class User extends BaseModel implements Presentable, UserInterface,
     }
 
     public function permissions() {
-        return $this->hasMany('Permission');
+        return $this->hasMany('Permission', 'user_id', 'user_id');
     }
 
     /**
