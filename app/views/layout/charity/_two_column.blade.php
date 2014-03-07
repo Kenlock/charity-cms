@@ -2,6 +2,9 @@
 
 @section('styles')
     {{ HTML::style('css/default.min.css') }}
+    @if (isset($charity))
+        @include('charity.styles', array('styles' => $charity->getStyles()))
+    @endif
 @overwrite
 
 @section('logo')

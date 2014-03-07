@@ -3,6 +3,7 @@
 use observers\CharityObserver;
 
 use Cms\App\Path;
+use Cms\App\Styles;
 
 class Charity extends Eloquent {
     const DEFAULT_IMAGE = 'css/images/user_default.png';
@@ -84,6 +85,10 @@ class Charity extends Eloquent {
             : $this->attributes['image'];
     }
 
+    public function getStyles() {
+        return new Styles($this->styles);
+    }
+
     /**
      * Make a charity and save it in the Database
      * TODO[long] convert to ModelObserver method
@@ -139,6 +144,10 @@ class Charity extends Eloquent {
 
     public function permissions() {
         return $this->hasMany('Permission', 'charity_id', 'charity_id');
+    }
+
+    public function styles() {
+        return $this->hasMany('CharityStyle', 'charity_id', 'charity_id');
     }
 
     public static function validate($data) {

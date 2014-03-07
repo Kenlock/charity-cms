@@ -43,6 +43,9 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('edit/page/{page_id}', 'EditController@getPage');
     Route::post('edit/page/{page_id}', 'EditController@postPage');
 
+    Route::get('edit/style/{charity_id}', 'EditController@getStyle');
+    Route::post('edit/style/{charity_id}', 'EditController@postStyle');
+
     // 
     #Route::get('create/contributor/page/{page_id}/user/{user_id}',
     #    'CreateController@createContributor');
