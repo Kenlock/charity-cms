@@ -8,5 +8,7 @@ return array(
     'delete_charity'        => 'Delete Charity',
     'delete_success'        => 'Charity deleted successfully',
     'edit_colors'           => 'Edit Colours',
+    'edit_charity'           => 'Edit Charity',
+    'edit_success'           => 'Charity updated successfully',
 
 );

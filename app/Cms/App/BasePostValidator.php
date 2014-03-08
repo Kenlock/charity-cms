@@ -56,7 +56,7 @@ abstract class BasePostValidator {
      */
     public function validate($data = null) {
         $this->data = isset($data) ? $data : Input::all();
-        $this->rules['title'] = 'required|between:2,255';
+        $this->rules['title'] = 'required|between:2,100';
         return \Validator::make($this->data, $this->rules);
     }
 

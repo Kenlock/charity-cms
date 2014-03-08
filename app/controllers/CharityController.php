@@ -1,7 +1,13 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use Cms\App\Sanitiser;
 
+/**
+ * Class for acessing Charities
+ * @author Aidan Grabe
+ */
 class CharityController extends BaseController {
 
     public function __construct() {
@@ -20,6 +26,10 @@ class CharityController extends BaseController {
             ->with('message_error', Lang::get('charity.charity_not_found'));
     }
 
+    /**
+     * Display a charity's about page
+     * @param string $charity_name the name of the charity
+     */
     public function getAbout($charity_name) {
         $charity = Charity::where('name', '=', $charity_name)->first();
         if ($charity == null) return $this->charityNotFound($charity_name);
@@ -44,12 +54,21 @@ class CharityController extends BaseController {
         return $layout;
     }
 
+    /**
+     * Display the User creation form
+     */
     public function getCreate() {
         $layout = View::make('layout._single_column');
         $layout->content = View::make('charity.create');
         return $layout;
     }
 
+    /**
+     * Get and display a charity's page
+     * @param string $name the name of the charity
+     * @param int $page_id optional. The id of the page to display. If none
+     *      provided, will default to charity's default_page_id
+     */
     public function getCharity($name, $page_id = 0) {
 
         $charity = Charity::with('pages')
@@ -63,6 +82,7 @@ class CharityController extends BaseController {
 
         $pages = $charity->pages;
 
+        // get the current page
         $page = $pages->filter(function($page) use($page_id) {
             return $page->page_id == $page_id;
         })->first();
@@ -94,76 +114,54 @@ class CharityController extends BaseController {
         return $layout;
     }
 
+    /**
+     * Get a given charity's dashboard
+     * @param string $name the name of the charity
+     */
     public function getDashboard($name) {
         $charity = Charity::with('pages')
-            ->where('name', '=', $name)->first();
-        if ($charity == null) return $this->charityNotFound($name);
+            ->where('name', '=', $name)
+            ->first();
+        if ($charity == null) throw new ModelNotFoundException;
 
-        $layout = View::make('layout._two_column', array(
+        return View::make('layout._two_column', array(
             'content' => View::make('charity.dashboard', array(
                 'charity' => $charity,
                 'favorites' => Auth::user()->getFavoriteCharities(),
             ))
         ));
-        return $layout;
     }
 
-    #public function getPage($charity_name, $page_id) {
-    #    $charity = Charity::where('name', '=', $charity_name)->get()->first();
-    #    if ($charity == null) return $this->charityNotFound($charity_name);
-
-    #    $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
-
-    #    // TODO check if page belongs to charity
-    #    $page = Page::find($page_id);
-    #    $title = Lang::get('page.page_not_found');
-    #    if ($page != null) {
-    #        $title = $page->title;
-    #    }
-
-    #    $layout = View::make('layout._two_column', array(
-    #        'sidebar'   => 'Sidebar'
-    #    ));
-    #    $layout->content = View::make('charity.view', array(
-    #        'charity' => $charity,
-    #        'page' => $page,
-    #        'pages' => $pages,
-    #        'title' => $title
-    #    ));
-
-    #    return $layout;
-    #}
-
+    /**
+     * Create a new Charity from a form
+     */
     public function postCreate() {
-        Input::merge(array(
-            'address' => Charity::makeAddress(
-                Input::get('address'),
-                Input::get('address1'),
-                Input::get('address2')
-            )
-        ));
-        $sanitiser = Sanitiser::make(Input::all())
+        $data = Input::all();
+        $data['address'] = Charity::makeAddress(
+            Input::get('address'),
+            Input::get('address1'),
+            Input::get('address2'));
+
+        // sanitise the data
+        $sanitiser = Sanitiser::make($data)
             ->guard('image')
             ->sanitise();
 
+        // create + validate the charity
+        $charity = new Charity();
+        $charity->validate($sanitiser->all());
 
-        $validator = Charity::validate($sanitiser->all());
-        if ($validator->passes()) {
-            $charity = Charity::makeAndSave(
-                Input::get('name'),
-                Input::get('charity_category_id'),
-                Input::get('description'),
-                Input::get('address'),
-                Input::file('image')
-            );
+        if ($charity->isValid()) {
+            if (Input::hasFile('image')) $charity->image = Input::file('image');
+            $charity->save();
             return Redirect::to('users/dashboard')
                 ->with('message_success', "Charity {$charity->name} created successfully");
-        } else {
-            return Redirect::to('c/create')
-                ->with('message_error', 'The Following errors occurred')
-                ->withErrors($validator)
-                ->withInput();
         }
+
+        return Redirect::to('c/create')
+            ->with('message_error', 'The Following errors occurred')
+            ->withErrors($charity->getValidator())
+            ->withInput();
     }
 
 }

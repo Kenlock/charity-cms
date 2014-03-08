@@ -40,6 +40,9 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('delete/page/{page_id}', 'DeleteController@deletePage');
 
     // editing
+    Route::get('edit/charity/{charity_id}', 'EditController@getCharity');
+    Route::post('edit/charity/{charity_id}', 'EditController@postCharity');
+
     Route::get('edit/page/{page_id}', 'EditController@getPage');
     Route::post('edit/page/{page_id}', 'EditController@postPage');
 

@@ -5,19 +5,24 @@ use observers\CharityObserver;
 use Cms\App\Path;
 use Cms\App\Styles;
 
-class Charity extends Eloquent {
-    const DEFAULT_IMAGE = 'css/images/user_default.png';
+class Charity extends BaseModel {
     const TABLE_NAME = 'charities';
 
     protected $primaryKey = 'charity_id';
 
-    public static $rules = array(
+    protected $rules = array(
         'address'           => 'required|min:6',
         'description'       => 'required|min:2',
         'name'              => "required|min:2|unique:charities",
         'charity_category_id'  => 'required|exists:charity_categories,charity_category_id',
         'image'             => 'sometimes|image|max:4096'
     );
+
+    protected $updateRules = array(
+        'name'              => ':same:,name,:id:'
+    );
+
+    protected $presenter = 'presenters\CharityPresenter';
 
 	/**
 	 * The database table used by the model.
@@ -34,7 +39,9 @@ class Charity extends Eloquent {
 	protected $hidden = array();
 
     protected $guarded = array('charity_id');
-    protected $fillable = array();
+    protected $fillable = array(
+        'name', 'charity_category_id', 'description', 'address'
+    );
 
     /**
      * Register the charity observer on boot
@@ -45,6 +52,7 @@ class Charity extends Eloquent {
         static::observe(new CharityObserver());
     }
 
+    // TODO!!
     public function getEmailAttribute() {
         return "aidsgrabe@gmail.com";
     }
@@ -71,18 +79,8 @@ class Charity extends Eloquent {
             ->get();
     }
 
-    public function getDescriptionAttribute() {
-        return Markdown::string($this->attributes['description']);
-    }
-
     public function getFavoriteCount() {
         return Favorite::where('charity_id', '=', $this->charity_id)->count();
-    }
-
-    public function getImageAttribute() {
-        return $this->attributes['image'] == ''
-            ? self::DEFAULT_IMAGE
-            : $this->attributes['image'];
     }
 
     public function getStyles() {
@@ -91,7 +89,7 @@ class Charity extends Eloquent {
 
     /**
      * Make a charity and save it in the Database
-     * TODO[long] convert to ModelObserver method
+     * @deprecated
      */
     public static function makeAndSave($name, $category_id, $description, $address, $image = '') {
         DB::beginTransaction();
@@ -134,8 +132,17 @@ class Charity extends Eloquent {
         return $charity;
     }
 
+    /**
+     * Create an address from multiple strings
+     * @param string $line... each line of the address
+     * @return string each line separated by a ',' (comma)
+     */
     public static function makeAddress() {
-        return implode(',', func_get_args());
+        $args = func_get_args();
+        foreach ($args as $index => $arg) {
+            $args[$index] = str_replace(',', '', $arg);
+        }
+        return implode(',', $args);
     }
 
     public function pages() {
@@ -148,10 +155,6 @@ class Charity extends Eloquent {
 
     public function styles() {
         return $this->hasMany('CharityStyle', 'charity_id', 'charity_id');
-    }
-
-    public static function validate($data) {
-        return Validator::make($data, self::$rules);
     }
 
 }

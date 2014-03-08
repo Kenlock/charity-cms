@@ -46,6 +46,7 @@
     <ul>
         <li>{{ HTML::link("contributors/{$charity->name}", Lang::get('charity.administrators')) }}</li>
         <li>{{ HTML::link("edit/style/{$charity->charity_id}", Lang::get('charity.edit_colors')) }}</li>
+        <li>{{ HTML::link("edit/charity/$charity->charity_id", Lang::get('charity.edit_charity')) }}</li>
         <li>{{ HTML::link("delete/charity/$charity->charity_id", Lang::get('charity.delete_charity')) }}</li>
     </ul>
 
