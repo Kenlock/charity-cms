@@ -10,11 +10,7 @@ $heart_class = Auth::check() && Auth::user()->hasFavorited($charity) ? 'heart-la
 <section class="sidebar-content">
 
     <figure>
-        @if (isset($charity->image))
-            {{ HTML::image($charity->image, 'Charity Logo') }}
-        @else
-            {{ HTML::image('', 'Default Image') }}
-        @endif
+        {{ HTML::image($charity->getPresenter()->image, 'Charity Logo') }}
     </figure>
     <h2>{{ $charity->name }}</h2>
 

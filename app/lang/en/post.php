@@ -2,7 +2,7 @@
 
 return array(
 
-    'delete'            => 'delete post',
+    'delete'            => 'Delete Post',
     'post_not_found'    => 'Post not found',
 
 );

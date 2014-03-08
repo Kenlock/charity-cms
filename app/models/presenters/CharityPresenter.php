@@ -7,7 +7,7 @@ use \Markdown;
  * @author Aidan Grabe
  */
 class CharityPresenter extends BasePresenter {
-    const DEFAULT_IMAGE = 'css/images/user_default.png';
+    const DEFAULT_IMAGE = 'css/images/charity_default.png';
 
     /**
      * Display the address line by line
