@@ -2,9 +2,15 @@
 
 <p>
     Welcome to Altruisco.org! We are a non-profit charity website hosting service.
-    <figure>
-        {{ HTML::image('css/images/dashboard.png', 'Dashboard Preview') }}
-    </figure>
+    <div class="media-item reverse">
+        <figure class="media-content">
+            {{ HTML::image('css/images/dashboard.png', 'Dashboard Preview') }}
+        </figure>
+        <section class="media">
+            <h3>Popular Charities</h3>
+            @include('widgets._popular_charities')
+        </section>
+    </div>
 </p>
 
 

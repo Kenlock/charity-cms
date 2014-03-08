@@ -83,6 +83,24 @@ class Charity extends BaseModel {
         return Favorite::where('charity_id', '=', $this->charity_id)->count();
     }
 
+    /**
+     * Get the currently popular charities, based on heart-count
+     * @param int $num the number of charities to show
+     * @return Collection of Charities with an extra attribute called
+     *      'num_favorites'
+     */
+    public static function getPopular($num) {
+        $t1 = static::TABLE_NAME;
+        $t2 = Favorite::TABLE_NAME;
+        $result = Charity::join($t2, "{$t2}.charity_id", '=', "{$t1}.charity_id")
+            ->select(DB::raw("count(*) AS num_favorites, {$t2}.charity_id, name"))
+            ->groupBy("{$t2}.charity_id")
+            ->orderBy('num_favorites', 'DESC')
+            ->limit($num)
+            ->get();
+        return $result;
+    }
+
     public function getStyles() {
         return new Styles($this->styles);
     }

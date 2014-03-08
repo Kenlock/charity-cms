@@ -1,0 +1,28 @@
+.media-item {
+
+    @extend .cf;
+    
+    .media {
+        
+        display: inline-block;
+
+    }
+
+    .media-content {
+
+        display: inline-block;
+        float: left;
+        margin-right: 20px;
+        max-width: 70%;
+
+    }
+
+    &.reverse .media-content {
+     
+        float: right;
+        margin-right: 0;
+        margin-left: 20px;
+
+    }
+    
+}
