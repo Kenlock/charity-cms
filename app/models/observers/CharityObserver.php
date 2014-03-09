@@ -52,6 +52,7 @@ class CharityObserver {
         $charity->pages()->get()->each(function($charity) {
             $charity->delete();
         });
+        $charity->socialLinks()->delete();
     }
 
     /**

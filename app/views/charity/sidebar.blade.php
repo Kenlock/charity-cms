@@ -29,8 +29,19 @@ $heart_class = Auth::check() && Auth::user()->hasFavorited($charity) ? 'heart-la
         </section>
     @endif
     
-    <div>
-        <a href="{{ URL::to("favorite/{$charity->name}") }}" class="{{ $heart_class }}" title="Favorite this Charity"></a>
+    <ul class="social">
+        <li>
+            <a href="{{ URL::to("favorite/{$charity->name}") }}" class="{{ $heart_class }}" title="Favorite this Charity"></a>
+        </li>
+        @foreach ($charity->socialLinks as $link)
+            @if ($link->url != "")
+                <li>
+                    <a href="{{ URL::to($link->url) }}" title="{{ $link->service }}"><img src="{{ asset("css/images/social/{$link->service}.png") }}" /></a>
+                </li>
+            @endif
+        @endforeach
+    </ul>
+    <div class="donate-button">
         @include('paypal.donate_button', array('charity' => $charity))
     </div>
 

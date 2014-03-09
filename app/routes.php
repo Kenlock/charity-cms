@@ -49,16 +49,20 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('edit/style/{charity_id}', 'EditController@getStyle');
     Route::post('edit/style/{charity_id}', 'EditController@postStyle');
 
-    // 
-    #Route::get('create/contributor/page/{page_id}/user/{user_id}',
-    #    'CreateController@createContributor');
-    Route::get('create/contributor/{charity_id}/{user_id}',
-        'CreateController@createAdmin');
 
+    // create social links
+    Route::get('create/social-link/{charity_id}', 'SocialLinkController@getCreate');
+    Route::post('create/social-link/{charity_id}', 'SocialLinkController@postCreate');
+
+    // edit charity contributors
     Route::get('contributors/{charity_name}/{page_id?}',
         'ContributorController@getContributors');
     Route::post('contributors/{charity_name}/{page_id?}',
         'ContributorController@getContributors');
+
+    Route::get('create/contributor/{charity_id}/{user_id}',
+        'CreateController@createAdmin');
+
 
 });
 

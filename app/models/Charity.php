@@ -171,6 +171,10 @@ class Charity extends BaseModel {
         return $this->hasMany('Permission', 'charity_id', 'charity_id');
     }
 
+    public function socialLinks() {
+        return $this->hasMany('SocialLink', 'charity_id', 'charity_id');
+    }
+
     public function styles() {
         return $this->hasMany('CharityStyle', 'charity_id', 'charity_id');
     }
