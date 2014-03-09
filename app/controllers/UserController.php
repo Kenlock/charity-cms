@@ -77,6 +77,11 @@ class UserController extends BaseController {
 
         if ($user->isValid()) {
             $user->save();
+            try {
+                $user->sendRegistrationEmail();
+            } catch (Exception $e) {
+                Log::error("Error sending registration email: " . $e);
+            }
 
             return Redirect::to('users/login')
                 ->with('message_success', Lang::get('forms.register_success'));

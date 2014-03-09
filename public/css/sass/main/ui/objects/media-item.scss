@@ -8,20 +8,25 @@
 
     }
 
-    .media-content {
 
-        display: inline-block;
-        float: left;
-        margin-right: 20px;
-        max-width: 70%;
+    @media all and (min-width: $lap-start) {
 
-    }
+        .media-content {
 
-    &.reverse .media-content {
-     
-        float: right;
-        margin-right: 0;
-        margin-left: 20px;
+            display: inline-block;
+            float: left;
+            margin-right: 20px;
+            max-width: 70%;
+
+        }
+
+        &.reverse .media-content {
+         
+            float: right;
+            margin-right: 0;
+            margin-left: 20px;
+
+        }
 
     }
     

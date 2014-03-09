@@ -262,6 +262,17 @@ class User extends BaseModel implements Presentable, UserInterface,
             ->paginate($per_page);
     }
 
+    public function sendRegistrationEmail() {
+        $user = $this;
+        $data = array(
+            'user'  => $user
+        );
+        Mail::send('emails.auth.register', $data, function($message) use($user) {
+                $message->to($user->email, $user->getPresenter()->getName())
+                    ->subject('Thank you for registering');
+        });
+    }
+
     public function validateUpdate($data) {
         Validator::extend('password_match',
             function($attribute, $value, $parameters) {
