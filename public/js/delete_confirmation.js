@@ -1,7 +1,7 @@
 (function() {
     function on_link_click(event) {
         event.preventDefault();
-        if (confirm('Are you sure you want to delete this page?')) {
+        if (confirm('Are you sure?\n\nOnce it has been deleted you will not be able to restore it.')) {
             document.location = this.getAttribute('href');
         };
     }
