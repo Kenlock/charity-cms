@@ -8,8 +8,7 @@ class RemindersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function getRemind()
-	{
+	public function getRemind() {
 		$this->layout->content = View::make('password.remind');
 	}
 
@@ -19,8 +18,11 @@ class RemindersController extends BaseController {
 	 * @return Response
 	 */
 	public function postRemind() {
-		switch ($response = Password::remind(Input::only('email')))
-		{
+        $response = Password::remind(Input::only('email'), function ($message) {
+            $message->subject('Password Reset');
+        });
+
+		switch ($response) {
 			case Password::INVALID_USER:
 				return Redirect::back()->with('message_error', Lang::get($response));
 
@@ -46,21 +48,18 @@ class RemindersController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function postReset()
-	{
+	public function postReset() {
 		$credentials = Input::only(
 			'email', 'password', 'password_confirmation', 'token'
 		);
 
-		$response = Password::reset($credentials, function($user, $password)
-		{
+		$response = Password::reset($credentials, function($user, $password) {
 			$user->password = $password;
 
 			$user->save();
 		});
 
-		switch ($response)
-		{
+		switch ($response) {
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
