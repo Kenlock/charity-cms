@@ -10,6 +10,6 @@
     </p>
     <p>
         Don't worry if you've forgotten your password, you can reset it by clicking
-        {{ URL::to('password/reset', 'here') }}
+        {{ HTML::linkRoute('password.reset', 'here') }}
     </p>
 @overwrite

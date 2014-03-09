@@ -60,6 +60,23 @@ abstract class BaseModel extends Eloquent implements Presentable {
     }
 
     /**
+     * Get the models validation rules
+     * @param string $type the type of validation rules to get
+     *      valid types: 'update'
+     * @return array the array of rules
+     */
+    public function getValidationRules($type = 'rules') {
+        switch ($type) {
+            case 'update':
+                return $this->updateRules;
+            break;
+            default:
+                return $this->rules;
+            break;
+        }
+    }
+
+    /**
      * Get the model's validator instance
      * @return Validator
      */
