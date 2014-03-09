@@ -25,7 +25,7 @@ class RemindersController extends BaseController {
 				return Redirect::back()->with('message_error', Lang::get($response));
 
 			case Password::REMINDER_SENT:
-				return Redirect::back()->with('message_status', Lang::get($response));
+				return Redirect::back()->with('message_success', Lang::get($response));
 		}
 	}
 
@@ -54,7 +54,7 @@ class RemindersController extends BaseController {
 
 		$response = Password::reset($credentials, function($user, $password)
 		{
-			$user->password = Hash::make($password);
+			$user->password = $password;
 
 			$user->save();
 		});
@@ -67,7 +67,8 @@ class RemindersController extends BaseController {
 				return Redirect::back()->with('message_error', Lang::get($response));
 
 			case Password::PASSWORD_RESET:
-				return Redirect::to('/');
+				return Redirect::to('users/login')
+                    ->with('message_success', 'Your password has been reset');
 		}
 	}
 
