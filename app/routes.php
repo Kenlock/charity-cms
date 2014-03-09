@@ -64,18 +64,18 @@ Route::group(array('before' => 'auth'), function() {
 
 // route passwords
 Route::get('password/reset', array(
-    'uses'   => 'PasswordController@remind',
+    'uses'   => 'RemindersController@getRemind',
     'as'    => 'password.remind',
 ));
 Route::post('password/reset', array(
-    'uses'   => 'PasswordController@request',
+    'uses'   => 'RemindersController@postRemind',
     'as'    => 'password.request',
 ));
 Route::get('password/reset/{token}', array(
-    'uses'   => 'PasswordController@reset',
+    'uses'   => 'RemindersController@getReset',
     'as'    => 'password.reset',
 ));
 Route::post('password/reset/{token}', array(
-    'uses'   => 'PasswordController@update',
+    'uses'   => 'RemindersController@postReset',
     'as'    => 'password.update',
 ));

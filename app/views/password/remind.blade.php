@@ -9,7 +9,7 @@
 {{ Form::open(array('route' => 'password.request')) }}
     <ul class="form-fields">
      
-        <li>
+        <li class="req">
             {{ Form::label('email', 'Email') }}
             {{ Form::text('email') }}
         </li>

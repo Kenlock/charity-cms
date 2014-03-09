@@ -2,26 +2,28 @@
 
 @if (Session::has('error'))
 
-    {{ trans(Session::get('reason')) }}
+    {{ Lang::get(Session::get('reason')) }}
 
 @endif
+
+@include('_errors')
  
 {{ Form::open(array('route' => array('password.update', $token))) }}
 
-    <ul>
-        <li>
+    <ul class="form-fields">
+        <li class="req">
             {{ Form::label('email', 'Email') }}
             {{ Form::text('email') }}
         </li>
 
-        <li>
+        <li class="req">
             {{ Form::label('password', 'Password') }}
-            {{ Form::text('password') }}
+            {{ Form::password('password') }}
         </li>
 
-        <li>
+        <li class="req">
             {{ Form::label('password_confirmation', 'Password confirm') }}
-            {{ Form::text('password_confirmation') }}
+            {{ Form::password('password_confirmation') }}
         </li>
 
         <li>

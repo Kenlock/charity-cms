@@ -29,7 +29,7 @@ form label {
 
 }
 
-label.req {
+label.req, form .req label {
     &:before {
         content: '* ';
         color: red;
