@@ -134,6 +134,28 @@ class CharityController extends BaseController {
     }
 
     /**
+     * A search page with a search form that GET's to itself
+     * @return View
+     */
+    public function getSearch() {
+        $search = Input::get('search');
+        $rpp    = max(array(Input::get('rpp'), 10));
+
+        // search the charities
+        $charities = $search == ''
+            ? array()
+            : Charity::where('name', 'LIKE', "%{$search}%")
+                ->paginate($rpp);
+
+        return View::make('layout._single_column', array(
+            'content' => View::make('charity.search', array(
+                'charities' => $charities,
+                'search' => $search
+            ))
+        ));
+    }
+
+    /**
      * Create a new Charity from a form
      */
     public function postCreate() {

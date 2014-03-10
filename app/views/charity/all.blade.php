@@ -1,3 +1,16 @@
+{{ Form::open(array('action' => 'CharityController@getSearch', 'method' => 'GET')) }}
+
+<ul class="form-fields">
+    <li>
+        {{ Form::text('search') }}
+    </li>
+    <li>
+        {{ Form::submit('Search', array('class' => 'btn inline-field')) }}
+    </li>
+</ul>
+
+{{ Form::close() }}
+
 @if (count($charities) > 0)
     <ul>
         @foreach($charities as $charity)

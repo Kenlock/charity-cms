@@ -66,6 +66,20 @@ class Charity extends BaseModel {
     }
 
     /**
+     * Analogous to Charity::find($id) but uses the Charity's name column as a
+     * primary key
+     * @param string $name the name to lookup
+     * @throws ModelNotFoundException
+     * @return Charity
+     */
+    public static function findByName($name) {
+        $charity = Charity::where('name', '=', $name)
+            ->first();
+        if ($charity == null) throw new ModelNotFoundException(get_called_class());
+        return $charity;
+    }
+
+    /**
      * Get the administrators belonging to this charity
      * @return Collection of Users
      */
