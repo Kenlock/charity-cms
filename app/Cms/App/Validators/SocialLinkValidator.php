@@ -73,7 +73,7 @@ class SocialLinkValidator {
         $passes = true;
 
         // get the current links if any
-        $socialLinks = $charity->socialLinks;
+        $socialLinks = $this->charity->socialLinks;
 
         $this->errors = new MessageBag();
         foreach ($services as $service) {
