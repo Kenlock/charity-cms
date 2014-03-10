@@ -4,6 +4,11 @@
     @include('users.sidebar')
 @overwrite
 
+<div class="user-tag right">
+    <span>{{ Auth::user()->getPresenter()->getName() }}</span>
+    {{ HTML::image(Auth::user()->getPresenter()->image, 'User Profile') }}
+</div>
+
 <h1>Dashboard</h1>
  
 <section>

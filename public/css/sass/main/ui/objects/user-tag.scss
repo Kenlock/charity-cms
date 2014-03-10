@@ -1,0 +1,59 @@
+$avatar-size: 80px;
+
+.user-tag {
+
+    &.right {
+        
+        color: white;
+        font-family: mathlete-bulky, sans-serif;
+        font-size: 1.8em;
+
+    }
+
+    img {
+
+        background: #444;
+        height: $avatar-size;
+        display: inline-block;
+        margin-left: -20px;
+        height: 30%;
+        width: 30%;
+        vertical-align: middle;
+
+        @include vendor(border-radius, 100%);
+        @include vendor(box-shadow, 0 0 5px #222);
+
+    }
+
+    span {
+
+        background: $c-main-background;
+        display: inline-block;
+        padding: 6px 20px;
+        width: 70%;
+
+    }
+
+    @media all and (min-width: $lap-start) {
+
+        &.right {
+
+            float: right;
+
+        }
+
+        img {
+
+            width: $avatar-size;
+
+        }
+
+        span {
+
+            display: inline;
+
+        }
+
+    }
+
+}
