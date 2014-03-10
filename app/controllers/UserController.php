@@ -32,7 +32,8 @@ class UserController extends BaseController {
 
         return View::make('layout._two_column', array(
             'content' => View::make('users.dashboard', array(
-                'favorites' => Auth::user()->getFavoriteCharities(),
+                #'favorites' => Auth::user()->getFavoriteCharities(),
+                'user'      => Auth::user(),
                 'my_recent_comments' => $comments,
             ))
         ));

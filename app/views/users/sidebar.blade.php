@@ -1,6 +1,10 @@
+<?php
+    $favorites = $user->getFavoriteCharities();
+?>
+
 <h2>Favorite Charities</h2>
 <ul class="heart-list">
-    @if (isset($favorites) and count($favorites) > 0)
+    @if (count($favorites) > 0)
         @foreach ($favorites as $charity)
             <li>{{ HTML::link("c/charity/{$charity->name}", $charity->name) }}</li>
         @endforeach
