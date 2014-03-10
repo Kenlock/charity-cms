@@ -16,8 +16,6 @@ Route::get('/', 'HomeController@getIndex');
 Route::controller('/users', 'UserController');
 Route::get('/users', 'UserController@getAll');
 
-#Route::get('/c/view/{charity_name}/{page_id}', 'CharityController@getPage');
-#Route::get('/c/view/{name}', 'CharityController@getCharity');
 Route::controller('/c', 'CharityController');
 Route::get('/c', 'CharityController@getAll');
 
@@ -29,10 +27,10 @@ Route::get('help', 'HelpController@getFaq');
 
 Route::get('/oauth/{provider}', 'OAuthController@getOAuth');
 
-Route::get('/favorite/{charity_name}', 'FavoriteController@favoriteCharity');
-Route::get('/unfavorite/{charity_name}', 'FavoriteController@unfavoriteCharity');
-
 Route::group(array('before' => 'auth'), function() {
+    Route::get('/favorite/{charity_name}', 'FavoriteController@favoriteCharity');
+    Route::get('/unfavorite/{charity_name}', 'FavoriteController@unfavoriteCharity');
+
 
     // deleting
     Route::get('delete/charity/{charity_id}', 'DeleteController@deleteCharity');

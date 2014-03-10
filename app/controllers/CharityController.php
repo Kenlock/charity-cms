@@ -11,7 +11,8 @@ use Cms\App\Sanitiser;
 class CharityController extends BaseController {
 
     public function __construct() {
-        $this->beforeFilter('csrf', ['on' => 'post']);
+        $this->beforeFilter('upload.max', array('on' => 'post'));
+        $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array(
             'only' => array(
                 'getCreate',

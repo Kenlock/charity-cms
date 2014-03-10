@@ -87,10 +87,36 @@ Route::filter('guest', function()
 |
 */
 
-Route::filter('csrf', function()
-{
+Route::filter('csrf', function() {
+
 	if (Session::token() != Input::get('_token'))
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Check if PHP ini upload_max_filesize is exceeded
+|--------------------------------------------------------------------------
+|
+| The CSRF filter is responsible for protecting your application against
+| cross-site request forgery attacks. If this special token in a user
+| session does not match the one given in this request, we'll bail.
+|
+*/
+Route::filter('upload.max', function() {
+    // try to catch error where the upload file size is greater than PHP ini
+    // setting
+    if (empty($_POST) && empty($_FILES) && isset($_SERVER['REQUEST_METHOD'])
+            && strtoupper($_SERVER['REQUEST_METHOD']) == 'POST') {
+        $postMax = ini_get('post_max_size');
+        $uploadMax = ini_get('upload_max_filesize');
+
+        Input::replace(Input::old());
+        return Redirect::back()
+            ->withInput()
+            ->with('message_error', "Uploads must be smaller than {$uploadMax}");
+    }
+
 });

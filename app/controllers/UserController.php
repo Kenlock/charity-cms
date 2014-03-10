@@ -7,17 +7,18 @@ class UserController extends BaseController {
     protected $layout = 'layout._single_column';
 
     public function __construct() {
+        $this->beforeFilter('upload.max', array('on' => 'post'));
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array(
             'only' => array(
                 'getDashboard',
-                'getUpdate'
+                'getUpdate',
             )
         ));
     }
 
     public function getAll() {
-        $users = User::limit(25)->get();
+        $users = User::paginate(10);
         $this->layout->content = View::make('users.all', array(
             'users' => $users,
         ));
