@@ -29,8 +29,7 @@ App::after(function($request, $response)
 | Handle the 404 errors
 |
 */
-App::missing(function($exception)
-{
+App::missing(function($exception) {
     return Response::view('errors.missing', array('url' => Request::url()), 404);
 });
 
