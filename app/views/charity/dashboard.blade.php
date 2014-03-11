@@ -2,6 +2,8 @@
     @include('users.sidebar')
 @overwrite
 
+<h1>{{ $charity->getPresenter()->name }} Dashboard</h1>
+
 <section>
     {{ HTML::link('users/dashboard', '&larr; ' . Lang::get('dashboard.back')) }}
 
