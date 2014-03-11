@@ -6,6 +6,10 @@
 
 {{ Form::model($charity, array('files' => true)) }}
 
+<script>
+    var model = "Charity";
+    var modelId = {{ $charity->charity_id }};
+</script>
 <ul class="form-fields">
 
     @include('charity.form._fields')

@@ -10,6 +10,10 @@
       @endforeach
    </ul>
 
+<script>
+    var model = "Charity";
+</script>
+
 <ul class="form-fields">
 
     @include('charity.form._fields')

@@ -10,11 +10,15 @@
       @endforeach
    </ul>
 
+<script>
+    var model = "User";
+</script>
+
 <ul class="form-fields">
     <li>
         {{ Form::label('firstname', Lang::get('forms.firstname'), array('class' => 'req')) }}
         {{ Form::text('firstname', null, [
-            'placeholder'=>'First Name'
+            'placeholder'=>'First Name',
         ]) }}
     </li>
     <li>

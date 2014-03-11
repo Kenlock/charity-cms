@@ -12,6 +12,10 @@
     @endforeach
 </ul>
 
+<script>
+    var model = "User";
+    var modelId = {{ Auth::user()->user_id }};
+</script>
 <ul class="form-fields">
     <li>
         {{ Form::label('firstname', Lang::get('forms.firstname'), array('class' => 'req')) }}

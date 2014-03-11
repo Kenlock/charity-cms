@@ -999,18 +999,20 @@ jscolor.install();
     var bgInput = document.getElementById('background-color');
     var bgElements = document.querySelectorAll('body, #wrapper');
     var tracking = false;
-    var updateBackgroundColor = function() {
-        if (!tracking) return;
-        for (var i = 0; i < bgElements.length; i++) {
-            bgElements[i].style.backgroundColor = bgInput.style.backgroundColor;
+    if (bgInput) {
+        var updateBackgroundColor = function() {
+            if (!tracking) return;
+            for (var i = 0; i < bgElements.length; i++) {
+                bgElements[i].style.backgroundColor = bgInput.style.backgroundColor;
+            }
         }
+        jscolor.addEvent(document, 'mousedown', function() {
+            tracking = true;
+            updateBackgroundColor();
+        });
+        jscolor.addEvent(document, 'mousemove', updateBackgroundColor);
+        jscolor.addEvent(document, 'mouseup', function() {
+            tracking = false;
+        });
     }
-    jscolor.addEvent(document, 'mousedown', function() {
-        tracking = true;
-        updateBackgroundColor();
-    });
-    jscolor.addEvent(document, 'mousemove', updateBackgroundColor);
-    jscolor.addEvent(document, 'mouseup', function() {
-        tracking = false;
-    });
 })();

@@ -81,3 +81,6 @@ Route::post('password/reset/{token}', array(
     'uses'   => 'RemindersController@postReset',
     'as'    => 'password.update',
 ));
+
+
+Route::post('api/validation/{model}/{field}', 'ApiController@validation');

@@ -76,6 +76,21 @@ abstract class BaseModel extends Eloquent implements Presentable {
         }
     }
 
+    public function getUpdateRules() {
+        // replace id placeholder with the actual id
+        $rules = array();
+        foreach ($this->updateRules as $name => $rule) {
+            if (array_key_exists($name, $this->rules)) {
+                $rule = str_replace(':same:',
+                        $this->rules[$name], $rule);
+                $rule = str_replace(':id:',
+                        $this->{$this->primaryKey} . ',' . $this->primaryKey, $rule);
+            }
+            $rules[$name] = $rule;
+        }
+        return $rules;
+    }
+
     /**
      * Get the model's validator instance
      * @return Validator
@@ -128,17 +143,8 @@ abstract class BaseModel extends Eloquent implements Presentable {
      * @param array $data the data to validate against
      */
     public function validateUpdate($data) {
-        // replace id placeholder with the actual id
-        foreach ($this->updateRules as $name => $rule) {
-            if (array_key_exists($name, $this->rules)) {
-                $rule = str_replace(':same:',
-                        $this->rules[$name], $rule);
-                $this->updateRules[$name] = str_replace(':id:',
-                        $this->{$this->primaryKey} . ',' . $this->primaryKey, $rule);
-            }
-        }
         $this->validator = Validator::make($data,
-                array_merge($this->rules, $this->updateRules));
+                array_merge($this->rules, $this->getUpdateRules()));
 
         $this->fill($data);
     }
