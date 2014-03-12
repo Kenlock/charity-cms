@@ -14,7 +14,7 @@
     {{ Form::label('extra_info', Lang::get('postViews.lost_and_found.extra_info')) }}
     {{ Form::textarea('extra_info', null) }}
 </li>
-<li>
+<li class="req">
     {{ Form::label('image', Lang::get('postViews.lost_and_found.image')) }}
     {{ Form::file('image') }}
 </li>

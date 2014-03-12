@@ -19,8 +19,8 @@ class PostValidator extends BasePostValidator {
 
     protected $rules = array(
         'animal_name'   => 'required|between:2,100',
-        'contact'       => 'required|between:2,255',
-        'last_seen'     => 'required',
+        'contact'       => 'required|between:2,100',
+        'last_seen'     => 'required|between:2,100',
         'extra_info'    => '',
         'image'         => 'required|image|max:4096'
     );
