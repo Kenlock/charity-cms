@@ -6,7 +6,7 @@
 <article>
 
     @if (!Auth::guest() && $post->userCanDelete(Auth::user()))
-        {{ HTML::link("posts/delete/{$post->post_id}", Lang::get('post.delete'), array('class' => 'delete-post btn')) }}
+        {{ HTML::link("posts/delete/{$post->post_id}", Lang::get('post.delete'), array('class' => 'delete-post btn delete')) }}
     @endif
 
     <small>{{ HTML::link("c/charity/{$post->page->charity->name}/{$post->page->page_id}", '&larr; Back') }}</small>
