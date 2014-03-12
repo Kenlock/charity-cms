@@ -148,6 +148,9 @@ class User extends BaseModel implements Presentable, UserInterface,
 		return $this->password;
 	}
 
+    /**
+     * Get the charities a user is an admin of
+     */
     public function getCharities() {
         $t1 = Permission::TABLE_NAME;
         $t2 = Charity::TABLE_NAME;

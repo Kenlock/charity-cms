@@ -16,4 +16,5 @@
 <h2>Settings</h2>
 <ul>
     <li>{{ HTML::link('users/update', 'Edit Account Details') }}</li>
+    <li>{{ HTML::link('users/delete', 'Delete Account') }}</li>
 </ul>

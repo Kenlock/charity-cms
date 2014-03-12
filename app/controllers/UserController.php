@@ -1,7 +1,12 @@
 <?php
 
 use \Cms\App\Sanitiser;
+use \Cms\App\Validators\UserDeleteValidator;
 
+/**
+ * Controller for the User model
+ * @author Aidan Grabe
+ */
 class UserController extends BaseController {
 
     protected $layout = 'layout._single_column';
@@ -12,11 +17,16 @@ class UserController extends BaseController {
         $this->beforeFilter('auth', array(
             'only' => array(
                 'getDashboard',
+                'getDelete',
+                'postDelete',
                 'getUpdate',
             )
         ));
     }
 
+    /**
+     * Show all users
+     */
     public function getAll() {
         $users = User::paginate(10);
         $this->layout->content = View::make('users.all', array(
@@ -24,6 +34,9 @@ class UserController extends BaseController {
         ));
     }
 
+    /**
+     * Show the user's dashboard
+     */
     public function getDashboard() {
         $comments = Comment::with('post')
             ->where('user_id', '=', Auth::user()->user_id)
@@ -40,6 +53,19 @@ class UserController extends BaseController {
         ));
     }
 
+    /**
+     * Show a confirm delete account form. To prevent accidental account
+     * deletion
+     */
+    public function getDelete() {
+        return View::make('layout._single_column', array(
+            'content'   => View::make('users.delete')
+        ));
+    }
+
+    /**
+     * Show the login form
+     */
     public function getLogin() {
         // no need to show a login page if already logged
         if (Auth::check()) {
@@ -49,12 +75,18 @@ class UserController extends BaseController {
         $this->layout->content = View::make('users.login');
     }
 
+    /**
+     * Log the user out
+     */
     public function getLogout() {
         Auth::logout();
         return Redirect::to('users/login')
             ->with('message_success', 'You were successfully logged out');
     }
 
+    /**
+     * Show the registration form
+     */
     public function getRegister() {
         if (Auth::check()) {
             return Redirect::to('users/dashboard')
@@ -64,6 +96,9 @@ class UserController extends BaseController {
         $this->layout->content = View::make('users.register');
     }
 
+    /**
+     * Show a form allowing the user to update their account details
+     */
     public function getUpdate() {
         $user = Auth::user();
 
@@ -74,6 +109,9 @@ class UserController extends BaseController {
         ));
     }
 
+    /**
+     * Create a user from form input
+     */
     public function postCreate() {
         $user = User::makeFromArray(Input::all());
 
@@ -95,6 +133,28 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+     * Delete the currently logged in user's account
+     */
+    public function postDelete() {
+        $validator = new UserDeleteValidator(Input::all());
+
+        if ($validator->passes()) {
+            Auth::user()->delete();
+            return Redirect::to('/')
+                ->with('message_success', 'Your account was successfully deleted. '
+                        . 'Thank you for using our website.');
+        }
+
+        return Redirect::back()
+            ->withInput()
+            ->withErrors($validator->getValidator())
+            ->with('message_error', Lang::get('forms.errors_occurred'));
+    }
+
+    /**
+     * Try to log the user in
+     */
     public function postSignin() {
         if (Auth::attempt(array(
                 'email' => Input::get('email'),
