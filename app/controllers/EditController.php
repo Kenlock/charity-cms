@@ -9,6 +9,11 @@ use Cms\App\Sanitiser;
  */
 class EditController extends BaseController {
 
+    public function __construct() {
+        $this->beforeFilter('upload.max', array('on' => 'post'));
+        $this->beforeFilter('csrf', array('on' => 'post'));
+    }
+
     /**
      * Display the form to update the charity
      * @param int $charity_id the charity's id
