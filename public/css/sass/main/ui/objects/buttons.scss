@@ -43,11 +43,37 @@
 
 }
 
+.tertiary-btn {
+
+    @extend .btn;
+
+    @include btn-theme(#F59742, black);
+
+}
+
 
 .btn-list {
     margin: 0;
     padding: 0;
+
+    &.rainbow {
+
+        li:nth-of-type(3n + 1) a {
+            @extend .btn;
+        }
+
+        li:nth-of-type(3n + 2) a {
+            @extend .secondary-btn;
+        }
+
+        li:nth-of-type(3n + 3) a {
+            @extend .tertiary-btn;
+        }
+
+    }
+
     li {
+
         display: inline-block;
         list-style: none;
         margin-right: 10px;
@@ -55,6 +81,27 @@
             margin-right: 0;
         }
     }
+}
+
+.btn-links {
+
+    &.small {
+
+        a {
+
+            font-size: .8em;
+            line-height: 110%;
+
+        }
+
+    }
+
+    a {
+
+        @extend .btn;
+
+    }
+
 }
 
 .facebook-btn {
@@ -70,5 +117,12 @@
     @extend .btn;
     
     @include btn-theme(#DC4A38);
+
+}
+
+table .btn {
+
+    font-size: .8em;
+    line-height: 110%;
 
 }

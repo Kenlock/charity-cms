@@ -5,11 +5,17 @@ return array(
     'errors_occurred'       => 'The following errors occurred',
 
     'about' => 'About yourself',
+    'about_hint' => 'Just a quick little bio about yourself',
     'email' => 'Email Address',
+    'email_hint' => 'Example: my_email@gmail.com',
     'firstname' => 'First Name',
+    'firstname_hint' => 'Your first name',
     'lastname' => 'Last Name',
+    'lastname_hint' => 'Your second name',
     'password' => 'Password',
+    'password_hint' => 'Must be between 6 and 100 characters long. Can contain any characters.',
     'password_confirmation' => 'Confirm Password',
+    'password_confirmation_hint' => 'Just repeat what you typed above',
     'password_old' => 'Current Password',
     'password_new' => 'New Password',
     'register_description' => 'Please fill out the following form to register '
@@ -17,6 +23,7 @@ return array(
         .'required field</small>',
     'register_success'  => 'Your account was successfully created. Thank you for registering with us.',
     'user_image' => 'Profile Picture',
+    'user_image_hint' => 'Maximum filesize of 4Mb<br />Formats allowed: jpg, png, gif',
 
     // Charity
     'charity_category' => 'Category',

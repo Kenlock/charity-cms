@@ -25,10 +25,10 @@
                     </td>
                     @if (Auth::user()->canDelete($page))
                         <td data-label="Actions">
-                            {{ HTML::link("edit/page/$page->page_id", 'edit') }}
+                            {{ HTML::link("edit/page/$page->page_id", 'edit', array('class' => 'btn')) }}
                         </td>
                         <td>
-                            {{ HTML::link("delete/page/$page->page_id", 'delete', array('class' => 'delete')) }}
+                            {{ HTML::link("delete/page/$page->page_id", 'delete', array('class' => 'delete btn')) }}
                         </td>
                     @else
                         <td colspan="2">N/A</td>
@@ -45,7 +45,7 @@
     </ul>
 
     <h2>Settings</h2>
-    <ul>
+    <ul class="btn-list btn-links small rainbow">
         <li>{{ HTML::link("contributors/{$charity->name}", Lang::get('charity.administrators')) }}</li>
         <li>{{ HTML::link("edit/style/{$charity->charity_id}", Lang::get('charity.edit_colors')) }}</li>
         <li>{{ HTML::link("create/social-link/{$charity->charity_id}", Lang::get('charity.social_links')) }}</li>

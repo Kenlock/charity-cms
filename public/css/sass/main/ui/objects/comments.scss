@@ -6,6 +6,18 @@ $comment-image-size: 63px;
     margin: 0;
     padding: 0;
 
+    .delete {
+
+        @extend %btn-base;
+
+        @include btn-theme(#111);
+
+        float: right;
+        line-height: 100%;
+        padding: 6px 8px;
+
+    }
+
     div {
 
         margin-bottom: 20px;

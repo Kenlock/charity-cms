@@ -15,14 +15,14 @@
 
     @if (count($myCharities) > 0)
         <h2>My Charities</h2>
-        <ul>
+        <table>
             @foreach($myCharities as $charity)
-                <li>
-                    {{ HTML::link("c/charity/{$charity->name}", $charity->name) }}
-                    ({{ HTML::link("c/dashboard/{$charity->name}", 'Dashboard') }})
-                </li>
+                <tr>
+                    <td>{{ HTML::link("c/charity/{$charity->name}", $charity->name) }}</td>
+                    <td>{{ HTML::link("c/dashboard/{$charity->name}", 'Dashboard', array('class' => 'btn')) }}</td>
+                </tr>
             @endforeach
-        </ul>
+        </table>
     @endif
 
     <h2>Recent Comments</h2>

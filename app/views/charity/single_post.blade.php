@@ -1,8 +1,11 @@
-<?php $author = new presenters\UserPresenter($post->author); ?>
+<?php
+    //$author = new presenters\UserPresenter($post->author);
+    $author = $post->author->getPresenter();
+?>
 
 <article>
 
-    @if ($post->userCanDelete(Auth::user()))
+    @if (!Auth::guest() && $post->userCanDelete(Auth::user()))
         {{ HTML::link("posts/delete/{$post->post_id}", Lang::get('post.delete'), array('class' => 'delete-post btn')) }}
     @endif
 
@@ -28,7 +31,7 @@
         <p>No Comments</p>
     @endif
 
-    @if (Auth::check())
+    @if (!Auth::guest())
         @include('comments.comment_form')
     @else
         <p>{{ Lang::get('comments.login_required') }}</p>
