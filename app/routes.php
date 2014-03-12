@@ -16,6 +16,9 @@ Route::get('/', 'HomeController@getIndex');
 Route::controller('/users', 'UserController');
 Route::get('/users', 'UserController@getAll');
 
+Route::get('contact', 'ContactController@getContact');
+Route::post('contact', 'ContactController@postContact');
+
 Route::controller('/c', 'CharityController');
 Route::get('/c', 'CharityController@getAll');
 
