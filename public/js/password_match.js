@@ -31,6 +31,7 @@
         this.validateField = function(el) {
             if (el) {
                 fieldName = el.getAttribute('name');
+                if (!fieldName) return;
                 data = {field: el.value};
                 if (!(typeof modelId === 'undefined')) {data.id = modelId;}
                 if (fieldName.indexOf('password') > -1) return;
