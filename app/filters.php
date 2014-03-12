@@ -106,17 +106,29 @@ Route::filter('csrf', function() {
 |
 */
 Route::filter('upload.max', function() {
+    $postMax = ini_get('post_max_size');
+    $uploadMax = ini_get('upload_max_filesize');
+    $redirect = Redirect::back()
+        ->withInput()
+        ->with('message_error', "Uploads must be smaller than {$uploadMax}");
+
+
     // try to catch error where the upload file size is greater than PHP ini
     // setting
+    $size_errors = array(
+        UPLOAD_ERR_INI_SIZE,
+        UPLOAD_ERR_FORM_SIZE
+    );
+    foreach ($_FILES as $file) {
+        if (in_array($file['error'], $size_errors)) {
+            return $redirect;
+        }
+    }
+
     if (empty($_POST) && empty($_FILES) && isset($_SERVER['REQUEST_METHOD'])
             && strtoupper($_SERVER['REQUEST_METHOD']) == 'POST') {
-        $postMax = ini_get('post_max_size');
-        $uploadMax = ini_get('upload_max_filesize');
 
-        Input::replace(Input::old());
-        return Redirect::back()
-            ->withInput()
-            ->with('message_error', "Uploads must be smaller than {$uploadMax}");
+        return $redirect;
     }
 
 });
