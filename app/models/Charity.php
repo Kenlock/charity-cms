@@ -14,6 +14,8 @@ class Charity extends BaseModel {
         'address'           => 'required|min:6',
         'description'       => 'required|min:2',
         'name'              => "required|min:2|unique:charities",
+        'email'              => "required|email",
+        'charity_no'              => "required|integer|digits_between:2,12",
         'charity_category_id'  => 'required|exists:charity_categories,charity_category_id',
         'image'             => 'sometimes|image|max:4096'
     );
@@ -40,7 +42,8 @@ class Charity extends BaseModel {
 
     protected $guarded = array('charity_id');
     protected $fillable = array(
-        'name', 'charity_category_id', 'description', 'address'
+         'charity_category_id', 'charity_no', 'email', 
+         'name', 'description', 'address'
     );
 
     /**
@@ -50,11 +53,6 @@ class Charity extends BaseModel {
         parent::boot();
         
         static::observe(new CharityObserver());
-    }
-
-    // TODO!!
-    public function getEmailAttribute() {
-        return "aidsgrabe@gmail.com";
     }
 
     public function category() {

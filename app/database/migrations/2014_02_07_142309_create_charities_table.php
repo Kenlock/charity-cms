@@ -19,6 +19,8 @@ class CreateCharitiesTable extends Migration {
 			$table->unsignedInteger('charity_category_id');
 			$table->unsignedInteger('default_page_id');
 			$table->text('description');
+			$table->string('email');
+			$table->string('charity_no');
 			$table->string('address', 255);
 			$table->string('image', 255)->nullable();
 			$table->timestamps();

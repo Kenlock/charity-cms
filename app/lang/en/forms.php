@@ -38,10 +38,14 @@ return array(
     'charity_create_description' => 'Please fill out the following form to create a new Charity.',
     'charity_description' => 'Description',
     'charity_description_hint' => 'Briefly describe your charity. e.g What you do, your aims etc.',
+    'charity_email' => 'Charity Email Address',
+    'charity_email_hint' => 'Your Charity\'s email address, used for PayPal donations',
     'charity_image' => 'Image',
     'charity_image_hint' => 'Your charities image or logo',
     'charity_name' => 'Name',
     'charity_name_hint' => 'Enter your charities name. Must contain only letters and numbers',
+    'charity_no' => 'Charity Registration Number',
+    'charity_no_hint' => 'Your Charity\'s registration number',
 
     // comments
     'comment'   => 'Add a Comment',

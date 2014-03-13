@@ -24,6 +24,25 @@
         ]) }}
     </div>
 </li>
+
+<li class="req">
+    {{ Form::label('email', Lang::get('forms.charity_email')) }}
+    <p>
+        {{ Lang::get('forms.charity_email_hint') }}
+    </p>
+    {{ Form::text('email', null, array(
+        'placeholder' => Lang::get('forms.charity_email')
+    )) }}
+</li>
+
+<li class="req">
+    {{ Form::label('charity_no', Lang::get('forms.charity_no')) }}
+    <p>{{ Lang::get('forms.charity_no_hint') }}</p>
+    {{ Form::text('charity_no', null, array(
+        'placeholder' => Lang::get('forms.charity_no')
+    )) }}
+</li>
+
 <li>
     {{ Form::label('description', Lang::get('forms.charity_description'), array('class' => 'req')) }}
     <p>
