@@ -51,17 +51,22 @@ $comment-image-size: 63px;
             padding: 10px 20px;
 
             & > h3 {
-
-                time {
-
-                    float: right;
-
-                }
-
-                @include font-size(14px);
+                
+                @extend .cf;
 
                 font-family: sans-serif;
                 margin: 0 0 0 ($comment-image-size + 10px);
+                white-space: nowrap;
+
+                @include font-size(14px);
+
+                time {
+
+                    display: block;
+                    margin-left: -($comment-image-size + 10px);
+                    text-align: center;
+
+                }
 
             }
 
@@ -70,6 +75,18 @@ $comment-image-size: 63px;
                 margin: 10px 0;
                 
             }
+
+        }
+
+    }
+
+    @media all and (min-width: $lap-start) {
+
+        div article > h3 time {
+            
+            display: inline;
+            margin-left: 0;
+            float: right;
 
         }
 

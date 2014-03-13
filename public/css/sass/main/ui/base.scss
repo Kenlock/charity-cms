@@ -55,4 +55,14 @@ ul {
 
     list-style: url('images/listyellowbullet.png') square;
 
+    &.inline {
+
+        label, li {
+
+            display: inline-block;
+
+        }
+
+    }
+
 }

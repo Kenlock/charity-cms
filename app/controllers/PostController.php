@@ -37,12 +37,21 @@ class PostController extends BaseController {
             ->with('message_error', Lang::get('strings.view_not_found'));
     }
 
+    /**
+     * Display the create new post form
+     * @param int $page_id the id of the page we're posting to
+     * @param int $view_id the id of the view we'd like the new psot to use
+     */
     public function getCreate($page_id, $view_id = 0) {
         $page = Page::find($page_id);
 
-        if ($page == null) return $this->pageNotFound();
+        #if ($page == null) return $this->pageNotFound();
+        if ($page == null) App::abort(404, 'Page Not Found');
         if (!Auth::user()->canPostTo($page)) return $this->permissionDenied();
 
+        $view_id = Input::has('change_post_view')
+            ? Input::get('change_post_view')
+            : $view_id;
         $view_id = $view_id == 0 ? $page->default_view_id : $view_id;
         $view = PostView::find($view_id);
 
