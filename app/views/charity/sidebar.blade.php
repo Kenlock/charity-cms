@@ -43,6 +43,7 @@ $heart_class = Auth::check() && Auth::user()->hasFavorited($charity) ? 'heart-la
     </ul>
     <div class="donate-button">
         @include('paypal.donate_button', array('charity' => $charity))
+        @include('google-translate')
     </div>
 
 </section> <!-- .sidebar-content -->
