@@ -28,7 +28,9 @@ $comment-image-size: 63px;
                 background: #333;
                 height: $comment-image-size;
                 margin: 0px 0px (-$comment-image-size / 2) 10px;
+                position: relative;
                 width: $comment-image-size;
+                z-index: 1;
 
             }
 

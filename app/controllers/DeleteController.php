@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\RedirectResponse;
+
 class DeleteController extends BaseController {
 
     /**
@@ -13,7 +15,7 @@ class DeleteController extends BaseController {
      * Delete a comment
      */
     public function deleteComment($comment_id) {
-        return $this->deleteItem(Comment::findOrFail($comment_id), 'comments');
+        return $this->deleteItem(Comment::findOrFail($comment_id), 'comments', Redirect::back());
     }
 
     /**
@@ -36,14 +38,19 @@ class DeleteController extends BaseController {
 
 
     private function deleteItem($item, $lang_file, $redirect = 'users/dashboard') {
+        if (!$redirect instanceof RedirectResponse) {
+            dd($redirect);
+            $redirect = Redirect::to($redirect);
+        }
+
         if (Auth::user()->canDelete($item)) {
             $item->delete();
         } else {
-            return Redirect::to($redirect)
+            return $redirect
                 ->with('message_error', Lang::get('strings.permission_denied'));
         }
 
-        return Redirect::to($redirect)
+        return $redirect
             ->with('message_success', Lang::get("{$lang_file}.delete_success"));
     }
 
