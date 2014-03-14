@@ -1,5 +1,7 @@
 <?php
 
+use observers\UserObserver;
+
 class Comment extends Eloquent {
     const TABLE_NAME = 'comments';
 
@@ -28,6 +30,15 @@ class Comment extends Eloquent {
         return View::make(self::VIEW, array(
             'comment' => $this
         ))->__toString();
+    }
+
+    /**
+     * Register the comment observer on boot
+     */
+    public static function boot() {
+        parent::boot();
+        
+        static::observe(new CommentObserver());
     }
 
     public function getAge() {
