@@ -110,6 +110,7 @@ class PostController extends BaseController {
 
         return View::make('layout.charity._two_column', array(
             'charity' => $charity,
+            'page' => $post->page,
             'pages' => $pages,
             'post' => $post,
             'content' => View::make('charity.single_post', array(
