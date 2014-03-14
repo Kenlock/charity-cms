@@ -18,6 +18,8 @@
         {{ $post->postView->getDisplayView($post) }}
     </section>
 
+    @include('js.facebook')
+
 </article>
 
 <h2>Comments</h2>

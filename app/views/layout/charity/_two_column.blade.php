@@ -9,6 +9,7 @@
 @overwrite
 
 @section('logo')
+    @include('js.facebook-sdk')
 @overwrite
 
 @section('nav-bar')
