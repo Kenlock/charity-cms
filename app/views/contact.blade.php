@@ -4,7 +4,11 @@
 
 {{ Form::open() }}
 
-<ul class="form-fields">
+<p>
+    {{ Lang::get('contact.description') }}
+</p>
+
+<ul class="form-fields contact-form">
 
     <li>
         {{ Form::label('name', 'Name') }}
