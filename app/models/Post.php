@@ -62,7 +62,7 @@ class Post extends Eloquent {
      * Get the post's link
      */
     public function getLink() {
-        return "posts/single/{$this->charity->name}/{$this->post_id}";
+        return "posts/single/{$this->page->charity->name}/{$this->post_id}";
     }
 
     public function getProperty($key) {
