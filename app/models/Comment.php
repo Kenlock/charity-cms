@@ -1,6 +1,6 @@
 <?php
 
-use observers\UserObserver;
+use observers\CommentObserver;
 
 class Comment extends Eloquent {
     const TABLE_NAME = 'comments';
