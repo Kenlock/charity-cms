@@ -1,5 +1,6 @@
 <?php
 
+use Markdown;
 use observers\PostObserver;
 
 class Post extends Eloquent {
@@ -77,6 +78,21 @@ class Post extends Eloquent {
         return '';
     }
 
+    /**
+     * load this instance's properties from the PostPropertyLarge and
+     * PostPropertySmall tables, and make them accessible via $this->{$name}
+     */
+    public function loadProperties() {
+        $sizes = array();
+        $sizes[] = $this->propertiesLarge->all();
+        $sizes[] = $this->propertiesSmall->all();
+        foreach ($sizes as $properties) {
+            foreach ($properties as $property) {
+                $this->{$property->title} = $property->content;
+            }
+        }
+    }
+
     public static function makeAndSave(User $user, Page $page, PostView $view, $title, $data) {
         DB::beginTransaction();
         $post = new Post();
@@ -95,6 +111,15 @@ class Post extends Eloquent {
         PostPropertySmall::insert($data['small']);
         PostPropertyLarge::insert($data['large']);
         DB::commit();
+    }
+
+    /**
+     * Get a particular attribute converted to Markdown
+     * @param string the name of the attribute to retrive as Markdown
+     * @return string Markdown equivalent of $this>$name
+     */
+    public function markdown($name) {
+        return Markdown::string($this->{$name});
     }
 
     public function postView() {

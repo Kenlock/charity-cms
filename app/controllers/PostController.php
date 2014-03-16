@@ -42,23 +42,31 @@ class PostController extends BaseController {
      * @param int $page_id the id of the page we're posting to
      * @param int $view_id the id of the view we'd like the new psot to use
      */
-    public function getCreate($page_id, $view_id = 0) {
+    public function getCreate($page_id, $post_id = 0) {
         $page = Page::find($page_id);
 
         #if ($page == null) return $this->pageNotFound();
         if ($page == null) App::abort(404, 'Page Not Found');
         if (!Auth::user()->canPostTo($page)) return $this->permissionDenied();
 
-        $view_id = Input::has('change_post_view')
-            ? Input::get('change_post_view')
-            : $view_id;
-        $view_id = $view_id == 0 ? $page->default_view_id : $view_id;
+        if ($post_id == 0) {
+            $view_id = Input::has('change_post_view')
+                ? Input::get('change_post_view')
+                : $page->default_view_id;
+            $post = new Post();
+        } else {
+            $post = Post::findOrFail($post_id);
+            $view_id = $post->view_id;
+            $post->loadProperties();
+        }
+
         $view = PostView::find($view_id);
 
         if ($view == null) return $this->viewNotFound();
 
         $formView = View::make("postViews.form", array(
             'page' => $page,
+            'post' => $post,
             'view' => $view
         ));
 
@@ -105,6 +113,7 @@ class PostController extends BaseController {
         // check if post exists
         $post = Post::find($post_id);
         if ($post == null) return $this->postNotFound($charity);
+        $post->loadProperties();
 
         $pages = Page::where('charity_id', '=', $charity->charity_id)->get();
 
@@ -119,7 +128,7 @@ class PostController extends BaseController {
         ));
     }
 
-    public function postCreate($page_id) {
+    public function postCreate($page_id, $post_id = 0) {
         $page = Page::find($page_id);
 
         if ($page == null) return $this->pageNotFound();
@@ -137,8 +146,19 @@ class PostController extends BaseController {
             : "c/charity/{$charity->name}/{$page->page_id}";
 
         $postValidator = $view->makePostValidator();
+        if ($post_id > 0) {
+            $postValidator->useUpdateRules();
+        }
         $validator = $postValidator->validate();
         if ($validator->passes()) {
+            if ($post_id != 0) {
+                // delete existing data
+                $post = Post::find($post_id);
+                $post->loadProperties();
+                $postValidator->editing($post);
+                $post->delete();
+            }
+
             $data = $postValidator->onSuccess();
 
             Post::makeAndSave(Auth::user(), $page, $view, Input::get('title'), $data);

@@ -6,7 +6,12 @@
 <article>
 
     @if (!Auth::guest() && $post->userCanDelete(Auth::user()))
-        {{ HTML::link("posts/delete/{$post->post_id}", Lang::get('post.delete'), array('class' => 'delete-post btn delete')) }}
+        <ul class="btn-list delete-post">
+        <li>{{ HTML::link("posts/delete/{$post->post_id}", Lang::get('post.delete'), array('class' => 'delete-post btn delete')) }}</li>
+        <li>
+        {{ HTML::link("posts/edit/{$post->page->charity->charity_id}/{$post->post_id}", Lang::get('post.edit'), array('class' => 'delete-post btn small')) }}
+        </li>
+        </ul>
     @endif
 
     <small>{{ HTML::link("c/charity/{$post->page->charity->name}/{$post->page->page_id}", '&larr; Back') }}</small>

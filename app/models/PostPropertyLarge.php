@@ -19,8 +19,4 @@ class PostPropertyLarge extends Eloquent {
 
     protected $guarded = array();
     protected $fillable = array();
-
-    public function getContentAttribute() {
-        return Markdown::string($this->attributes['content']);
-    }
 }

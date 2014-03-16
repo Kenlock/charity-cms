@@ -23,7 +23,12 @@ Route::controller('/c', 'CharityController');
 Route::get('/c', 'CharityController@getAll');
 
 Route::controller('pages', 'PageController');
+
+// posts
+Route::get('posts/edit/{charity_id}/{post_id}', 'PostController@getCreate');
+Route::post('posts/edit/{charity_id}/{post_id}', 'PostController@postCreate');
 Route::controller('posts', 'PostController');
+
 Route::controller('comments', 'CommentController');
 
 Route::get('help', 'HelpController@getFaq');

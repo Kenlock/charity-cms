@@ -25,6 +25,14 @@ class PostValidator extends BasePostValidator {
         'image'         => 'required|image|max:4096'
     );
 
+    protected $updateRules = array(
+        'image'         => 'image|max:4096'
+    );
+
+    public function editing($post) {
+        $this->data['image'] = $post->image;
+    }
+
     public function onSuccess() {
         $this->saveImage('image');
 

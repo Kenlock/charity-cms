@@ -30,8 +30,8 @@ class PostView extends Eloquent {
         return View::make($this->getViewPath($this->view, 'display'), array('post' => $post));
     }
 
-    public function getFormView() {
-        return View::make($this->getViewPath($this->view, 'form'));
+    public function getFormView($post) {
+        return View::make($this->getViewPath($this->view, 'form'), array('post' => $post));
     }
 
     public static function getViewTitles() {

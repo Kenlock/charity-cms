@@ -4,16 +4,21 @@
 
 abstract class BasePostValidator {
 
-    private $data;
+    protected $data;
 
     protected $properties = array(
         array('small' => array(), 'large' => array())
     );
 
     protected $rules = array();
+    protected $updateRules = array();
 
     public function __construct() {
         $this->data = array();
+    }
+
+    public function editing($model) {
+
     }
 
     public function onSuccess() {
@@ -44,10 +49,6 @@ abstract class BasePostValidator {
             $image->move($movePath, $image->getClientOriginalName());
 
             $this->data[$name] = Path::make($path, $image->getClientOriginalName());
-        } else {
-            \Input::merge(array(
-                $name => ''
-            ));
         }
     }
 
@@ -58,6 +59,10 @@ abstract class BasePostValidator {
         $this->data = isset($data) ? $data : Input::all();
         $this->rules['title'] = 'required|between:2,100';
         return \Validator::make($this->data, $this->rules);
+    }
+
+    public function useUpdateRules() {
+        $this->rules = array_merge($this->rules, $this->updateRules);
     }
 
 }

@@ -1,6 +1,6 @@
 <article>
     <p>
-        {{ $post->getLargeProperty('content') }}
+        {{ $post->markdown('content') }}
     </p>
 
 </article>

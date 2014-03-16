@@ -2,6 +2,7 @@
 @if (isset($posts) and count($posts) > 0)
 
     @foreach ($posts as $post)
+        <?php $post->loadProperties() ?>
         
         <section>
             <h2>{{ HTML::link("posts/single/{$charity->name}/{$post->post_id}", $post->title) }} <time>{{ date('d M \'y', $post->created_at) }}</time></h2>

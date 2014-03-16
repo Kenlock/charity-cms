@@ -20,8 +20,16 @@ class PostValidator extends BasePostValidator {
         'animal_name'   => 'required|between:2,100',
         'contact'       => 'required|between:2,255',
         'animal_description'     => 'required',
+        'image'         => 'required|image|max:4096'
+    );
+
+    protected $updateRules = array(
         'image'         => 'image|max:4096'
     );
+
+    public function editing($post) {
+        $this->data['image'] = $post->image;
+    }
 
     public function onSuccess() {
         $this->saveImage('image');
