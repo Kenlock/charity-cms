@@ -1,0 +1,24 @@
+
+.charity-badge-list {
+
+    @extend .cf;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media all and (min-width: $lap-start) {
+
+        .badge {
+
+            display: inline-block;
+            margin: 0 1.6%;
+            vertical-align: top;
+            width: 30%;
+
+        }
+        
+
+    }
+
+}

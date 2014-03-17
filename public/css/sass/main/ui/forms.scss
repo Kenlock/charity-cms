@@ -22,10 +22,22 @@ form label {
 }
 
 // field hints
-.form-fields p {
-    
-    @include font-size(14px);
-    margin-left: 20px;
+.form-fields {
+
+    &.inline {
+
+        label, input {
+            display: inline-block;
+        }
+
+    }
+
+    p {
+
+        @include font-size(14px);
+        margin-left: 20px;
+
+    }
 
 }
 

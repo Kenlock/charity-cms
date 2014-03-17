@@ -20,13 +20,7 @@
     <p>
         Searching for "{{ $search }}"
     </p>
-    <ul>
-        @foreach ($charities as $charity)
-            <li>
-                {{ $charity->getPresenter()->viewLink()}}
-            </li>
-        @endforeach
-    </ul>
+    @include('charity._badges')
 @elseif ($search != "")
 
     <p>
