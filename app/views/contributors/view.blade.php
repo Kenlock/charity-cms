@@ -7,11 +7,14 @@ $type = isset($type) ? $type : 'Contributors';
 <h1>{{ $charity->name }}</h1>
 
 <h2>Current {{ $type }}</h2>
-<ul>
+<table>
     @foreach ($contributors as $user)
-        <li>{{ $user->getPresenter()->getName() }}</li>
+        <tr>
+            <td>{{ $user->getPresenter()->getName() }}</td>
+            <td>{{ HTML::link("delete/contributor/{$charity->charity_id}/{$user->user_id}", "remove", array('class' => 'btn delete')) }}</td>
+        </tr>
     @endforeach
-</ul>
+</table>
 
 <h2>Add {{ $type }}</h2>
 <p>
@@ -24,7 +27,7 @@ $type = isset($type) ? $type : 'Contributors';
     <li>
         {{ Form::label('user_name', 'Username', array('class' => 'inline-field')) }}
         {{ Form::text('user_name', $query) }}
-        {{ Form::submit('Search', array('class' => 'inline-field')) }}
+        {{ Form::submit('Search', array('class' => 'inline-field btn')) }}
     </li>
 </ul>
 {{ Form::close() }}
@@ -45,5 +48,9 @@ $type = isset($type) ? $type : 'Contributors';
         @endforeach
     </table>
     {{ $search_results->links() }}
+
+@else
+    
+    <p>No Users found</p>
 
 @endif

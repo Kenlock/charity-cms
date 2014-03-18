@@ -276,6 +276,16 @@ class User extends BaseModel implements Presentable, UserInterface,
         });
     }
 
+    /**
+     * Remove the user's admin privileges
+     * @param Charity $charity the charity to remove the admin privileges from
+     */
+    public function removeAdmin(Charity $charity) {
+        $this->permissions()
+            ->where('charity_id', '=', $charity->charity_id)
+            ->delete();
+    }
+
     public function validateUpdate($data) {
         Validator::extend('password_match',
             function($attribute, $value, $parameters) {

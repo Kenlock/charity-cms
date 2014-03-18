@@ -57,4 +57,27 @@ class ContributorController extends BaseController {
         ));
     }
 
+    /**
+     * Remove an admin from a given charity
+     * @param int $charity_id the id of the charity to remove the admin from
+     * @param int $user_id the id of the user to remove the privileges
+     * @return Redirect
+     */
+    public function getDelete($charity_id, $user_id) {
+        $user = User::findOrFail($user_id);
+        $charity = Charity::findOrFail($charity_id);
+
+        if (!Auth::user()->isAdmin($charity)) App::abort(403, "Permission Denied");
+
+        if ($charity->getAdmins()->count() > 1) {
+            $user->removeAdmin($charity);
+        } else {
+            return Redirect::back()
+                ->with('message_error', 'You must have at least 1 admin for a charity');
+        }
+
+        return Redirect::back()
+            ->with('message_success', 'Admin removed');
+    }
+
 }

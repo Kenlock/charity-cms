@@ -65,6 +65,7 @@ Route::group(array('before' => 'auth'), function() {
         'ContributorController@getContributors');
     Route::post('contributors/{charity_name}/{page_id?}',
         'ContributorController@getContributors');
+    Route::get('delete/contributor/{charity_id}/{user_id}', 'ContributorController@getDelete');
 
     Route::get('create/contributor/{charity_id}/{user_id}',
         'CreateController@createAdmin');
