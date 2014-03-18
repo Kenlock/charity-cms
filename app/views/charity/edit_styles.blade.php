@@ -1,3 +1,5 @@
+{{ HTML::link("c/dashboard/{$charity->name}", "&larr; Back") }}
+
 <h2>Charity Colours</h2>
 
 {{ Form::open() }}
