@@ -119,12 +119,13 @@ abstract class BaseModel extends Eloquent implements Presentable {
             $date = date('d-m-Y');
             $path = Path::make("uploads", $date);
             $newPath = Path::make(public_path(), $path);
+            $name = date('H-i-s-') . $image->getClientOriginalName();
 
             // move + rename file
-            $image->move($newPath, $image->getClientOriginalName());
+            $image->move($newPath, $name);
 
             // get the path relative to public folder
-            $path = Path::make($path, $image->getClientOriginalName());
+            $path = Path::make($path, $name);
         }
         return $path;
     }
