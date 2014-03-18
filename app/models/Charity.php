@@ -113,6 +113,10 @@ class Charity extends BaseModel {
         return $result;
     }
 
+    public function getNameAttribute() {
+        return e($this->attributes['name']);
+    }
+
     public function getStyles() {
         return new Styles($this->styles);
     }

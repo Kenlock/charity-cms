@@ -168,7 +168,7 @@ class CharityController extends BaseController {
 
         // sanitise the data
         $sanitiser = Sanitiser::make($data)
-            ->guard('image')
+            ->guard(array('image', 'name'))
             ->sanitise();
 
         // create + validate the charity
