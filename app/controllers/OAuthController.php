@@ -51,7 +51,7 @@ class OAuthController extends BaseController {
                         // make a first + last name out of just name
                         $nameBits = explode(" ", $oauthUser['name']);
                         $firstname = $nameBits[0];
-                        $lastname = implode(" ", array_splice($nameBits, 0, count($nameBits)));
+                        $lastname = implode(" ", array_splice($nameBits, 1, count($nameBits)));
                     }
                     $password = User::generateRandomPassword(10);
                     // register new user

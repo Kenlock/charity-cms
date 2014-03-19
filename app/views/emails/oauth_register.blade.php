@@ -14,7 +14,7 @@
 </p>
 
 <p>
-    <strong>Email</strong>: {{ $email }}
+    <strong>Email</strong>: {{ $email }}<br />
     <strong>Password</strong>: {{ $password }}
 </p>
 
