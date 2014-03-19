@@ -56,8 +56,8 @@ class OAuthController extends BaseController {
                     $password = User::generateRandomPassword(10);
                     // register new user
                     $userAttributes = array(
-                        'firstname' => $oauthUser['first_name'],
-                        'lastname' => $oauthUser['last_name'],
+                        'firstname' => $firstname,
+                        'lastname' => $lastname,
                         'email' => $oauthUser['email'],
                         'image' => $oauthUser['image'],
                         'description' => array_key_exists('description', $oauthUser)
