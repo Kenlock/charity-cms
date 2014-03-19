@@ -44,17 +44,45 @@ class OAuthController extends BaseController {
             if ($existingUser == null) {
                 $user = User::where('email', '=', $oauthUser['email'])->first();
                 if ($user == null) {
+                    if (array_key_exists('first_name', $oauthUser)) {
+                        $firstname = array_key_exists('first_name', $oauthUser);
+                        $lastname = array_key_exists('last_name', $oauthUser);
+                    } else {
+                        // make a first + last name out of just name
+                        $nameBits = explode(" ", $oauthUser['name']);
+                        $firstname = $nameBits[0];
+                        $lastname = implode(" ", array_splice($nameBits, 0, count($nameBits)));
+                    }
+                    $password = User::generateRandomPassword(10);
                     // register new user
                     $userAttributes = array(
                         'firstname' => $oauthUser['first_name'],
                         'lastname' => $oauthUser['last_name'],
                         'email' => $oauthUser['email'],
                         'image' => $oauthUser['image'],
-                        'description' => $oauthUser['description'],
-                        'password' => User::generateRandomPassword(10)
+                        'description' => array_key_exists('description', $oauthUser)
+                            ? $oauthUser['description']
+                            : '',
+                        'password' => $password
                     );
                     $user = User::makeFromArray($userAttributes);
                     $user->save();
+
+                    $data = array(
+                        'firstname' => $firstname,
+                        'lastname' => $lastname,
+                        'email'     => $oauthUser['email'],
+                        'password'  => $password,
+                        'provider'  => $providerName,
+                    );
+                    try {
+                        Mail::queue('emails.oauth_register', $data, function($message) use ($data) {
+                            $message->subject('Altruisco Registration', "{$data['firstname']} {$data['lastname']}")
+                                ->to($data['email']);
+                        });
+                    } catch (Exception $e) {
+                        Log::error("Error sending OAuth registration email: " . $e);
+                    }
                 }
 
                 $oauthEntry = new OAuth();
