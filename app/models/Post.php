@@ -1,6 +1,6 @@
 <?php
 
-use Markdown;
+use \Markdown;
 use observers\PostObserver;
 
 class Post extends Eloquent {
