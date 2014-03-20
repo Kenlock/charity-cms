@@ -1,5 +1,5 @@
+<h2 class="form-signin-heading">Please Login</h2>
 {{ Form::open(array('url'=>'users/signin', 'class'=>'form-signin')) }}
-   <h2 class="form-signin-heading">Please Login</h2>
  
     <ul class="form-fields">
         <li>
@@ -18,7 +18,7 @@
 
 <small>{{ HTML::linkRoute('password.remind', 'Forgotten your password?') }}</small>
 
-<h4>or sign in with:</h4>
+<h2>or sign in with:</h2>
 <ul class="btn-list">
     <li>{{ HTML::link('oauth/google', 'Google+', array('class' => 'google-plus-btn')) }}</li>
     <li>{{ HTML::link('oauth/facebook', 'Facebook', array('class' => 'facebook-btn')) }}</li>
